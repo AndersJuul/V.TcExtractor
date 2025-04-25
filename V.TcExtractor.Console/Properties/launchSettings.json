@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "V.TcExtractor.Console": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\Data\\DVPR\""
+    }
+  }
+}
