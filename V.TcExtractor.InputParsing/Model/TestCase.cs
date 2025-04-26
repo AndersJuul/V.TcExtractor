@@ -9,6 +9,6 @@ public class TestCase
 
     public override string ToString()
     {
-        return $"Test No: {TestNo}, Description: {Description}, Req ID: {ReqId}, FileName: {FileName}";
+        return $"Test No: {TestNo}, Req ID: {ReqId}, FileName: {FileName}, Description: {Description}";
     }
 }

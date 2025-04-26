@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using V.TcExtractor.InputParsing;
+using V.TcExtractor.InputParsing.Adapters.FileAdapters;
 
 namespace V.TcExtractor.Console;
 

@@ -1,6 +1,6 @@
 ﻿using V.TcExtractor.InputParsing.Model;
 
-namespace V.TcExtractor.InputParsing;
+namespace V.TcExtractor.InputParsing.Adapters.FileAdapters;
 
 public interface IFileProcessor
 {

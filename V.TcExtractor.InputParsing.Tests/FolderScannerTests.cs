@@ -1,14 +1,13 @@
-﻿using Xunit.Abstractions;
+﻿using V.TcExtractor.InputParsing.Adapters.FileAdapters;
+using V.TcExtractor.InputParsing.Adapters.TableAdapters;
+using Xunit.Abstractions;
 
 namespace V.TcExtractor.InputParsing.Tests
 {
-    public class FolderScannerTests
+    public class FolderScannerTests : TestCaseTests
     {
-        private readonly ITestOutputHelper _testOutputHelper;
-
-        public FolderScannerTests(ITestOutputHelper testOutputHelper)
+        public FolderScannerTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-            _testOutputHelper = testOutputHelper;
         }
 
         [Fact]
@@ -52,17 +51,20 @@ namespace V.TcExtractor.InputParsing.Tests
         {
             // This test assumes test data in known place.
             // Arrange
-            var wordDocumentProcessor = new WordFileProcessor();
+            var cellAdapter = new CellAdapter();
+            var wordDocumentProcessor = new WordFileProcessor(
+                [
+                    new TableAdapterId(cellAdapter),
+                    new TableAdapterTestCaseInformation(cellAdapter)
+                ],
+                cellAdapter);
             var sut = new FolderScanner([wordDocumentProcessor]);
 
             // Act
-            var testCases = sut.Scan(["C:\\DATA\\DVPR"]);
+            var testCases = sut.Scan([TestDataBasePath]).ToList();
 
             // Assert
-            foreach (var testCase in testCases)
-            {
-                _testOutputHelper.WriteLine($"Test : {testCase}");
-            }
+            Dump(testCases);
 
             Assert.Equal(4200, testCases.Count());
         }
