@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\V.TcExtractor.InputParsing\V.TcExtractor.InputParsing.csproj" />
+    <ProjectReference Include="..\V.TcExtractor.OutputFormatting\V.TcExtractor.OutputFormatting.csproj" />
   </ItemGroup>
 
 </Project>

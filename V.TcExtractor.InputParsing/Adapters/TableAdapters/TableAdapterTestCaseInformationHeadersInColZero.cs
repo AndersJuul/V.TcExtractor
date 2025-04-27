@@ -1,6 +1,6 @@
 ﻿using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Wordprocessing;
-using V.TcExtractor.InputParsing.Model;
+using V.TcExtractor.Model;
 using Table = DocumentFormat.OpenXml.Wordprocessing.Table;
 
 namespace V.TcExtractor.InputParsing.Adapters.TableAdapters;

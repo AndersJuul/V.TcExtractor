@@ -12,42 +12,6 @@ namespace V.TcExtractor.InputParsing.Tests
         }
 
         [Fact]
-        public void Guard_rejects_empty_arg_for_path()
-        {
-            // Arrange
-            var sut = GetSut();
-
-            // Act
-            // Assert
-            Assert.Throws<ArgumentException>(() => sut.GetTestCases([]));
-        }
-
-        [Fact]
-        public void Guard_rejects_two_args_for_path()
-        {
-            // Arrange
-            var sut = GetSut();
-
-            // Act
-            // Assert
-            Assert.Throws<ArgumentException>(() => sut.GetTestCases([]));
-        }
-
-        [Fact]
-        public void Guard_accepts_single_arg_for_path()
-        {
-            // This test assumes test data in known place.
-            // Arrange
-            var sut = GetSut();
-
-            // Act
-            var testCases = sut.GetTestCases(["C:\\DATA\\DVPR"]);
-
-            // Assert
-            Assert.Empty(testCases);
-        }
-
-        [Fact]
         public void Scan_finds_all_test_cases()
         {
             // This test assumes test data in known place.
@@ -55,7 +19,7 @@ namespace V.TcExtractor.InputParsing.Tests
             var sut = GetSut();
 
             // Act
-            var testCases = sut.GetTestCases([TestDataBasePath]).ToList();
+            var testCases = sut.GetTestCases(TestDataBasePath);
 
             // Assert
             Dump(testCases);

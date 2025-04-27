@@ -1,8 +1,8 @@
-﻿using V.TcExtractor.InputParsing.Model;
+﻿using V.TcExtractor.Model;
 
 namespace V.TcExtractor.InputParsing;
 
 public interface IFolderScanner
 {
-    IEnumerable<TestCase> GetTestCases(string[] args);
+    IEnumerable<TestCase> GetTestCases(string pathToFiles);
 }

@@ -1,4 +1,4 @@
-﻿namespace V.TcExtractor.InputParsing.Model;
+﻿namespace V.TcExtractor.Model;
 
 public class TestCase
 {

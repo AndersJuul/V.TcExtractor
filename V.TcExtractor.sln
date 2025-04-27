@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V.TcExtractor.InputParsing"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V.TcExtractor.InputParsing.Tests", "V.TcExtractor.InputParsing.Tests\V.TcExtractor.InputParsing.Tests.csproj", "{545F47DC-9D99-428E-942E-21BE4C9BD691}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V.TcExtractor.OutputFormatting", "V.TcExtractor.OutputFormatting\V.TcExtractor.OutputFormatting.csproj", "{3402357E-8C1F-4160-B1D1-C8DF84DD2FED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V.TcExtractor.Model", "V.TcExtractor.Model\V.TcExtractor.Model.csproj", "{6EB484B7-B160-4CE3-9FA0-0EB6B488230B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{545F47DC-9D99-428E-942E-21BE4C9BD691}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{545F47DC-9D99-428E-942E-21BE4C9BD691}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{545F47DC-9D99-428E-942E-21BE4C9BD691}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3402357E-8C1F-4160-B1D1-C8DF84DD2FED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3402357E-8C1F-4160-B1D1-C8DF84DD2FED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3402357E-8C1F-4160-B1D1-C8DF84DD2FED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3402357E-8C1F-4160-B1D1-C8DF84DD2FED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EB484B7-B160-4CE3-9FA0-0EB6B488230B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EB484B7-B160-4CE3-9FA0-0EB6B488230B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EB484B7-B160-4CE3-9FA0-0EB6B488230B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EB484B7-B160-4CE3-9FA0-0EB6B488230B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

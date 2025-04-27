@@ -1,7 +1,7 @@
 ﻿using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using V.TcExtractor.InputParsing.Adapters.TableAdapters;
-using V.TcExtractor.InputParsing.Model;
+using V.TcExtractor.Model;
 
 namespace V.TcExtractor.InputParsing.Adapters.FileAdapters
 {

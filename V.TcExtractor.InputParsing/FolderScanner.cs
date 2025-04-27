@@ -1,6 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using V.TcExtractor.InputParsing.Adapters.FileAdapters;
-using V.TcExtractor.InputParsing.Model;
+using V.TcExtractor.Model;
 
 namespace V.TcExtractor.InputParsing;
 
@@ -13,17 +13,10 @@ public class FolderScanner : IFolderScanner
         _fileProcessors = fileProcessors;
     }
 
-    public IEnumerable<TestCase> GetTestCases(string[] args)
-    {
-        Guard.Against.Expression(x => x != 1, args.Length,
-            "args must be single arg, specifying path to a folder with TC Files");
-        return GetTestCasesInFolder(args.Single());
-    }
-
-    private IEnumerable<TestCase> GetTestCasesInFolder(string path)
+    public IEnumerable<TestCase> GetTestCases(string pathToFiles)
     {
         // Width first search: Files then recurse through folders.
-        var files = Directory.EnumerateFiles(path);
+        var files = Directory.EnumerateFiles(pathToFiles);
         foreach (var file in files)
         {
             var processors = _fileProcessors.Where(xx => xx.CanHandle(file));
@@ -34,10 +27,10 @@ public class FolderScanner : IFolderScanner
             }
         }
 
-        var directories = Directory.EnumerateDirectories(path);
+        var directories = Directory.EnumerateDirectories(pathToFiles);
         foreach (var directory in directories)
         {
-            foreach (var testCase in GetTestCasesInFolder(directory)) yield return testCase;
+            foreach (var testCase in GetTestCases(directory)) yield return testCase;
         }
     }
 }

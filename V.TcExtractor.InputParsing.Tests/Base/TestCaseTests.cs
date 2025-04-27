@@ -1,5 +1,5 @@
 ﻿using Xunit.Abstractions;
-using V.TcExtractor.InputParsing.Model;
+using V.TcExtractor.Model;
 
 namespace V.TcExtractor.InputParsing.Tests.Base;
 
