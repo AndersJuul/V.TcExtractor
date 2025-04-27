@@ -20,6 +20,10 @@ public class Program
         var pathToFiles = args.FirstOrDefault() ?? "c:\\data\\dvpr";
         var outputFormatter = (config["output"] ?? "console").ToLower();
 
+        System.Console.WriteLine($"Trying to read TC files from {pathToFiles} and send out to {outputFormatter}.");
+        System.Console.WriteLine(
+            "First arg to application is the path. Use --output to write to c:\\data\\tc_out.csv.");
+
         // Get classes required for processing
         var folderScanner = host.Services.GetRequiredService<IFolderScanner>();
         var output = host.Services.GetServices<ITestCaseOutput>()

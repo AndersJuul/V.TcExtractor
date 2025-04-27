@@ -142,7 +142,7 @@ namespace V.TcExtractor.InputParsing.Tests
 
             // Assert
             Dump(testCases);
-            Assert.Equal(1, testCases.Count());
+            Assert.Single(testCases);
 
             Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.TestNo)));
             Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.FileName)));
