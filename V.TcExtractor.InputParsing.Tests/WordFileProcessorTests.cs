@@ -109,6 +109,26 @@ namespace V.TcExtractor.InputParsing.Tests
             Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.Description)));
         }
 
+        [Fact]
+        public void Handle_returns_testcases_for_psi_dvpr_ves_data_tools()
+        {
+            // Arrange
+            var sut = GetSut();
+
+            // Act
+            var testCases = sut
+                .Handle(Path.Combine(TestDataBasePath, "PSI", "DVPR VES Data Tools.docx"))
+                .ToArray();
+
+            // Assert
+            Dump(testCases);
+            Assert.Equal(3, testCases.Count());
+
+            Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.TestNo)));
+            Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.FileName)));
+            Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.Description)));
+        }
+
         private static WordFileProcessor GetSut()
         {
             var cellAdapter = new CellAdapter();
