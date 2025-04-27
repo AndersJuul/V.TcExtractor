@@ -2,5 +2,5 @@
 
 public interface ICellAdapter
 {
-    string GetCellText(TableCell cell);
+    string GetCellText(TableCell? cell);
 }

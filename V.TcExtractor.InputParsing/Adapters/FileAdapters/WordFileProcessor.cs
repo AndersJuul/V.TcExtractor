@@ -28,10 +28,10 @@ namespace V.TcExtractor.InputParsing.Adapters.FileAdapters
 
             using (var wordDocument = WordprocessingDocument.Open(filePath, false))
             {
-                var body = wordDocument.MainDocumentPart.Document.Body;
+                var body = wordDocument.MainDocumentPart?.Document.Body;
 
                 // Find all tables in the document
-                var tables = body.Descendants<Table>().ToList();
+                var tables = body?.Descendants<Table>().ToList() ?? [];
 
                 foreach (var table in tables)
                 {

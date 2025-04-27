@@ -2,7 +2,7 @@
 
 public class CellAdapter : ICellAdapter
 {
-    public string GetCellText(TableCell cell)
+    public string GetCellText(TableCell? cell)
     {
         if (cell == null)
             return string.Empty;

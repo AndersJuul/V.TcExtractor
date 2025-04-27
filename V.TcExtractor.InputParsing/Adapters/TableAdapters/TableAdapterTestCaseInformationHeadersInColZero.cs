@@ -1,23 +1,32 @@
-﻿using DocumentFormat.OpenXml.Wordprocessing;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
 using V.TcExtractor.InputParsing.Model;
+using Table = DocumentFormat.OpenXml.Wordprocessing.Table;
 
 namespace V.TcExtractor.InputParsing.Adapters.TableAdapters;
 
-public class TableAdapterTestCaseInformation(ICellAdapter cellAdapter) : ITableAdapter
+public class TableAdapterTestCaseInformationHeadersInColZero(ICellAdapter cellAdapter) : ITableAdapter
 {
     private readonly ICellAdapter _cellAdapter = cellAdapter;
 
     public bool CanHandle(Table table)
     {
-        var firstRow = table.Elements<TableRow>().FirstOrDefault();
+        var firstColumn = table.Elements<TableColumn>().FirstOrDefault();
 
-        if (firstRow != null)
+        if (firstColumn != null)
         {
-            var cellText = _cellAdapter.GetCellText(firstRow.Elements<TableCell>().FirstOrDefault());
-            if (cellText.Contains("Test Case Information"))
+            var cells = firstColumn.Elements<TableCell>().ToArray();
+            if (!_cellAdapter.GetCellText(cells.FirstOrDefault()).Contains("Test Case Information"))
             {
-                return true;
+                return false;
             }
+
+            if (!_cellAdapter.GetCellText(cells.FirstOrDefault()).Contains("Test Case Information"))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         return false;
@@ -33,8 +42,8 @@ public class TableAdapterTestCaseInformation(ICellAdapter cellAdapter) : ITableA
             var cells = row.Elements<TableCell>().ToList();
             if (cells.Count >= 2)
             {
-                string headerCell = _cellAdapter.GetCellText(cells[0]);
-                string valueCell = _cellAdapter.GetCellText(cells[1]);
+                var headerCell = _cellAdapter.GetCellText(cells[0]);
+                var valueCell = _cellAdapter.GetCellText(cells[1]);
 
                 // Extract Test No
                 if (headerCell.Contains("Test No"))
@@ -47,13 +56,10 @@ public class TableAdapterTestCaseInformation(ICellAdapter cellAdapter) : ITableA
                     testCase.Description = valueCell.Trim();
                 }
                 // Extract Req ID
-                else if (cells.Count >= 5 && headerCell.Contains("Test Case Information"))
+                else if (cells.Count >= 5)
                 {
                     // Req ID is typically in the 5th column of the header row
-                    if (cells.Count >= 5)
-                    {
-                        testCase.ReqId = _cellAdapter.GetCellText(cells[4]).Trim();
-                    }
+                    testCase.ReqId = _cellAdapter.GetCellText(cells[4]).Trim();
                 }
             }
         }

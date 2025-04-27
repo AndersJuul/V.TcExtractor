@@ -1,5 +1,6 @@
 ﻿using V.TcExtractor.InputParsing.Adapters.FileAdapters;
 using V.TcExtractor.InputParsing.Adapters.TableAdapters;
+using V.TcExtractor.InputParsing.Tests.Base;
 using Xunit.Abstractions;
 
 namespace V.TcExtractor.InputParsing.Tests
@@ -14,7 +15,7 @@ namespace V.TcExtractor.InputParsing.Tests
         public void Guard_rejects_empty_arg_for_path()
         {
             // Arrange
-            var sut = new FolderScanner([]);
+            var sut = GetSut();
 
             // Act
             // Assert
@@ -25,7 +26,7 @@ namespace V.TcExtractor.InputParsing.Tests
         public void Guard_rejects_two_args_for_path()
         {
             // Arrange
-            var sut = new FolderScanner([]);
+            var sut = GetSut();
 
             // Act
             // Assert
@@ -37,7 +38,7 @@ namespace V.TcExtractor.InputParsing.Tests
         {
             // This test assumes test data in known place.
             // Arrange
-            var sut = new FolderScanner([]);
+            var sut = GetSut();
 
             // Act
             var testCases = sut.Scan(["C:\\DATA\\DVPR"]);
@@ -51,14 +52,7 @@ namespace V.TcExtractor.InputParsing.Tests
         {
             // This test assumes test data in known place.
             // Arrange
-            var cellAdapter = new CellAdapter();
-            var wordDocumentProcessor = new WordFileProcessor(
-                [
-                    new TableAdapterId(cellAdapter),
-                    new TableAdapterTestCaseInformation(cellAdapter)
-                ],
-                cellAdapter);
-            var sut = new FolderScanner([wordDocumentProcessor]);
+            var sut = GetSut();
 
             // Act
             var testCases = sut.Scan([TestDataBasePath]).ToList();
@@ -67,6 +61,19 @@ namespace V.TcExtractor.InputParsing.Tests
             Dump(testCases);
 
             Assert.Equal(4200, testCases.Count());
+        }
+
+        private static FolderScanner GetSut()
+        {
+            var cellAdapter = new CellAdapter();
+            var wordDocumentProcessor = new WordFileProcessor(
+                [
+                    new TableAdapterId(cellAdapter),
+                    new TableAdapterTestCaseInformationHeadersInColZero(cellAdapter)
+                ],
+                cellAdapter);
+            var sut = new FolderScanner([wordDocumentProcessor]);
+            return sut;
         }
     }
 }

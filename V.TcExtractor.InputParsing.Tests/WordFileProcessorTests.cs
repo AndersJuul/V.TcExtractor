@@ -1,6 +1,7 @@
 ﻿using Xunit.Abstractions;
 using V.TcExtractor.InputParsing.Adapters.FileAdapters;
 using V.TcExtractor.InputParsing.Adapters.TableAdapters;
+using V.TcExtractor.InputParsing.Tests.Base;
 
 namespace V.TcExtractor.InputParsing.Tests
 {
@@ -10,7 +11,7 @@ namespace V.TcExtractor.InputParsing.Tests
         public void CanHandle_returns_true_for_word_file_name()
         {
             // Arrange
-            var sut = new WordFileProcessor([], new CellAdapter());
+            var sut = GetSut();
 
             // Act
             var canHandle = sut.CanHandle("A.docx");
@@ -23,7 +24,7 @@ namespace V.TcExtractor.InputParsing.Tests
         public void CanHandle_returns_false_for_excel_file_name()
         {
             // Arrange
-            var sut = new WordFileProcessor([], new CellAdapter());
+            var sut = GetSut();
 
             // Act
             var canHandle = sut.CanHandle("A.xlsx");
@@ -33,23 +34,48 @@ namespace V.TcExtractor.InputParsing.Tests
         }
 
         [Fact]
-        public void Handle_returns_testcases_for_ves_dvpr()
+        public void Handle_returns_testcases_for_spc_ves_dvpr()
         {
             // Arrange
-            var cellAdapter = new CellAdapter();
-            var sut = new WordFileProcessor(
-                [
-                    new TableAdapterId(cellAdapter),
-                    new TableAdapterTestCaseInformation(cellAdapter)
-                ],
-                cellAdapter);
+            var sut = GetSut();
 
             // Act
-            var testCases = sut.Handle(Path.Combine(TestDataBasePath, "SPC", "VES DVPR.docx"));
+            var testCases = sut
+                .Handle(Path.Combine(TestDataBasePath, "SPC", "VES DVPR.docx"));
 
             // Assert
             Dump(testCases);
             Assert.Equal(38, testCases.Count);
+        }
+
+        [Fact]
+        public void Handle_returns_testcases_for_psi_dvpr_ves_multithreading()
+        {
+            // Arrange
+            var sut = GetSut();
+
+            // Act
+            var testCases = sut
+                .Handle(Path.Combine(TestDataBasePath, "PSI", "DVPR VES  Multithreading.docx"))
+                .ToArray();
+
+            // Assert
+            Dump(testCases);
+            Assert.Equal(2, testCases.Count());
+            Assert.Equal("REQ-1", testCases[0].ReqId);
+        }
+
+        private static WordFileProcessor GetSut()
+        {
+            var cellAdapter = new CellAdapter();
+            var sut = new WordFileProcessor(
+                [
+                    new TableAdapterId(cellAdapter),
+                    new TableAdapterTestCaseInformationHeadersInColZero(cellAdapter),
+                    new TableAdapterTestCaseInformationHeadersInRowZero(cellAdapter)
+                ],
+                cellAdapter);
+            return sut;
         }
     }
 }
