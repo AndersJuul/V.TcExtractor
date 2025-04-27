@@ -23,7 +23,7 @@ public class TableAdapterId(ICellAdapter cellAdapter) : ITableAdapter
         return false;
     }
 
-    public TestCase? GetTestCase(Table table, string filePath)
+    public IEnumerable<TestCase> GetTestCases(Table table, string filePath)
     {
         var testCase = new TestCase
         {
@@ -33,7 +33,7 @@ public class TableAdapterId(ICellAdapter cellAdapter) : ITableAdapter
             Description = GetLastPartOfCellString(table, "Case Description:")
         };
 
-        return testCase;
+        yield return testCase;
     }
 
     private string GetLastPartOfCellString(Table table, string id)

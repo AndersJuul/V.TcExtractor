@@ -9,3 +9,5 @@ For confidentiality reasons, the files are not included in the repository.
 3. It can be considered to highlight missing test case properties
 
 4. "Test No" is in many cases written into the documents as fragments (invisible to the eye) which causes spaces to appear in extracted test cases. Should they be removed?
+
+5. DVPR VES Supervisions and Monitoring.docx is difficult because of table structure. Sometimes description column covers multible rows (sometimes not). Not yet resolved.

@@ -37,12 +37,12 @@ namespace V.TcExtractor.InputParsing.Adapters.FileAdapters
                 {
                     var tableAdapter = _tableAdapters.SingleOrDefault(x => x.CanHandle(table));
 
-                    var testCase = tableAdapter?.GetTestCase(table, filePath);
+                    var cases = tableAdapter?.GetTestCases(table, filePath);
 
                     // Add the test case if we found at least some information
-                    if (testCase != null)
+                    if (cases != null)
                     {
-                        testCases.Add(testCase);
+                        testCases.AddRange(cases);
                     }
                 }
             }

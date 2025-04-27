@@ -276,6 +276,26 @@ namespace V.TcExtractor.InputParsing.Tests
             Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.Description)));
         }
 
+        [Fact]
+        public void Handle_returns_testcases_for_psi_dvpr_ves_supervisions_and_monitoring()
+        {
+            // Arrange
+            var sut = GetSut();
+
+            // Act
+            var testCases = sut
+                .Handle(Path.Combine(TestDataBasePath, "PSI", "DVPR VES Supervisions and Monitoring.docx"))
+                .ToArray();
+
+            // Assert
+            Dump(testCases);
+            Assert.Equal(93, testCases.Count());
+
+            Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.TestNo)));
+            Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.FileName)));
+            Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.Description)));
+        }
+
         private static WordFileProcessor GetSut()
         {
             var cellAdapter = new CellAdapter();
@@ -283,7 +303,8 @@ namespace V.TcExtractor.InputParsing.Tests
                 [
                     new TableAdapterId(cellAdapter),
                     new TableAdapterTestCaseInformationHeadersInColZero(cellAdapter),
-                    new TableAdapterTestCaseInformationHeadersInRowZero(cellAdapter)
+                    new TableAdapterTestCaseInformationHeadersInRowZero(cellAdapter),
+                    new TableAdapterTestCaseIdHeadersInRowZero(cellAdapter)
                 ],
                 cellAdapter);
             return sut;

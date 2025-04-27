@@ -33,7 +33,9 @@ namespace V.TcExtractor.InputParsing.Tests
             var wordDocumentProcessor = new WordFileProcessor(
                 [
                     new TableAdapterId(cellAdapter),
-                    new TableAdapterTestCaseInformationHeadersInColZero(cellAdapter)
+                    new TableAdapterTestCaseInformationHeadersInColZero(cellAdapter),
+                    new TableAdapterTestCaseInformationHeadersInRowZero(cellAdapter),
+                    new TableAdapterTestCaseIdHeadersInRowZero(cellAdapter)
                 ],
                 cellAdapter);
             var sut = new FolderScanner([wordDocumentProcessor]);
