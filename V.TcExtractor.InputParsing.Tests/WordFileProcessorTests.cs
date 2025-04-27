@@ -253,7 +253,27 @@ namespace V.TcExtractor.InputParsing.Tests
 
             Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.TestNo)));
             Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.FileName)));
-            // Temp -- document is clearly not done. Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.Description)));
+            // TODO -- document is clearly not done. Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.Description)));
+        }
+
+        [Fact]
+        public void Handle_returns_testcases_for_psi_dvpr_ves_statcom_interface()
+        {
+            // Arrange
+            var sut = GetSut();
+
+            // Act
+            var testCases = sut
+                .Handle(Path.Combine(TestDataBasePath, "PSI", "DVPR VES STATCOM Interface.docx"))
+                .ToArray();
+
+            // Assert
+            Dump(testCases);
+            Assert.Equal(3, testCases.Count());
+
+            Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.TestNo)));
+            Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.FileName)));
+            Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.Description)));
         }
 
         private static WordFileProcessor GetSut()
