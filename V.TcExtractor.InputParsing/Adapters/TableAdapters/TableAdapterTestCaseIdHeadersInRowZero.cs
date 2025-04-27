@@ -33,14 +33,21 @@ public class TableAdapterTestCaseIdHeadersInRowZero(ICellAdapter cellAdapter) : 
     public IEnumerable<TestCase> GetTestCases(Table table, string filePath)
     {
         // Process rows to find Test No, Description, and Req ID
+        var desc = "";
         foreach (var row in table.Elements<TableRow>().Skip(1))
         {
             var testCase = new TestCase { FileName = filePath };
 
             var cells = row.Elements<TableCell>().ToList();
 
+            if (string.IsNullOrEmpty(_cellAdapter.GetCellText(cells[0]).Trim()))
+                continue;
+
             testCase.TestNo = _cellAdapter.GetCellText(cells[0]).Trim();
-            testCase.Description = _cellAdapter.GetCellText(cells[1]).Trim();
+
+            if (!string.IsNullOrEmpty(_cellAdapter.GetCellText(cells[1]).Trim()))
+                desc = _cellAdapter.GetCellText(cells[1]).Trim();
+            testCase.Description = desc;
 
             yield return testCase;
         }
