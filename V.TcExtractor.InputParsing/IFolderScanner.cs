@@ -4,5 +4,5 @@ namespace V.TcExtractor.InputParsing;
 
 public interface IFolderScanner
 {
-    IEnumerable<TestCase> Scan(string[] args);
+    IEnumerable<TestCase> GetTestCases(string[] args);
 }

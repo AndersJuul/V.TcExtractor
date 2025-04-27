@@ -13,14 +13,14 @@ public class FolderScanner : IFolderScanner
         _fileProcessors = fileProcessors;
     }
 
-    public IEnumerable<TestCase> Scan(string[] args)
+    public IEnumerable<TestCase> GetTestCases(string[] args)
     {
         Guard.Against.Expression(x => x != 1, args.Length,
             "args must be single arg, specifying path to a folder with TC Files");
-        return ScanFolder(args.Single());
+        return GetTestCasesInFolder(args.Single());
     }
 
-    private IEnumerable<TestCase> ScanFolder(string path)
+    private IEnumerable<TestCase> GetTestCasesInFolder(string path)
     {
         // Width first search: Files then recurse through folders.
         var files = Directory.EnumerateFiles(path);
@@ -37,7 +37,7 @@ public class FolderScanner : IFolderScanner
         var directories = Directory.EnumerateDirectories(path);
         foreach (var directory in directories)
         {
-            foreach (var testCase in ScanFolder(directory)) yield return testCase;
+            foreach (var testCase in GetTestCasesInFolder(directory)) yield return testCase;
         }
     }
 }

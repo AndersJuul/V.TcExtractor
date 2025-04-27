@@ -83,8 +83,26 @@ namespace V.TcExtractor.InputParsing.Tests
             // Assert
             Dump(testCases);
             Assert.Equal(2, testCases.Count());
-            // Original input file modified to have ReqId == REQ-1 for testing purposes (was blank)
-            //Assert.Equal("REQ-1", testCases[0].ReqId);
+
+            Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.TestNo)));
+            Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.FileName)));
+            Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.Description)));
+        }
+
+        [Fact]
+        public void Handle_returns_testcases_for_psi_dvpr_ves_data_logging()
+        {
+            // Arrange
+            var sut = GetSut();
+
+            // Act
+            var testCases = sut
+                .Handle(Path.Combine(TestDataBasePath, "PSI", "DVPR VES Data Logging.docx"))
+                .ToArray();
+
+            // Assert
+            Dump(testCases);
+            Assert.Equal(6, testCases.Count());
 
             Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.TestNo)));
             Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.FileName)));

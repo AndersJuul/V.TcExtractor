@@ -11,7 +11,9 @@ public static class ServiceCollectionExtensions
         params Assembly[] assemblies)
     {
         var interfaceType = typeof(TInterface);
-        var assemblyList = assemblies.Any() ? assemblies : new[] { Assembly.GetExecutingAssembly() };
+        var assemblyList = assemblies.Any()
+            ? assemblies
+            : new[] { Assembly.GetExecutingAssembly(), interfaceType.Assembly };
 
         foreach (var assembly in assemblyList)
         {

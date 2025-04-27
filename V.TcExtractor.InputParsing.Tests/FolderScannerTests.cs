@@ -19,7 +19,7 @@ namespace V.TcExtractor.InputParsing.Tests
 
             // Act
             // Assert
-            Assert.Throws<ArgumentException>(() => sut.Scan([]));
+            Assert.Throws<ArgumentException>(() => sut.GetTestCases([]));
         }
 
         [Fact]
@@ -30,7 +30,7 @@ namespace V.TcExtractor.InputParsing.Tests
 
             // Act
             // Assert
-            Assert.Throws<ArgumentException>(() => sut.Scan([]));
+            Assert.Throws<ArgumentException>(() => sut.GetTestCases([]));
         }
 
         [Fact]
@@ -41,7 +41,7 @@ namespace V.TcExtractor.InputParsing.Tests
             var sut = GetSut();
 
             // Act
-            var testCases = sut.Scan(["C:\\DATA\\DVPR"]);
+            var testCases = sut.GetTestCases(["C:\\DATA\\DVPR"]);
 
             // Assert
             Assert.Empty(testCases);
@@ -55,7 +55,7 @@ namespace V.TcExtractor.InputParsing.Tests
             var sut = GetSut();
 
             // Act
-            var testCases = sut.Scan([TestDataBasePath]).ToList();
+            var testCases = sut.GetTestCases([TestDataBasePath]).ToList();
 
             // Assert
             Dump(testCases);
