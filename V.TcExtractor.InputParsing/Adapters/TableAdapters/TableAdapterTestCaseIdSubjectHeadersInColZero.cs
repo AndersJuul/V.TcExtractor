@@ -51,15 +51,19 @@ public class TableAdapterTestCaseIdSubjectHeadersInColZero(ICellAdapter cellAdap
                 var headerCell = _cellAdapter.GetCellText(cells[0]);
                 var valueCell = _cellAdapter.GetCellText(cells[1]);
 
-                // Extract Test No
                 if (headerCell.Contains("Test ID"))
                 {
                     testCase.TestNo = valueCell.Trim();
                 }
-                // Extract Description
-                else if (headerCell.Contains("Description"))
+
+                if (headerCell.Contains("Description"))
                 {
                     testCase.Description = valueCell.Trim();
+                }
+
+                if (headerCell.Contains("Line in DVPL"))
+                {
+                    testCase.ReqId = valueCell.Trim();
                 }
             }
         }
