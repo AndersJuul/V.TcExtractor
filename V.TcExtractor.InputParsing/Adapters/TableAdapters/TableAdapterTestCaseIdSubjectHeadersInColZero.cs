@@ -5,23 +5,29 @@ using Table = DocumentFormat.OpenXml.Wordprocessing.Table;
 
 namespace V.TcExtractor.InputParsing.Adapters.TableAdapters;
 
-public class TableAdapterTestCaseInformationHeadersInColZero(ICellAdapter cellAdapter) : ITableAdapter
+public class TableAdapterTestCaseIdSubjectHeadersInColZero(ICellAdapter cellAdapter) : ITableAdapter
 {
     private readonly ICellAdapter _cellAdapter = cellAdapter;
 
     public bool CanHandle(Table table)
     {
-        var firstColumn = table.Elements<TableColumn>().FirstOrDefault();
+        // Get all the rows in the table
+        var rows = table.Elements<TableRow>();
 
-        if (firstColumn != null)
+        if (rows.Any())
         {
-            var cells = firstColumn.Elements<TableCell>().ToArray();
-            if (!_cellAdapter.GetCellText(cells.FirstOrDefault()).Contains("Test Case Information"))
+            // Select the first cell of each row
+            var firstColumnCells = rows
+                .Select(row => row.Elements<TableCell>().FirstOrDefault())
+                .Where(cell => cell != null)
+                .ToArray();
+
+            if (!_cellAdapter.GetCellText(firstColumnCells.FirstOrDefault()).Contains("Test ID"))
             {
                 return false;
             }
 
-            if (!_cellAdapter.GetCellText(cells.FirstOrDefault()).Contains("Test Case Information"))
+            if (!_cellAdapter.GetCellText(firstColumnCells.Skip(1).FirstOrDefault()).Contains("Subject"))
             {
                 return false;
             }
@@ -46,7 +52,7 @@ public class TableAdapterTestCaseInformationHeadersInColZero(ICellAdapter cellAd
                 var valueCell = _cellAdapter.GetCellText(cells[1]);
 
                 // Extract Test No
-                if (headerCell.Contains("Test No"))
+                if (headerCell.Contains("Test ID"))
                 {
                     testCase.TestNo = valueCell.Trim();
                 }
@@ -54,12 +60,6 @@ public class TableAdapterTestCaseInformationHeadersInColZero(ICellAdapter cellAd
                 else if (headerCell.Contains("Description"))
                 {
                     testCase.Description = valueCell.Trim();
-                }
-                // Extract Req ID
-                else if (cells.Count >= 5)
-                {
-                    // Req ID is typically in the 5th column of the header row
-                    testCase.ReqId = _cellAdapter.GetCellText(cells[4]).Trim();
                 }
             }
         }

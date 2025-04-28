@@ -29,7 +29,7 @@ public abstract class TestCaseTests(ITestOutputHelper testOutputHelper)
             [
                 new TableAdapterId(cellAdapter),
                 new TableAdapterTestCaseIdAndDescriptionHeadersInRowZero(cellAdapter),
-                new TableAdapterTestCaseInformationHeadersInColZero(cellAdapter),
+                new TableAdapterTestCaseIdSubjectHeadersInColZero(cellAdapter),
                 new TableAdapterTestCaseInformationHeadersInRowZero(cellAdapter),
                 new TableAdapterTestCaseIdInitialConditionsHeadersInRowZero(cellAdapter)
             ],
