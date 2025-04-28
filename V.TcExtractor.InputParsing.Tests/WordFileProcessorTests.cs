@@ -416,6 +416,26 @@ namespace V.TcExtractor.InputParsing.Tests
             Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.Description)));
         }
 
+        [Fact]
+        public void Handle_returns_testcases_for_spc_test_batch_ves_dvpr_for_security_zone_options()
+        {
+            // Arrange
+            var sut = GetSut();
+
+            // Act
+            var testCases = sut
+                .Handle(Path.Combine(TestDataBasePath, "SPC", "Tests_Batch - VES DVPR for Security Zone Options.docx"))
+                .ToArray();
+
+            // Assert
+            Dump(testCases);
+            Assert.Equal(12, testCases.Count());
+
+            Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.TestNo)));
+            Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.FileName)));
+            Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.Description)));
+        }
+
         private static WordFileProcessor GetSut()
         {
             var sut = GetWordFileProcessor();
