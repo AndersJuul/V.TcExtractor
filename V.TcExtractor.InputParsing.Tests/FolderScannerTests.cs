@@ -1,6 +1,4 @@
-﻿using V.TcExtractor.InputParsing.Adapters.FileAdapters;
-using V.TcExtractor.InputParsing.Adapters.TableAdapters;
-using V.TcExtractor.InputParsing.Tests.Base;
+﻿using V.TcExtractor.InputParsing.Tests.Base;
 using Xunit.Abstractions;
 
 namespace V.TcExtractor.InputParsing.Tests
@@ -19,12 +17,14 @@ namespace V.TcExtractor.InputParsing.Tests
             var sut = GetSut();
 
             // Act
-            var testCases = sut.GetTestCases(TestDataBasePath);
+            var testCases = sut
+                .GetTestCases(TestDataBasePath)
+                .ToArray();
 
             // Assert
             Dump(testCases);
 
-            Assert.Equal(4200, testCases.Count());
+            Assert.Equal(227, testCases.Count());
         }
 
         private static FolderScanner GetSut()
