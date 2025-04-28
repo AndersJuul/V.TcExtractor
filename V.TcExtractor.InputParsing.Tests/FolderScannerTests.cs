@@ -29,15 +29,7 @@ namespace V.TcExtractor.InputParsing.Tests
 
         private static FolderScanner GetSut()
         {
-            var cellAdapter = new CellAdapter();
-            var wordDocumentProcessor = new WordFileProcessor(
-                [
-                    new TableAdapterId(cellAdapter),
-                    new TableAdapterTestCaseInformationHeadersInColZero(cellAdapter),
-                    new TableAdapterTestCaseInformationHeadersInRowZero(cellAdapter),
-                    new TableAdapterTestCaseIdHeadersInRowZero(cellAdapter)
-                ],
-                cellAdapter);
+            var wordDocumentProcessor = GetWordFileProcessor();
             var sut = new FolderScanner([wordDocumentProcessor]);
             return sut;
         }

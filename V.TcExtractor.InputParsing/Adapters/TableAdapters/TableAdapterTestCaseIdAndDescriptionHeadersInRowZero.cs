@@ -3,7 +3,7 @@ using V.TcExtractor.Model;
 
 namespace V.TcExtractor.InputParsing.Adapters.TableAdapters;
 
-public class TableAdapterTestCaseIdHeadersInRowZero(ICellAdapter cellAdapter) : ITableAdapter
+public class TableAdapterTestCaseIdAndDescriptionHeadersInRowZero(ICellAdapter cellAdapter) : ITableAdapter
 {
     private readonly ICellAdapter _cellAdapter = cellAdapter;
 
@@ -19,7 +19,12 @@ public class TableAdapterTestCaseIdHeadersInRowZero(ICellAdapter cellAdapter) : 
                 return false;
             }
 
-            if (!_cellAdapter.GetCellText(cells.Skip(2).FirstOrDefault()).Contains("Initial Conditions"))
+            if (!_cellAdapter.GetCellText(cells.Skip(1).FirstOrDefault()).Contains("Test Description"))
+            {
+                return false;
+            }
+
+            if (!_cellAdapter.GetCellText(cells.Skip(2).FirstOrDefault()).Contains("Step"))
             {
                 return false;
             }

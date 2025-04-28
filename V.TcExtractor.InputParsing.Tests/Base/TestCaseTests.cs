@@ -1,4 +1,6 @@
-﻿using Xunit.Abstractions;
+﻿using V.TcExtractor.InputParsing.Adapters.FileAdapters;
+using V.TcExtractor.InputParsing.Adapters.TableAdapters;
+using Xunit.Abstractions;
 using V.TcExtractor.Model;
 
 namespace V.TcExtractor.InputParsing.Tests.Base;
@@ -18,5 +20,20 @@ public abstract class TestCaseTests(ITestOutputHelper testOutputHelper)
         }
 
         TestOutputHelper.WriteLine("----");
+    }
+
+    protected static WordFileProcessor GetWordFileProcessor()
+    {
+        var cellAdapter = new CellAdapter();
+        var wordFileProcessor = new WordFileProcessor(
+            [
+                new TableAdapterId(cellAdapter),
+                new TableAdapterTestCaseIdAndDescriptionHeadersInRowZero(cellAdapter),
+                new TableAdapterTestCaseInformationHeadersInColZero(cellAdapter),
+                new TableAdapterTestCaseInformationHeadersInRowZero(cellAdapter),
+                new TableAdapterTestCaseIdInitialConditionsHeadersInRowZero(cellAdapter)
+            ],
+            cellAdapter);
+        return wordFileProcessor;
     }
 }

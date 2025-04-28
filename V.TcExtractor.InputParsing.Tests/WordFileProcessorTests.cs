@@ -316,18 +316,29 @@ namespace V.TcExtractor.InputParsing.Tests
             Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.Description)));
         }
 
+        [Fact]
+        public void Handle_returns_testcases_for_psi_dvpr_re_veppc()
+        {
+            // Arrange
+            var sut = GetSut();
+
+            // Act
+            var testCases = sut
+                .Handle(Path.Combine(TestDataBasePath, "PSI", "DVPR-RE VEPPC Lab.docx"))
+                .ToArray();
+
+            // Assert
+            Dump(testCases);
+            Assert.Equal(20, testCases.Count());
+
+            Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.TestNo)));
+            Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.FileName)));
+            Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.Description)));
+        }
 
         private static WordFileProcessor GetSut()
         {
-            var cellAdapter = new CellAdapter();
-            var sut = new WordFileProcessor(
-                [
-                    new TableAdapterId(cellAdapter),
-                    new TableAdapterTestCaseInformationHeadersInColZero(cellAdapter),
-                    new TableAdapterTestCaseInformationHeadersInRowZero(cellAdapter),
-                    new TableAdapterTestCaseIdHeadersInRowZero(cellAdapter)
-                ],
-                cellAdapter);
+            var sut = GetWordFileProcessor();
             return sut;
         }
     }
