@@ -17,5 +17,10 @@ namespace V.TcExtractor.OutputFormatting
                 System.Console.WriteLine(testCase);
             }
         }
+
+        public void Write(ModuleRequirement[] moduleRequirements)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

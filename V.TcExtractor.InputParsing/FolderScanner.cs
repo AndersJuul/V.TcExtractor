@@ -1,36 +1,58 @@
-﻿using Ardalis.GuardClauses;
-using V.TcExtractor.InputParsing.Adapters.FileAdapters;
+﻿using V.TcExtractor.InputParsing.Adapters.FileAdapters;
 using V.TcExtractor.Model;
 
 namespace V.TcExtractor.InputParsing;
 
 public class FolderScanner : IFolderScanner
 {
-    private readonly IEnumerable<IFileProcessor> _fileProcessors;
+    private readonly IEnumerable<ITestCaseFileProcessor> _testFileProcessors;
+    private readonly IEnumerable<IModuleRequirementFileProcessor> _moduleRequirementFileProcessor;
 
-    public FolderScanner(IEnumerable<IFileProcessor> fileProcessors)
+    public FolderScanner(IEnumerable<ITestCaseFileProcessor> testFileProcessors,
+        IEnumerable<IModuleRequirementFileProcessor> moduleRequirementFileProcessor)
     {
-        _fileProcessors = fileProcessors;
+        _testFileProcessors = testFileProcessors;
+        _moduleRequirementFileProcessor = moduleRequirementFileProcessor;
+    }
+
+    public IEnumerable<string> GetFiles(string folder, string searchPattern)
+    {
+        var files = Directory.EnumerateFiles(folder, searchPattern);
+        foreach (var file in files)
+        {
+            yield return file;
+        }
+
+        var directories = Directory.EnumerateDirectories(folder);
+        foreach (var directory in directories)
+        {
+            foreach (var file in GetFiles(directory, searchPattern)) yield return file;
+        }
     }
 
     public IEnumerable<TestCase> GetTestCases(string pathToFiles)
     {
-        // Width first search: Files then recurse through folders.
-        var files = Directory.EnumerateFiles(pathToFiles);
-        foreach (var file in files)
+        foreach (var file in GetFiles(pathToFiles, "*.docx"))
         {
-            var processors = _fileProcessors.Where(xx => xx.CanHandle(file));
+            var processors = _testFileProcessors.Where(xx => xx.CanHandle(file));
 
             foreach (var processor in processors)
             {
-                foreach (var testCase in processor.Handle(file)) yield return testCase;
+                foreach (var testCase in processor.GetTestCases(file)) yield return testCase;
             }
         }
+    }
 
-        var directories = Directory.EnumerateDirectories(pathToFiles);
-        foreach (var directory in directories)
+    public IEnumerable<ModuleRequirement> GetModuleRequirements(string pathToFiles)
+    {
+        foreach (var file in GetFiles(pathToFiles, "*.xlsx"))
         {
-            foreach (var testCase in GetTestCases(directory)) yield return testCase;
+            var processors = _moduleRequirementFileProcessor.Where(xx => xx.CanHandle(file));
+
+            foreach (var processor in processors)
+            {
+                foreach (var testCase in processor.GetModuleRequirements(file)) yield return testCase;
+            }
         }
     }
 }

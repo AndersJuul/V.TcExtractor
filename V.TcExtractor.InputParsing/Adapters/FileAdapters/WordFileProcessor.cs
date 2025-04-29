@@ -5,15 +5,13 @@ using V.TcExtractor.Model;
 
 namespace V.TcExtractor.InputParsing.Adapters.FileAdapters
 {
-    public class WordFileProcessor : IFileProcessor
+    public class WordFileProcessor : ITestCaseFileProcessor
     {
         private readonly IEnumerable<ITableAdapter> _tableAdapters;
-        private readonly ICellAdapter _cellAdapter;
 
-        public WordFileProcessor(IEnumerable<ITableAdapter> tableAdapters, ICellAdapter cellAdapter)
+        public WordFileProcessor(IEnumerable<ITableAdapter> tableAdapters)
         {
             _tableAdapters = tableAdapters;
-            _cellAdapter = cellAdapter;
         }
 
         public bool CanHandle(string fileName)
@@ -22,7 +20,7 @@ namespace V.TcExtractor.InputParsing.Adapters.FileAdapters
             return extension.Equals(".docx", StringComparison.InvariantCultureIgnoreCase);
         }
 
-        public List<TestCase> Handle(string filePath)
+        public List<TestCase> GetTestCases(string filePath)
         {
             var testCases = new List<TestCase>();
 

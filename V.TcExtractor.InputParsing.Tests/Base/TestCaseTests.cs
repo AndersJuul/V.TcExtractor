@@ -22,18 +22,22 @@ public abstract class TestCaseTests(ITestOutputHelper testOutputHelper)
         TestOutputHelper.WriteLine("----");
     }
 
+    protected void Dump(ModuleRequirement[] moduleRequirements)
+    {
+        throw new NotImplementedException();
+    }
+
     protected static WordFileProcessor GetWordFileProcessor()
     {
         var cellAdapter = new CellAdapter();
         var wordFileProcessor = new WordFileProcessor(
-            [
-                new TableAdapterId(cellAdapter),
-                new TableAdapterTestCaseIdAndDescriptionHeadersInRowZero(cellAdapter),
-                new TableAdapterTestCaseIdSubjectHeadersInColZero(cellAdapter),
-                new TableAdapterTestCaseInformationHeadersInRowZero(cellAdapter),
-                new TableAdapterTestCaseIdInitialConditionsHeadersInRowZero(cellAdapter)
-            ],
-            cellAdapter);
+        [
+            new TableAdapterId(cellAdapter),
+            new TableAdapterTestCaseIdAndDescriptionHeadersInRowZero(cellAdapter),
+            new TableAdapterTestCaseIdSubjectHeadersInColZero(cellAdapter),
+            new TableAdapterTestCaseInformationHeadersInRowZero(cellAdapter),
+            new TableAdapterTestCaseIdInitialConditionsHeadersInRowZero(cellAdapter)
+        ]);
         return wordFileProcessor;
     }
 }

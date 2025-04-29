@@ -41,7 +41,7 @@ namespace V.TcExtractor.InputParsing.Tests
 
             // Act
             var testCases = sut
-                .Handle(Path.Combine(TestDataBasePath, "SPC", "VES DVPR.docx"));
+                .GetTestCases(Path.Combine(TestDataBasePath, "SPC", "VES DVPR.docx"));
 
             // Assert
             Dump(testCases);
@@ -56,7 +56,7 @@ namespace V.TcExtractor.InputParsing.Tests
 
             // Act
             var testCases = sut
-                .Handle(Path.Combine(TestDataBasePath, "PSI", "DVPR VES  Multithreading.docx"))
+                .GetTestCases(Path.Combine(TestDataBasePath, "PSI", "DVPR VES  Multithreading.docx"))
                 .ToArray();
 
             // Assert
@@ -77,7 +77,7 @@ namespace V.TcExtractor.InputParsing.Tests
 
             // Act
             var testCases = sut
-                .Handle(Path.Combine(TestDataBasePath, "PSI", "DVPR VES BESS Interface.docx"))
+                .GetTestCases(Path.Combine(TestDataBasePath, "PSI", "DVPR VES BESS Interface.docx"))
                 .ToArray();
 
             // Assert
@@ -97,7 +97,7 @@ namespace V.TcExtractor.InputParsing.Tests
 
             // Act
             var testCases = sut
-                .Handle(Path.Combine(TestDataBasePath, "PSI", "DVPR VES Data Logging.docx"))
+                .GetTestCases(Path.Combine(TestDataBasePath, "PSI", "DVPR VES Data Logging.docx"))
                 .ToArray();
 
             // Assert
@@ -117,7 +117,7 @@ namespace V.TcExtractor.InputParsing.Tests
 
             // Act
             var testCases = sut
-                .Handle(Path.Combine(TestDataBasePath, "PSI", "DVPR VES Data Tools.docx"))
+                .GetTestCases(Path.Combine(TestDataBasePath, "PSI", "DVPR VES Data Tools.docx"))
                 .ToArray();
 
             // Assert
@@ -137,7 +137,7 @@ namespace V.TcExtractor.InputParsing.Tests
 
             // Act
             var testCases = sut
-                .Handle(Path.Combine(TestDataBasePath, "PSI", "DVPR VES Environmental Control.docx"))
+                .GetTestCases(Path.Combine(TestDataBasePath, "PSI", "DVPR VES Environmental Control.docx"))
                 .ToArray();
 
             // Assert
@@ -157,7 +157,7 @@ namespace V.TcExtractor.InputParsing.Tests
 
             // Act
             var testCases = sut
-                .Handle(Path.Combine(TestDataBasePath, "PSI", "DVPR VES OPC-UA Interface.docx"))
+                .GetTestCases(Path.Combine(TestDataBasePath, "PSI", "DVPR VES OPC-UA Interface.docx"))
                 .ToArray();
 
             // Assert
@@ -177,7 +177,7 @@ namespace V.TcExtractor.InputParsing.Tests
 
             // Act
             var testCases = sut
-                .Handle(Path.Combine(TestDataBasePath, "PSI", "DVPR VES Power Meter.docx"))
+                .GetTestCases(Path.Combine(TestDataBasePath, "PSI", "DVPR VES Power Meter.docx"))
                 .ToArray();
 
             // Assert
@@ -197,7 +197,7 @@ namespace V.TcExtractor.InputParsing.Tests
 
             // Act
             var testCases = sut
-                .Handle(Path.Combine(TestDataBasePath, "PSI", "DVPR VES PPC Resources and Scaling.docx"))
+                .GetTestCases(Path.Combine(TestDataBasePath, "PSI", "DVPR VES PPC Resources and Scaling.docx"))
                 .ToArray();
 
             // Assert
@@ -224,7 +224,7 @@ namespace V.TcExtractor.InputParsing.Tests
 
             // Act
             var testCases = sut
-                .Handle(Path.Combine(TestDataBasePath, "PSI", "DVPR VES PV Interface.docx"))
+                .GetTestCases(Path.Combine(TestDataBasePath, "PSI", "DVPR VES PV Interface.docx"))
                 .ToArray();
 
             // Assert
@@ -244,7 +244,7 @@ namespace V.TcExtractor.InputParsing.Tests
 
             // Act
             var testCases = sut
-                .Handle(Path.Combine(TestDataBasePath, "PSI", "DVPR VES SSL.docx"))
+                .GetTestCases(Path.Combine(TestDataBasePath, "PSI", "DVPR VES SSL.docx"))
                 .ToArray();
 
             // Assert
@@ -264,7 +264,7 @@ namespace V.TcExtractor.InputParsing.Tests
 
             // Act
             var testCases = sut
-                .Handle(Path.Combine(TestDataBasePath, "PSI", "DVPR VES STATCOM Interface.docx"))
+                .GetTestCases(Path.Combine(TestDataBasePath, "PSI", "DVPR VES STATCOM Interface.docx"))
                 .ToArray();
 
             // Assert
@@ -284,7 +284,7 @@ namespace V.TcExtractor.InputParsing.Tests
 
             // Act
             var testCases = sut
-                .Handle(Path.Combine(TestDataBasePath, "PSI", "DVPR VES Supervisions and Monitoring.docx"))
+                .GetTestCases(Path.Combine(TestDataBasePath, "PSI", "DVPR VES Supervisions and Monitoring.docx"))
                 .ToArray();
 
             // Assert
@@ -304,7 +304,7 @@ namespace V.TcExtractor.InputParsing.Tests
 
             // Act
             var testCases = sut
-                .Handle(Path.Combine(TestDataBasePath, "PSI", "DVPR VES WTG Interface.docx"))
+                .GetTestCases(Path.Combine(TestDataBasePath, "PSI", "DVPR VES WTG Interface.docx"))
                 .ToArray();
 
             // Assert
@@ -324,7 +324,7 @@ namespace V.TcExtractor.InputParsing.Tests
 
             // Act
             var testCases = sut
-                .Handle(Path.Combine(TestDataBasePath, "PSI", "DVPR-RE VEPPC Lab.docx"))
+                .GetTestCases(Path.Combine(TestDataBasePath, "PSI", "DVPR-RE VEPPC Lab.docx"))
                 .ToArray();
 
             // Assert
@@ -344,7 +344,7 @@ namespace V.TcExtractor.InputParsing.Tests
 
             // Act
             var testCases = sut
-                .Handle(Path.Combine(TestDataBasePath, "SPC", "DVPR VES - Framework.docx"))
+                .GetTestCases(Path.Combine(TestDataBasePath, "SPC", "DVPR VES - Framework.docx"))
                 .ToArray();
 
             // Assert
@@ -364,7 +364,7 @@ namespace V.TcExtractor.InputParsing.Tests
 
             // Act
             var testCases = sut
-                .Handle(Path.Combine(TestDataBasePath, "SPC", "DVPR VES - IO.docx"))
+                .GetTestCases(Path.Combine(TestDataBasePath, "SPC", "DVPR VES - IO.docx"))
                 .ToArray();
 
             // Assert
@@ -384,7 +384,7 @@ namespace V.TcExtractor.InputParsing.Tests
 
             // Act
             var testCases = sut
-                .Handle(Path.Combine(TestDataBasePath, "SPC", "DVPR VES - VOT.docx"))
+                .GetTestCases(Path.Combine(TestDataBasePath, "SPC", "DVPR VES - VOT.docx"))
                 .ToArray();
 
             // Assert
@@ -404,7 +404,8 @@ namespace V.TcExtractor.InputParsing.Tests
 
             // Act
             var testCases = sut
-                .Handle(Path.Combine(TestDataBasePath, "SPC", "Tests_Batch - VES DVPR for Base Configuration.docx"))
+                .GetTestCases(Path.Combine(TestDataBasePath, "SPC",
+                    "Tests_Batch - VES DVPR for Base Configuration.docx"))
                 .ToArray();
 
             // Assert
@@ -424,7 +425,8 @@ namespace V.TcExtractor.InputParsing.Tests
 
             // Act
             var testCases = sut
-                .Handle(Path.Combine(TestDataBasePath, "SPC", "Tests_Batch - VES DVPR for Security Zone Options.docx"))
+                .GetTestCases(Path.Combine(TestDataBasePath, "SPC",
+                    "Tests_Batch - VES DVPR for Security Zone Options.docx"))
                 .ToArray();
 
             // Assert

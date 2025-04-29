@@ -2,8 +2,8 @@
 
 namespace V.TcExtractor.InputParsing.Adapters.FileAdapters;
 
-public interface IFileProcessor
+public interface ITestCaseFileProcessor
 {
     bool CanHandle(string fileName);
-    List<TestCase> Handle(string file);
+    List<TestCase> GetTestCases(string file);
 }

@@ -27,6 +27,11 @@ namespace V.TcExtractor.OutputFormatting
             csv.WriteRecords(testCases);
         }
 
+        public void Write(ModuleRequirement[] moduleRequirements)
+        {
+            throw new NotImplementedException();
+        }
+
         public class TestCaseMap : ClassMap<TestCase>
         {
             public TestCaseMap()

@@ -6,4 +6,5 @@ public interface ITestCaseOutput
 {
     bool CanHandle(string formatId);
     void Write(TestCase[] testCases);
+    void Write(ModuleRequirement[] moduleRequirements);
 }

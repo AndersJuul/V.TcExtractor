@@ -34,9 +34,16 @@ public class Program
             return;
         }
 
-        // Get test cases from the folder and write them to the output
-        var testCases = folderScanner.GetTestCases(pathToFiles).ToArray();
+        // Get test cases, module requirements from the folder and write them to the output
+        var testCases = folderScanner
+            .GetTestCases(pathToFiles)
+            .ToArray();
+        var moduleRequirements = folderScanner
+            .GetModuleRequirements(pathToFiles)
+            .ToArray();
+
         output.Write(testCases);
+        output.Write(moduleRequirements);
     }
 
     private static IConfigurationBuilder CreateConfigurationBuilder(string[] args)
@@ -50,7 +57,7 @@ public class Program
             .ConfigureServices((hostContext, services) =>
             {
                 services.AddScoped<IFolderScanner, FolderScanner>();
-                services.AddAllImplementations<IFileProcessor>();
+                services.AddAllImplementations<ITestCaseFileProcessor>();
                 services.AddAllImplementations<ITableAdapter>();
                 services.AddAllImplementations<ICellAdapter>();
                 services.AddAllImplementations<ITestCaseOutput>();
