@@ -32,26 +32,26 @@ public class FolderScanner : IFolderScanner
 
     public IEnumerable<TestCase> GetTestCases(string pathToFiles)
     {
-        foreach (var file in GetFiles(pathToFiles, "*.docx"))
+        foreach (var fileName in GetFiles(pathToFiles, "*.docx"))
         {
-            var processors = _testFileProcessors.Where(xx => xx.CanHandle(file));
+            var processors = _testFileProcessors.Where(xx => xx.CanHandle(fileName));
 
             foreach (var processor in processors)
             {
-                foreach (var testCase in processor.GetTestCases(file)) yield return testCase;
+                foreach (var testCase in processor.GetTestCases(fileName)) yield return testCase;
             }
         }
     }
 
     public IEnumerable<ModuleRequirement> GetModuleRequirements(string pathToFiles)
     {
-        foreach (var file in GetFiles(pathToFiles, "*.xlsx"))
+        foreach (var fileName in GetFiles(pathToFiles, "*.xlsx"))
         {
-            var processors = _moduleRequirementFileProcessor.Where(xx => xx.CanHandle(file));
+            var processors = _moduleRequirementFileProcessor.Where(xx => xx.CanHandle(fileName));
 
             foreach (var processor in processors)
             {
-                foreach (var testCase in processor.GetModuleRequirements(file)) yield return testCase;
+                foreach (var testCase in processor.GetModuleRequirements(fileName)) yield return testCase;
             }
         }
     }

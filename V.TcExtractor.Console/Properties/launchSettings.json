@@ -2,7 +2,7 @@
   "profiles": {
     "V.TcExtractor.Console": {
       "commandName": "Project",
-      "commandLineArgs": "\"C:\\Data\\DVPR\" --output csv"
+      "commandLineArgs": "\"C:\\Data\\V\" --output csv"
     }
   }
 }

@@ -20,11 +20,11 @@ namespace V.TcExtractor.InputParsing.Adapters.FileAdapters
             return extension.Equals(".docx", StringComparison.InvariantCultureIgnoreCase);
         }
 
-        public List<TestCase> GetTestCases(string filePath)
+        public List<TestCase> GetTestCases(string fileName)
         {
             var testCases = new List<TestCase>();
 
-            using (var wordDocument = WordprocessingDocument.Open(filePath, false))
+            using (var wordDocument = WordprocessingDocument.Open(fileName, false))
             {
                 var body = wordDocument.MainDocumentPart?.Document.Body;
 
@@ -35,7 +35,7 @@ namespace V.TcExtractor.InputParsing.Adapters.FileAdapters
                 {
                     var tableAdapter = _tableAdapters.SingleOrDefault(x => x.CanHandle(table));
 
-                    var cases = tableAdapter?.GetTestCases(table, filePath);
+                    var cases = tableAdapter?.GetTestCases(table, fileName);
 
                     // Add the test case if we found at least some information
                     if (cases != null)

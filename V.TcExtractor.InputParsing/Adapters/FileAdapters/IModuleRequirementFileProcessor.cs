@@ -4,6 +4,6 @@ namespace V.TcExtractor.InputParsing.Adapters.FileAdapters;
 
 public interface IModuleRequirementFileProcessor
 {
-    bool CanHandle(string file);
-    IEnumerable<ModuleRequirement> GetModuleRequirements(string file);
+    bool CanHandle(string fileName);
+    IEnumerable<ModuleRequirement> GetModuleRequirements(string fileName);
 }

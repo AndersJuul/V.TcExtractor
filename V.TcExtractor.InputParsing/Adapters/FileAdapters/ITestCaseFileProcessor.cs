@@ -5,5 +5,5 @@ namespace V.TcExtractor.InputParsing.Adapters.FileAdapters;
 public interface ITestCaseFileProcessor
 {
     bool CanHandle(string fileName);
-    List<TestCase> GetTestCases(string file);
+    List<TestCase> GetTestCases(string fileName);
 }

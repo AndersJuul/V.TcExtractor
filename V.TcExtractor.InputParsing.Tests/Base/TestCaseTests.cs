@@ -8,7 +8,8 @@ namespace V.TcExtractor.InputParsing.Tests.Base;
 public abstract class TestCaseTests(ITestOutputHelper testOutputHelper)
 {
     protected readonly ITestOutputHelper TestOutputHelper = testOutputHelper;
-    protected readonly string TestDataBasePath = "C:\\DATA\\DVPR";
+    protected readonly string TestCaseDataBasePath = "C:\\DATA\\v\\DVPR";
+    protected readonly string ModuleRequirementsDataBasePath = "C:\\DATA\\v\\DVPL";
 
     protected void Dump(IEnumerable<TestCase> testCases)
     {
@@ -22,9 +23,16 @@ public abstract class TestCaseTests(ITestOutputHelper testOutputHelper)
         TestOutputHelper.WriteLine("----");
     }
 
-    protected void Dump(ModuleRequirement[] moduleRequirements)
+    protected void Dump(IEnumerable<ModuleRequirement> moduleRequirements)
     {
-        throw new NotImplementedException();
+        TestOutputHelper.WriteLine("Module Requirements:");
+        TestOutputHelper.WriteLine($"---- {moduleRequirements.Count()} module requirements");
+        foreach (var moduleRequirement in moduleRequirements)
+        {
+            TestOutputHelper.WriteLine($"Module Requirement : {moduleRequirement}");
+        }
+
+        TestOutputHelper.WriteLine("----");
     }
 
     protected static WordFileProcessor GetWordFileProcessor()
@@ -39,5 +47,11 @@ public abstract class TestCaseTests(ITestOutputHelper testOutputHelper)
             new TableAdapterTestCaseIdInitialConditionsHeadersInRowZero(cellAdapter)
         ]);
         return wordFileProcessor;
+    }
+
+    protected static ExcelFileProcessor GetExcelFileProcessor()
+    {
+        var cellAdapter = new CellAdapter();
+        return new ExcelFileProcessor();
     }
 }

@@ -17,12 +17,12 @@ public class Program
         var config = CreateConfigurationBuilder(args)
             .Build();
 
-        var pathToFiles = args.FirstOrDefault() ?? "c:\\data\\dvpr";
+        var pathToFiles = args.FirstOrDefault() ?? "c:\\data\\v";
         var outputFormatter = (config["output"] ?? "console").ToLower();
 
         System.Console.WriteLine($"Trying to read TC files from {pathToFiles} and send out to {outputFormatter}.");
         System.Console.WriteLine(
-            "First arg to application is the path. Use --output to write to c:\\data\\tc_out.csv.");
+            "First arg to application is the path. Use --output to write to c:\\data\\v\\tc_out.csv.");
 
         // Get classes required for processing
         var folderScanner = host.Services.GetRequiredService<IFolderScanner>();
@@ -58,6 +58,7 @@ public class Program
             {
                 services.AddScoped<IFolderScanner, FolderScanner>();
                 services.AddAllImplementations<ITestCaseFileProcessor>();
+                services.AddAllImplementations<IModuleRequirementFileProcessor>();
                 services.AddAllImplementations<ITableAdapter>();
                 services.AddAllImplementations<ICellAdapter>();
                 services.AddAllImplementations<ITestCaseOutput>();

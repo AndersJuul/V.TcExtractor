@@ -1,4 +1,5 @@
-﻿using V.TcExtractor.InputParsing.Tests.Base;
+﻿using V.TcExtractor.InputParsing.Adapters.FileAdapters;
+using V.TcExtractor.InputParsing.Tests.Base;
 using Xunit.Abstractions;
 
 namespace V.TcExtractor.InputParsing.Tests
@@ -18,7 +19,7 @@ namespace V.TcExtractor.InputParsing.Tests
 
             // Act
             var testCases = sut
-                .GetTestCases(TestDataBasePath)
+                .GetTestCases(TestCaseDataBasePath)
                 .ToArray();
 
             // Assert
@@ -28,7 +29,7 @@ namespace V.TcExtractor.InputParsing.Tests
         }
 
         [Fact]
-        public void Scan_finds_all_modulerequirements()
+        public void Scan_finds_all_module_requirements()
         {
             // This test assumes test data in known place.
             // Arrange
@@ -36,19 +37,21 @@ namespace V.TcExtractor.InputParsing.Tests
 
             // Act
             var moduleRequirements = sut
-                .GetModuleRequirements(TestDataBasePath)
+                .GetModuleRequirements(ModuleRequirementsDataBasePath)
                 .ToArray();
 
             // Assert
             Dump(moduleRequirements);
 
-            Assert.Equal(227, moduleRequirements.Count());
+            Assert.Equal(43, moduleRequirements.Length);
         }
 
         private static FolderScanner GetSut()
         {
             var wordDocumentProcessor = GetWordFileProcessor();
-            var sut = new FolderScanner([wordDocumentProcessor], []);
+            var moduleRequirementFileProcessor = new ExcelFileProcessor();
+
+            var sut = new FolderScanner([wordDocumentProcessor], [moduleRequirementFileProcessor]);
             return sut;
         }
     }
