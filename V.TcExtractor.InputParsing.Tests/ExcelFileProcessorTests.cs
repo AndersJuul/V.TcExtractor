@@ -47,6 +47,21 @@ namespace V.TcExtractor.InputParsing.Tests
             Assert.Equal(43, moduleRequirements.Count());
         }
 
+        [Fact]
+        public void GetModuleRequirements_returns_module_requirements_for_spc_requirements()
+        {
+            // Arrange
+            var sut = GetSut();
+
+            // Act
+            var moduleRequirements = sut
+                .GetModuleRequirements(Path.Combine(ModuleRequirementsDataBasePath, "SPC Requirements.xlsx"));
+
+            // Assert
+            Dump(moduleRequirements);
+            Assert.Equal(85, moduleRequirements.Count());
+        }
+
         private static ExcelFileProcessor GetSut()
         {
             var sut = GetExcelFileProcessor();
