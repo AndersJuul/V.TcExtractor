@@ -7,6 +7,13 @@ namespace V.TcExtractor.OutputFormatting
 {
     public class TestCaseOutputCsv : ITestCaseOutput
     {
+        private readonly OutputFolder _outputFolder;
+
+        public TestCaseOutputCsv(OutputFolder outputFolder)
+        {
+            _outputFolder = outputFolder;
+        }
+
         public bool CanHandle(string formatId)
         {
             return formatId.Equals("csv", StringComparison.InvariantCultureIgnoreCase);
@@ -14,7 +21,7 @@ namespace V.TcExtractor.OutputFormatting
 
         public void Write(TestCase[] testCases)
         {
-            const string filePath = "c:\\data\\v\\tc_out.csv";
+            var filePath = Path.Combine(_outputFolder.Path, "tc_out.csv");
 
             var config = new QuotedStringCsvConfig();
             using var writer = new StreamWriter(filePath);
@@ -29,7 +36,7 @@ namespace V.TcExtractor.OutputFormatting
 
         public void Write(ModuleRequirement[] moduleRequirements)
         {
-            const string filePath = "c:\\data\\v\\rm_out.csv";
+            var filePath = Path.Combine(_outputFolder.Path, "rm_out.csv");
 
             var config = new QuotedStringCsvConfig();
             using var writer = new StreamWriter(filePath);
