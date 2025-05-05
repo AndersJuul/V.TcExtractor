@@ -4,6 +4,6 @@ namespace V.TcExtractor.InputParsing;
 
 public interface IFolderScanner
 {
-    IEnumerable<TestCase> GetTestCases(string pathToFiles);
-    IEnumerable<ModuleRequirement> GetModuleRequirements(string pathToFiles);
+    IEnumerable<TestCase> GetTestCases();
+    IEnumerable<ModuleRequirement> GetModuleRequirements();
 }

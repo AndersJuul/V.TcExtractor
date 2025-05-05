@@ -61,6 +61,7 @@ namespace V.TcExtractor.OutputFormatting
                 Map(m => m.RsTitle).Name("RsTitle").Index(1);
                 Map(m => m.CombinedRequirement).Name("CombinedRequirement").Index(2);
                 Map(m => m.Motivation).Name("Motivation").Index(3);
+                Map(m => m.FileName).Name("FileName").Index(4);
             }
         }
 

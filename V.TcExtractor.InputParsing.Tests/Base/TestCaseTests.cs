@@ -8,8 +8,7 @@ namespace V.TcExtractor.InputParsing.Tests.Base;
 public abstract class TestCaseTests(ITestOutputHelper testOutputHelper)
 {
     protected readonly ITestOutputHelper TestOutputHelper = testOutputHelper;
-    protected readonly string TestCaseDataBasePath = "C:\\DATA\\v\\DVPR";
-    protected readonly string ModuleRequirementsDataBasePath = "C:\\DATA\\v\\DVPL";
+    protected readonly string TestDataPath = "C:\\DATA\\v";
 
     protected void Dump(IEnumerable<TestCase> testCases)
     {
@@ -51,7 +50,6 @@ public abstract class TestCaseTests(ITestOutputHelper testOutputHelper)
 
     protected static ExcelFileProcessor GetExcelFileProcessor()
     {
-        var cellAdapter = new CellAdapter();
         return new ExcelFileProcessor();
     }
 }

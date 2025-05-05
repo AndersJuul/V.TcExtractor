@@ -7,12 +7,14 @@ public class FolderScanner : IFolderScanner
 {
     private readonly IEnumerable<ITestCaseFileProcessor> _testFileProcessors;
     private readonly IEnumerable<IModuleRequirementFileProcessor> _moduleRequirementFileProcessor;
+    private readonly InputFolder _inputFolder;
 
     public FolderScanner(IEnumerable<ITestCaseFileProcessor> testFileProcessors,
-        IEnumerable<IModuleRequirementFileProcessor> moduleRequirementFileProcessor)
+        IEnumerable<IModuleRequirementFileProcessor> moduleRequirementFileProcessor, InputFolder inputFolder)
     {
         _testFileProcessors = testFileProcessors;
         _moduleRequirementFileProcessor = moduleRequirementFileProcessor;
+        _inputFolder = inputFolder;
     }
 
     public IEnumerable<string> GetFiles(string folder, string searchPattern)
@@ -30,9 +32,9 @@ public class FolderScanner : IFolderScanner
         }
     }
 
-    public IEnumerable<TestCase> GetTestCases(string pathToFiles)
+    public IEnumerable<TestCase> GetTestCases()
     {
-        foreach (var fileName in GetFiles(pathToFiles, "*.docx"))
+        foreach (var fileName in GetFiles(_inputFolder.Path, "*.docx"))
         {
             var processors = _testFileProcessors.Where(xx => xx.CanHandle(fileName));
 
@@ -43,9 +45,9 @@ public class FolderScanner : IFolderScanner
         }
     }
 
-    public IEnumerable<ModuleRequirement> GetModuleRequirements(string pathToFiles)
+    public IEnumerable<ModuleRequirement> GetModuleRequirements()
     {
-        foreach (var fileName in GetFiles(pathToFiles, "*.xlsx"))
+        foreach (var fileName in GetFiles(_inputFolder.Path, "*.xlsx"))
         {
             var processors = _moduleRequirementFileProcessor.Where(xx => xx.CanHandle(fileName));
 

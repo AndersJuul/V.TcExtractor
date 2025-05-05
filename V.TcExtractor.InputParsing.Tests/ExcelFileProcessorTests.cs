@@ -26,7 +26,7 @@ namespace V.TcExtractor.InputParsing.Tests
             var sut = GetSut();
 
             // Act
-            var canHandle = sut.CanHandle(Path.Combine(ModuleRequirementsDataBasePath, "PSI Requirements.xlsx"));
+            var canHandle = sut.CanHandle(Path.Combine(TestDataPath, "DVPL", "PSI Requirements.xlsx"));
 
             // Assert
             Assert.True(canHandle);
@@ -40,7 +40,7 @@ namespace V.TcExtractor.InputParsing.Tests
 
             // Act
             var moduleRequirements = sut
-                .GetModuleRequirements(Path.Combine(ModuleRequirementsDataBasePath, "PSI Requirements.xlsx"));
+                .GetModuleRequirements(Path.Combine(TestDataPath, "DVPL", "PSI Requirements.xlsx"));
 
             // Assert
             Dump(moduleRequirements);
@@ -55,7 +55,7 @@ namespace V.TcExtractor.InputParsing.Tests
 
             // Act
             var moduleRequirements = sut
-                .GetModuleRequirements(Path.Combine(ModuleRequirementsDataBasePath, "SPC Requirements.xlsx"));
+                .GetModuleRequirements(Path.Combine(TestDataPath, "DVPL", "SPC Requirements.xlsx"));
 
             // Assert
             Dump(moduleRequirements);

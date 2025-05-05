@@ -13,16 +13,17 @@ public class Program
     static void Main(string[] args)
     {
         // Build IoC container and configuration
-        var host = CreateHostBuilder(args).Build();
         var config = CreateConfigurationBuilder(args)
             .Build();
+        var host = CreateHostBuilder(args, config).Build();
 
-        var pathToFiles = args.FirstOrDefault() ?? "c:\\data\\v";
+        config["pathToFiles"] = args.FirstOrDefault() ?? "c:\\data\\v";
         var outputFormatter = (config["output"] ?? "console").ToLower();
 
-        System.Console.WriteLine($"Trying to read TC files from {pathToFiles} and send out to {outputFormatter}.");
         System.Console.WriteLine(
-            "First arg to application is the path. Use --output to write to c:\\data\\v\\tc_out.csv.");
+            $"Trying to read files from {config["pathToFiles"]} and send out to {outputFormatter}.");
+        System.Console.WriteLine("First arg to application is the path, defaulting to c:\\data\\v ");
+        System.Console.WriteLine("Use --output (csv|console) to write to console or csv files, defaulting to console");
 
         // Get classes required for processing
         var folderScanner = host.Services.GetRequiredService<IFolderScanner>();
@@ -36,11 +37,13 @@ public class Program
 
         // Get test cases, module requirements from the folder and write them to the output
         var testCases = folderScanner
-            .GetTestCases(pathToFiles)
+            .GetTestCases()
             .ToArray();
         var moduleRequirements = folderScanner
-            .GetModuleRequirements(pathToFiles)
+            .GetModuleRequirements()
             .ToArray();
+
+        System.Console.WriteLine($"Read from files: {testCases.Length} TCs and {moduleRequirements.Length} MRs");
 
         output.Write(testCases);
         output.Write(moduleRequirements);
@@ -52,10 +55,12 @@ public class Program
             .AddCommandLine(args);
     }
 
-    static IHostBuilder CreateHostBuilder(string[] args) =>
+    static IHostBuilder CreateHostBuilder(string[] args, IConfigurationRoot config) =>
         Host.CreateDefaultBuilder(args)
             .ConfigureServices((hostContext, services) =>
             {
+                services.AddScoped(c => new OutputFolder(config["pathToFiles"]!));
+                services.AddScoped(c => new InputFolder(config["pathToFiles"]!));
                 services.AddScoped<IFolderScanner, FolderScanner>();
                 services.AddAllImplementations<ITestCaseFileProcessor>();
                 services.AddAllImplementations<IModuleRequirementFileProcessor>();
