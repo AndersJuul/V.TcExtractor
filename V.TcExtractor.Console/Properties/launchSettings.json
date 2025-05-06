@@ -2,7 +2,7 @@
   "profiles": {
     "V.TcExtractor.Console": {
       "commandName": "Project",
-      "commandLineArgs": "--FileLocation:Path \"C:\\Data\\V\" --output csv --InputRefresh:ShouldRefreshTestCases true --InputRefresh:ShouldRefreshModuleReq true"
+      "commandLineArgs": "--FileLocation:Path \"C:\\Data\\V\" --output csv --Setting:RefreshTestCases true --Setting:RefreshModuleReq true --Setting:RefreshModuleReqTestCaseMapping true"
     }
   }
 }

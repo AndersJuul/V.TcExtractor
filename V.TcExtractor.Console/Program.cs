@@ -26,9 +26,9 @@ public class Program
         System.Console.WriteLine(
             "--FileLocation:Path <Path> // Path to input and output files. Defaults to C:\\DATA\\V ");
         System.Console.WriteLine(
-            "--InputRefresh:ShouldRefreshTestCases true // Whether Test Cases should be read fresh from Office files. Defaults to false");
+            "--Setting:RefreshTestCases true // Whether Test Cases should be read fresh from Office files. Defaults to false");
         System.Console.WriteLine(
-            "--InputRefresh:ShouldRefreshModuleReq true // Whether Module Requirements should be read fresh from Office files. Defaults to false");
+            "--Setting:RefreshModuleReq true // Whether Module Requirements should be read fresh from Office files. Defaults to false");
         System.Console.WriteLine("");
         System.Console.WriteLine("---------------------------------------------------------------------");
         System.Console.WriteLine("Actual arguments: " + string.Join(' ', args));
@@ -51,19 +51,25 @@ public class Program
 
             var runtimeOptions = host
                 .Services
-                .GetRequiredService<IOptions<InputRefreshOptions>>()
+                .GetRequiredService<IOptions<SettingOptions>>()
                 .Value;
 
-            if (runtimeOptions.ShouldRefreshTestCases)
+            if (runtimeOptions.RefreshTestCases)
                 host
                     .Services
                     .GetRequiredService<ITestCaseRefresher>()
                     .Execute();
 
-            if (runtimeOptions.ShouldRefreshModuleReq)
+            if (runtimeOptions.RefreshModuleReq)
                 host
                     .Services
                     .GetRequiredService<IModuleRequirementRefresher>()
+                    .Execute();
+
+            if (runtimeOptions.RefreshModuleReqTestCaseMapping)
+                host
+                    .Services
+                    .GetRequiredService<IModuleReqTestCaseMappingRefresher>()
                     .Execute();
         }
         catch (Exception ex)
@@ -84,8 +90,9 @@ public class Program
                 config.AddCommandLine(args, new Dictionary<string, string>
                 {
                     ["--FileLocation:Path"] = "FileLocation:Path",
-                    ["--InputRefresh:ShouldRefreshTestCases"] = "InputRefresh:ShouldRefreshTestCases",
-                    ["--InputRefresh:ShouldRefreshModuleReq"] = "InputRefresh:ShouldRefreshModuleReq",
+                    ["--Setting:RefreshTestCases"] = "Setting:RefreshTestCases",
+                    ["--Setting:RefreshModuleReq"] = "Setting:RefreshModuleReq",
+                    ["--Setting:RefreshModuleReqTestCaseMapping"] = "Setting:RefreshModuleReqTestCaseMapping",
                 });
             })
             .UseSerilog()
@@ -104,11 +111,12 @@ public class Program
                 services.AddOptions<FileLocationOptions>()
                     .Bind(hostContext.Configuration.GetSection("FileLocation"))
                     .Validate(options => !string.IsNullOrEmpty(options.Path), "Path is required");
-                services.AddOptions<InputRefreshOptions>()
-                    .Bind(hostContext.Configuration.GetSection("InputRefresh"));
+                services.AddOptions<SettingOptions>()
+                    .Bind(hostContext.Configuration.GetSection("Setting"));
 
                 services.AddScoped<ITestCaseRefresher, TestCaseRefresher>();
                 services.AddScoped<IModuleRequirementRefresher, ModuleRequirementRefresher>();
+                services.AddScoped<IModuleReqTestCaseMappingRefresher, ModuleReqTestCaseMappingRefresher>();
             });
     }
 }
