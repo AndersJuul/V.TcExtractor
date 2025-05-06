@@ -1,4 +1,4 @@
-﻿namespace V.TcExtractor.Domain;
+﻿namespace V.TcExtractor.Domain.Refreshers;
 
 public interface ITestCaseRefresher
 {

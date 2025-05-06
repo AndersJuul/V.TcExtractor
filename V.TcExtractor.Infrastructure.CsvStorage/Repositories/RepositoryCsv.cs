@@ -1,4 +1,4 @@
-﻿namespace V.TcExtractor.Infrastructure.CsvStorage;
+﻿namespace V.TcExtractor.Infrastructure.CsvStorage.Repositories;
 
 public abstract class RepositoryCsv
 {

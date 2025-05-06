@@ -6,4 +6,5 @@ public interface IModuleRequirementRepository
 {
     void DeleteAll();
     void AddRange(ModuleRequirement[] moduleRequirements);
+    ModuleRequirement[] GetAll();
 }

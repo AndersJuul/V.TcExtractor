@@ -3,8 +3,9 @@ using CsvHelper;
 using V.TcExtractor.Domain.Model;
 using V.TcExtractor.Domain.Options;
 using V.TcExtractor.Domain.Repositories;
+using V.TcExtractor.Infrastructure.CsvStorage.Maps;
 
-namespace V.TcExtractor.Infrastructure.CsvStorage;
+namespace V.TcExtractor.Infrastructure.CsvStorage.Repositories;
 
 public class TestCaseRepositoryCsv : RepositoryCsv, ITestCaseRepository
 {
@@ -30,8 +31,25 @@ public class TestCaseRepositoryCsv : RepositoryCsv, ITestCaseRepository
         csv.WriteRecords(testCases);
     }
 
+    public TestCase[] GetAll()
+    {
+        var filePath = GetFileName();
+
+        var config = new QuotedStringCsvConfig();
+        using var reader = new StreamReader(filePath);
+        using var csv = new CsvReader(reader, config);
+
+        csv.Context.RegisterClassMap<TestCaseMap>();
+
+        return csv
+            .GetRecords<TestCase>()
+            .ToArray();
+    }
+
     protected override string GetFileName()
     {
+        if (!Path.Exists(_fileLocationOptions.Path))
+            Directory.CreateDirectory(_fileLocationOptions.Path);
         return Path.Combine(_fileLocationOptions.Path, "tc.csv");
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using V.TcExtractor.Domain;
+using V.TcExtractor.Domain.Refreshers;
 using V.TcExtractor.Domain.Repositories;
 using V.TcExtractor.Infrastructure.OfficeDocuments;
 
@@ -29,5 +29,7 @@ public class TestCaseRefresher : ITestCaseRefresher
 
         _testCaseRepository.DeleteAll();
         _testCaseRepository.AddRange(testCases);
+
+        _logger.LogInformation("Done Refreshing Test Cases: " + testCases.Length);
     }
 }

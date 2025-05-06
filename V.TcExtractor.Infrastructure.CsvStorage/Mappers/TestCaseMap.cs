@@ -1,7 +1,7 @@
 ﻿using CsvHelper.Configuration;
 using V.TcExtractor.Domain.Model;
 
-namespace V.TcExtractor.Infrastructure.CsvStorage;
+namespace V.TcExtractor.Infrastructure.CsvStorage.Maps;
 
 public class TestCaseMap : ClassMap<TestCase>
 {

@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V.TcExtractor.Infrastructur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V.TcExtractor.Infrastructure.OfficeDocuments.Tests", "V.TcExtractor.Infrastructure.OfficeDocuments.Tests\V.TcExtractor.Infrastructure.OfficeDocuments.Tests.csproj", "{485E169D-B45F-48E0-B286-D43A2C10D49F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V.TcExtractor.Infrastructure.CsvStorage.Tests", "V.TcExtractor.Infrastructure.CsvStorage.Tests\V.TcExtractor.Infrastructure.CsvStorage.Tests.csproj", "{79A7796A-7228-4882-808A-04DB60FEBD63}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,9 +49,17 @@ Global
 		{485E169D-B45F-48E0-B286-D43A2C10D49F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{485E169D-B45F-48E0-B286-D43A2C10D49F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{485E169D-B45F-48E0-B286-D43A2C10D49F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79A7796A-7228-4882-808A-04DB60FEBD63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79A7796A-7228-4882-808A-04DB60FEBD63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79A7796A-7228-4882-808A-04DB60FEBD63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79A7796A-7228-4882-808A-04DB60FEBD63}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{485E169D-B45F-48E0-B286-D43A2C10D49F} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{79A7796A-7228-4882-808A-04DB60FEBD63} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {305BB150-8B18-4750-8C09-1DCE2AEDFD68}

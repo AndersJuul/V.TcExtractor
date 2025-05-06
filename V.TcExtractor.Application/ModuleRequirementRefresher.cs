@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
-using V.TcExtractor.Domain;
+using V.TcExtractor.Domain.Model;
+using V.TcExtractor.Domain.Refreshers;
 using V.TcExtractor.Domain.Repositories;
 using V.TcExtractor.Infrastructure.OfficeDocuments;
 
@@ -29,5 +30,7 @@ public class ModuleRequirementRefresher : IModuleRequirementRefresher
 
         _moduleRequirementRepository.DeleteAll();
         _moduleRequirementRepository.AddRange(moduleRequirements);
+
+        _logger.LogInformation("Done Refreshing Module Requirements: " + moduleRequirements.Length);
     }
 }

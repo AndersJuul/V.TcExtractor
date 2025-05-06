@@ -6,4 +6,5 @@ public interface ITestCaseRepository
 {
     void DeleteAll();
     void AddRange(TestCase[] testCases);
+    TestCase[] GetAll();
 }
