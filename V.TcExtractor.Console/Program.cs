@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Serilog;
 using V.TcExtractor.Application;
+using V.TcExtractor.Domain;
 using V.TcExtractor.Domain.Options;
 using V.TcExtractor.Domain.Refreshers;
 using V.TcExtractor.Domain.Repositories;
@@ -107,6 +108,7 @@ public class Program
 
                 services.AddScoped<ITestCaseRepository, TestCaseRepositoryCsv>();
                 services.AddScoped<IModuleRequirementRepository, ModuleRequirementRepositoryCsv>();
+                services.AddScoped<IMatch1Repository, Match1RepositoryCsv>();
 
                 services.AddOptions<FileLocationOptions>()
                     .Bind(hostContext.Configuration.GetSection("FileLocation"))

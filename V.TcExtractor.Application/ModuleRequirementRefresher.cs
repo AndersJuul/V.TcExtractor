@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using V.TcExtractor.Domain.Model;
 using V.TcExtractor.Domain.Refreshers;
 using V.TcExtractor.Domain.Repositories;
 using V.TcExtractor.Infrastructure.OfficeDocuments;
@@ -13,7 +12,8 @@ public class ModuleRequirementRefresher : IModuleRequirementRefresher
     private readonly ILogger<ModuleRequirementRefresher> _logger;
 
     public ModuleRequirementRefresher(IFolderScanner folderScanner,
-        IModuleRequirementRepository moduleRequirementRepository, ILogger<ModuleRequirementRefresher> logger)
+        IModuleRequirementRepository moduleRequirementRepository,
+        ILogger<ModuleRequirementRefresher> logger)
     {
         _folderScanner = folderScanner;
         _moduleRequirementRepository = moduleRequirementRepository;

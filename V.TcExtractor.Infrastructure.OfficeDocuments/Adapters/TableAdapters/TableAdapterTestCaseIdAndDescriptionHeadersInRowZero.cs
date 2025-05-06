@@ -6,8 +6,6 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.TableAdapters;
 
 public class TableAdapterTestCaseIdAndDescriptionHeadersInRowZero(ICellAdapter cellAdapter) : ITableAdapter
 {
-    private readonly ICellAdapter _cellAdapter = cellAdapter;
-
     public bool CanHandle(Table table)
     {
         var firstRow = table.Elements<TableRow>().FirstOrDefault();
@@ -15,17 +13,17 @@ public class TableAdapterTestCaseIdAndDescriptionHeadersInRowZero(ICellAdapter c
         if (firstRow != null)
         {
             var cells = firstRow.Elements<TableCell>().ToArray();
-            if (!_cellAdapter.GetCellText(cells.FirstOrDefault()).Contains("Test case ID"))
+            if (!cellAdapter.GetCellText(cells.FirstOrDefault()).Contains("Test case ID"))
             {
                 return false;
             }
 
-            if (!_cellAdapter.GetCellText(cells.Skip(1).FirstOrDefault()).Contains("Test Description"))
+            if (!cellAdapter.GetCellText(cells.Skip(1).FirstOrDefault()).Contains("Test Description"))
             {
                 return false;
             }
 
-            if (!_cellAdapter.GetCellText(cells.Skip(2).FirstOrDefault()).Contains("Step"))
+            if (!cellAdapter.GetCellText(cells.Skip(2).FirstOrDefault()).Contains("Step"))
             {
                 return false;
             }
@@ -46,13 +44,13 @@ public class TableAdapterTestCaseIdAndDescriptionHeadersInRowZero(ICellAdapter c
 
             var cells = row.Elements<TableCell>().ToList();
 
-            if (string.IsNullOrEmpty(_cellAdapter.GetCellText(cells[0]).Trim()))
+            if (string.IsNullOrEmpty(cellAdapter.GetCellText(cells[0]).Trim()))
                 continue;
 
-            testCase.TestNo = _cellAdapter.GetCellText(cells[0]).Trim();
+            testCase.TestNo = cellAdapter.GetCellText(cells[0]).Trim();
 
-            if (!string.IsNullOrEmpty(_cellAdapter.GetCellText(cells[1]).Trim()))
-                desc = _cellAdapter.GetCellText(cells[1]).Trim();
+            if (!string.IsNullOrEmpty(cellAdapter.GetCellText(cells[1]).Trim()))
+                desc = cellAdapter.GetCellText(cells[1]).Trim();
             testCase.Description = desc;
 
             yield return testCase;

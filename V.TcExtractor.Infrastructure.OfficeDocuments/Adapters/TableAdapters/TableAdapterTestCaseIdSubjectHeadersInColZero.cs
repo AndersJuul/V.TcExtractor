@@ -7,8 +7,6 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.TableAdapters;
 
 public class TableAdapterTestCaseIdSubjectHeadersInColZero(ICellAdapter cellAdapter) : ITableAdapter
 {
-    private readonly ICellAdapter _cellAdapter = cellAdapter;
-
     public bool CanHandle(Table table)
     {
         // Get all the rows in the table
@@ -22,12 +20,12 @@ public class TableAdapterTestCaseIdSubjectHeadersInColZero(ICellAdapter cellAdap
                 .Where(cell => cell != null)
                 .ToArray();
 
-            if (!_cellAdapter.GetCellText(firstColumnCells.FirstOrDefault()).Contains("Test ID"))
+            if (!cellAdapter.GetCellText(firstColumnCells.FirstOrDefault()).Contains("Test ID"))
             {
                 return false;
             }
 
-            if (!_cellAdapter.GetCellText(firstColumnCells.Skip(1).FirstOrDefault()).Contains("Subject"))
+            if (!cellAdapter.GetCellText(firstColumnCells.Skip(1).FirstOrDefault()).Contains("Subject"))
             {
                 return false;
             }
@@ -48,8 +46,8 @@ public class TableAdapterTestCaseIdSubjectHeadersInColZero(ICellAdapter cellAdap
             var cells = row.Elements<TableCell>().ToList();
             if (cells.Count >= 2)
             {
-                var headerCell = _cellAdapter.GetCellText(cells[0]);
-                var valueCell = _cellAdapter.GetCellText(cells[1]);
+                var headerCell = cellAdapter.GetCellText(cells[0]);
+                var valueCell = cellAdapter.GetCellText(cells[1]);
 
                 if (headerCell.Contains("Test ID"))
                 {

@@ -6,15 +6,13 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.TableAdapters;
 
 public class TableAdapterId(ICellAdapter cellAdapter) : ITableAdapter
 {
-    private readonly ICellAdapter _cellAdapter = cellAdapter;
-
     public bool CanHandle(Table table)
     {
         var firstRow = table.Elements<TableRow>().FirstOrDefault();
 
         if (firstRow != null)
         {
-            var cellText = _cellAdapter.GetCellText(firstRow.Elements<TableCell>().FirstOrDefault());
+            var cellText = cellAdapter.GetCellText(firstRow.Elements<TableCell>().FirstOrDefault());
             if (cellText.StartsWith("ID:"))
             {
                 return true;
@@ -41,13 +39,13 @@ public class TableAdapterId(ICellAdapter cellAdapter) : ITableAdapter
     {
         var row = table.Elements<TableRow>().FirstOrDefault(x =>
         {
-            var cellText = _cellAdapter.GetCellText(x.Elements<TableCell>().FirstOrDefault());
+            var cellText = cellAdapter.GetCellText(x.Elements<TableCell>().FirstOrDefault());
             return cellText.StartsWith(id);
         });
 
         if (row != null)
         {
-            var cellText = _cellAdapter.GetCellText(row.Elements<TableCell>().FirstOrDefault());
+            var cellText = cellAdapter.GetCellText(row.Elements<TableCell>().FirstOrDefault());
             if (cellText.StartsWith(id))
             {
                 return cellText.Substring(id.Length).Trim();

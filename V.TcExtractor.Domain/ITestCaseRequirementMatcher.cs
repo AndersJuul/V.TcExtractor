@@ -1,6 +1,6 @@
 ﻿using V.TcExtractor.Domain.Model;
 
-namespace V.TcExtractor.Console;
+namespace V.TcExtractor.Domain;
 
 public interface ITestCaseRequirementMatcher
 {

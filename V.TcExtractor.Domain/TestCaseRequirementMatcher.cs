@@ -1,11 +1,11 @@
 ﻿using V.TcExtractor.Domain.Model;
 
-namespace V.TcExtractor.Console;
+namespace V.TcExtractor.Domain;
 
 public class TestCaseRequirementMatcher : ITestCaseRequirementMatcher
 {
     public bool IsMatch(ModuleRequirement moduleRequirement, TestCase testCase)
     {
-        throw new NotImplementedException();
+        return testCase.ReqId == moduleRequirement.Id;
     }
 }
