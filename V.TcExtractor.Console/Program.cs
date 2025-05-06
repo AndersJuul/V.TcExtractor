@@ -44,26 +44,36 @@ public class Program
                 outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
             .CreateLogger();
 
+        try
+        {
+            var host = CreateHostBuilder(args)
+                .Build();
 
-        var host = CreateHostBuilder(args)
-            .Build();
-
-        var runtimeOptions = host
-            .Services
-            .GetRequiredService<IOptions<InputRefreshOptions>>()
-            .Value;
-
-        if (runtimeOptions.ShouldRefreshTestCases)
-            host
+            var runtimeOptions = host
                 .Services
-                .GetRequiredService<ITestCaseRefresher>()
-                .Execute();
+                .GetRequiredService<IOptions<InputRefreshOptions>>()
+                .Value;
 
-        if (runtimeOptions.ShouldRefreshModuleReq)
-            host
-                .Services
-                .GetRequiredService<IModuleRequirementRefresher>()
-                .Execute();
+            if (runtimeOptions.ShouldRefreshTestCases)
+                host
+                    .Services
+                    .GetRequiredService<ITestCaseRefresher>()
+                    .Execute();
+
+            if (runtimeOptions.ShouldRefreshModuleReq)
+                host
+                    .Services
+                    .GetRequiredService<IModuleRequirementRefresher>()
+                    .Execute();
+        }
+        catch (Exception ex)
+        {
+            Log.Logger.Error(ex, "During program.");
+        }
+        finally
+        {
+            Log.Logger.Information("Done.");
+        }
     }
 
     static IHostBuilder CreateHostBuilder(string[] args)
