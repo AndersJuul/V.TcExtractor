@@ -18,10 +18,28 @@ public class Program
 {
     static void Main(string[] args)
     {
+        System.Console.WriteLine("---------------------------------------------------------------------");
+        System.Console.WriteLine("Program to analyze Requirements and Test Cases from Office Documents.");
+        System.Console.WriteLine("---------------------------------------------------------------------");
+        System.Console.WriteLine("Possible arguments to command line:");
+        System.Console.WriteLine(
+            "--FileLocation:Path <Path> // Path to input and output files. Defaults to C:\\DATA\\V ");
+        System.Console.WriteLine(
+            "--InputRefresh:ShouldRefreshTestCases true // Whether Test Cases should be read fresh from Office files. Defaults to false");
+        System.Console.WriteLine(
+            "--InputRefresh:ShouldRefreshModuleReq true // Whether Module Requirements should be read fresh from Office files. Defaults to false");
+        System.Console.WriteLine("");
+        System.Console.WriteLine("---------------------------------------------------------------------");
+        System.Console.WriteLine("Actual arguments: " + string.Join(' ', args));
+        System.Console.WriteLine("---------------------------------------------------------------------");
+
         var host = CreateHostBuilder(args)
             .Build();
 
-        var runtimeOptions = host.Services.GetRequiredService<IOptions<InputRefreshOptions>>().Value;
+        var runtimeOptions = host
+            .Services
+            .GetRequiredService<IOptions<InputRefreshOptions>>()
+            .Value;
 
         if (runtimeOptions.ShouldRefreshTestCases)
             host
