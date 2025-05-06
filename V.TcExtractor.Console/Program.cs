@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using V.TcExtractor.Application;
 using V.TcExtractor.Domain;
 using V.TcExtractor.Domain.Options;
+using V.TcExtractor.Domain.Repositories;
 using V.TcExtractor.Infrastructure.CsvStorage;
 using V.TcExtractor.Infrastructure.OfficeDocuments;
 using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.CellAdapters;
@@ -17,20 +18,22 @@ public class Program
 {
     static void Main(string[] args)
     {
-        // Build IoC container and configuration
         var host = CreateHostBuilder(args)
             .Build();
 
         var runtimeOptions = host.Services.GetRequiredService<IOptions<InputRefreshOptions>>().Value;
 
         if (runtimeOptions.ShouldRefreshTestCases)
-        {
-            // Resolve the IUpdateTc service and execute it
             host
                 .Services
-                .GetRequiredService<IUpdateTc>()
+                .GetRequiredService<ITestCaseRefresher>()
                 .Execute();
-        }
+
+        if (runtimeOptions.ShouldRefreshModuleReq)
+            host
+                .Services
+                .GetRequiredService<IModuleRequirementRefresher>()
+                .Execute();
     }
 
     static IHostBuilder CreateHostBuilder(string[] args)
@@ -41,8 +44,8 @@ public class Program
                 config.AddCommandLine(args, new Dictionary<string, string>
                 {
                     ["--FileLocation:Path"] = "FileLocation:Path",
-                    ["--InputRefresh:ShouldRefreshTestCases"] =
-                        "InputRefresh:ShouldRefreshTestCases", // Add this mapping
+                    ["--InputRefresh:ShouldRefreshTestCases"] = "InputRefresh:ShouldRefreshTestCases",
+                    ["--InputRefresh:ShouldRefreshModuleReq"] = "InputRefresh:ShouldRefreshModuleReq",
                 });
             })
             .ConfigureServices((hostContext, services) =>
@@ -55,15 +58,16 @@ public class Program
                 services.AddAllImplementations<ICellAdapter>();
 
                 services.AddScoped<ITestCaseRepository, TestCaseRepositoryCsv>();
+                services.AddScoped<IModuleRequirementRepository, ModuleRequirementRepositoryCsv>();
 
-                //--FileLocation:Path "C:\Data\V" --output csv --InputRefresh:Execute yes
                 services.AddOptions<FileLocationOptions>()
                     .Bind(hostContext.Configuration.GetSection("FileLocation"))
                     .Validate(options => !string.IsNullOrEmpty(options.Path), "Path is required");
                 services.AddOptions<InputRefreshOptions>()
                     .Bind(hostContext.Configuration.GetSection("InputRefresh"));
 
-                services.AddScoped<IUpdateTc, UpdateTc>();
+                services.AddScoped<ITestCaseRefresher, TestCaseRefresher>();
+                services.AddScoped<IModuleRequirementRefresher, ModuleRequirementRefresher>();
             });
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace V.TcExtractor.Domain;
 
-public interface IUpdateTc
+public interface ITestCaseRefresher
 {
     void Execute();
 }

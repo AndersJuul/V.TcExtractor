@@ -1,6 +1,6 @@
 ﻿using V.TcExtractor.Domain.Model;
 
-namespace V.TcExtractor.Domain;
+namespace V.TcExtractor.Domain.Repositories;
 
 public interface ITestCaseRepository
 {

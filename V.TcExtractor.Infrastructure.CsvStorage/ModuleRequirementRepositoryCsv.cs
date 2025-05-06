@@ -1,21 +1,26 @@
-﻿using Microsoft.Extensions.Options;
-using CsvHelper;
+﻿using CsvHelper;
+using Microsoft.Extensions.Options;
 using V.TcExtractor.Domain.Model;
 using V.TcExtractor.Domain.Options;
 using V.TcExtractor.Domain.Repositories;
 
 namespace V.TcExtractor.Infrastructure.CsvStorage;
 
-public class TestCaseRepositoryCsv : RepositoryCsv, ITestCaseRepository
+public class ModuleRequirementRepositoryCsv : RepositoryCsv, IModuleRequirementRepository
 {
     private readonly FileLocationOptions _fileLocationOptions;
 
-    public TestCaseRepositoryCsv(IOptions<FileLocationOptions> fileLocationOptions)
+    public ModuleRequirementRepositoryCsv(IOptions<FileLocationOptions> fileLocationOptions)
     {
         _fileLocationOptions = fileLocationOptions.Value;
     }
 
-    public void AddRange(TestCase[] testCases)
+    protected override string GetFileName()
+    {
+        return Path.Combine(_fileLocationOptions.Path, "mr.csv");
+    }
+
+    public void AddRange(ModuleRequirement[] moduleRequirements)
     {
         var filePath = GetFileName();
 
@@ -24,14 +29,9 @@ public class TestCaseRepositoryCsv : RepositoryCsv, ITestCaseRepository
         using var csv = new CsvWriter(writer, config);
 
         // Register the class map
-        csv.Context.RegisterClassMap<TestCaseMap>();
+        csv.Context.RegisterClassMap<ModuleRequirementMap>();
 
         // Write the records
-        csv.WriteRecords(testCases);
-    }
-
-    protected override string GetFileName()
-    {
-        return Path.Combine(_fileLocationOptions.Path, "tc.csv");
+        csv.WriteRecords(moduleRequirements);
     }
 }

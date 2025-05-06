@@ -1,14 +1,15 @@
 ﻿using V.TcExtractor.Domain;
+using V.TcExtractor.Domain.Repositories;
 using V.TcExtractor.Infrastructure.OfficeDocuments;
 
 namespace V.TcExtractor.Application;
 
-public class UpdateTc : IUpdateTc
+public class TestCaseRefresher : ITestCaseRefresher
 {
     private readonly IFolderScanner _folderScanner;
     private readonly ITestCaseRepository _testCaseRepository;
 
-    public UpdateTc(IFolderScanner folderScanner, ITestCaseRepository testCaseRepository)
+    public TestCaseRefresher(IFolderScanner folderScanner, ITestCaseRepository testCaseRepository)
     {
         _folderScanner = folderScanner;
         _testCaseRepository = testCaseRepository;
