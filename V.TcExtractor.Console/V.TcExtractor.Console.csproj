@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\V.TcExtractor.InputParsing\V.TcExtractor.InputParsing.csproj" />
-    <ProjectReference Include="..\V.TcExtractor.OutputFormatting\V.TcExtractor.OutputFormatting.csproj" />
+    <ProjectReference Include="..\V.TcExtractor.Application\V.TcExtractor.Application.csproj" />
+    <ProjectReference Include="..\V.TcExtractor.Infrastructure.CsvStorage\V.TcExtractor.Infrastructure.CsvStorage.csproj" />
   </ItemGroup>
 
 </Project>

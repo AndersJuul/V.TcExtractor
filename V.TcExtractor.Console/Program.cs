@@ -1,11 +1,15 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using V.TcExtractor.InputParsing;
-using V.TcExtractor.InputParsing.Adapters.FileAdapters;
-using V.TcExtractor.InputParsing.Adapters.TableAdapters;
-using V.TcExtractor.Model;
-using V.TcExtractor.OutputFormatting;
+using Microsoft.Extensions.Options;
+using V.TcExtractor.Application;
+using V.TcExtractor.Domain;
+using V.TcExtractor.Domain.Options;
+using V.TcExtractor.Infrastructure.CsvStorage;
+using V.TcExtractor.Infrastructure.OfficeDocuments;
+using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.CellAdapters;
+using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters;
+using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.TableAdapters;
 
 namespace V.TcExtractor.Console;
 
@@ -14,82 +18,52 @@ public class Program
     static void Main(string[] args)
     {
         // Build IoC container and configuration
-        var config = CreateConfigurationBuilder(args)
+        var host = CreateHostBuilder(args)
             .Build();
-        var host = CreateHostBuilder(args, config).Build();
 
-        config["pathToFiles"] = args.FirstOrDefault() ?? "c:\\data\\v";
-        var outputFormatter = (config["output"] ?? "console").ToLower();
+        var runtimeOptions = host.Services.GetRequiredService<IOptions<InputRefreshOptions>>().Value;
 
-        System.Console.WriteLine(
-            $"Trying to read files from {config["pathToFiles"]} and send out to {outputFormatter}.");
-        System.Console.WriteLine("First arg to application is the path, defaulting to c:\\data\\v ");
-        System.Console.WriteLine("Use --output (csv|console) to write to console or csv files, defaulting to console");
-
-        // Get classes required for processing
-        var folderScanner = host.Services.GetRequiredService<IFolderScanner>();
-        var output = host.Services.GetServices<ITestCaseOutput>()
-            .SingleOrDefault(x => x.CanHandle(outputFormatter));
-        if (output == null)
+        if (runtimeOptions.ShouldRefreshTestCases)
         {
-            System.Console.WriteLine($"Output formatter '{outputFormatter}' not found.");
-            return;
+            // Resolve the IUpdateTc service and execute it
+            host
+                .Services
+                .GetRequiredService<IUpdateTc>()
+                .Execute();
         }
-
-        // Get test cases, module requirements from the folder and write them to the output
-        var testCases = folderScanner
-            .GetTestCases()
-            .ToArray();
-        var moduleRequirements = folderScanner
-            .GetModuleRequirements()
-            .ToArray();
-
-        System.Console.WriteLine($"Read from files: {testCases.Length} TCs and {moduleRequirements.Length} MRs");
-
-        var matcher = host.Services.GetRequiredService<ITestCaseRequirementMatcher>();
-        foreach (var moduleRequirement in moduleRequirements)
-        {
-            var matchingTestCases = testCases.Where(x => matcher.IsMatch(moduleRequirement, x)).ToArray();
-            if (!matchingTestCases.Any())
-                continue;
-            //var match = new Match(moduleRequirement, matchingTestCases);
-        }
-
-        output.Write(testCases);
-        output.Write(moduleRequirements);
     }
 
-    private static IConfigurationBuilder CreateConfigurationBuilder(string[] args)
+    static IHostBuilder CreateHostBuilder(string[] args)
     {
-        return new ConfigurationBuilder()
-            .AddCommandLine(args);
-    }
-
-    static IHostBuilder CreateHostBuilder(string[] args, IConfigurationRoot config) =>
-        Host.CreateDefaultBuilder(args)
+        return Host.CreateDefaultBuilder(args)
+            .ConfigureAppConfiguration((hostingContext, config) =>
+            {
+                config.AddCommandLine(args, new Dictionary<string, string>
+                {
+                    ["--FileLocation:Path"] = "FileLocation:Path",
+                    ["--InputRefresh:ShouldRefreshTestCases"] =
+                        "InputRefresh:ShouldRefreshTestCases", // Add this mapping
+                });
+            })
             .ConfigureServices((hostContext, services) =>
             {
-                services.AddScoped(c => new OutputFolder(config["pathToFiles"]!));
-                services.AddScoped(c => new InputFolder(config["pathToFiles"]!));
                 services.AddScoped<IFolderScanner, FolderScanner>();
                 services.AddScoped<ITestCaseRequirementMatcher, TestCaseRequirementMatcher>();
                 services.AddAllImplementations<ITestCaseFileProcessor>();
                 services.AddAllImplementations<IModuleRequirementFileProcessor>();
                 services.AddAllImplementations<ITableAdapter>();
                 services.AddAllImplementations<ICellAdapter>();
-                services.AddAllImplementations<ITestCaseOutput>();
+
+                services.AddScoped<ITestCaseRepository, TestCaseRepositoryCsv>();
+
+                //--FileLocation:Path "C:\Data\V" --output csv --InputRefresh:Execute yes
+                services.AddOptions<FileLocationOptions>()
+                    .Bind(hostContext.Configuration.GetSection("FileLocation"))
+                    .Validate(options => !string.IsNullOrEmpty(options.Path), "Path is required");
+                services.AddOptions<InputRefreshOptions>()
+                    .Bind(hostContext.Configuration.GetSection("InputRefresh"));
+
+                services.AddScoped<IUpdateTc, UpdateTc>();
             });
-}
-
-public interface ITestCaseRequirementMatcher
-{
-    bool IsMatch(ModuleRequirement moduleRequirement, TestCase testCase);
-}
-
-public class TestCaseRequirementMatcher : ITestCaseRequirementMatcher
-{
-    public bool IsMatch(ModuleRequirement moduleRequirement, TestCase testCase)
-    {
-        throw new NotImplementedException();
     }
 }

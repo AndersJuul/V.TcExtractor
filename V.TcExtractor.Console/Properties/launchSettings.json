@@ -2,7 +2,7 @@
   "profiles": {
     "V.TcExtractor.Console": {
       "commandName": "Project",
-      "commandLineArgs": "\"C:\\Data\\V\" --output csv"
+      "commandLineArgs": "--FileLocation:Path \"C:\\Data\\V\" --output csv --InputRefresh:ShouldRefreshTestCases true"
     }
   }
 }

@@ -5,13 +5,15 @@ VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V.TcExtractor.Console", "V.TcExtractor.Console\V.TcExtractor.Console.csproj", "{0E78BE07-A4CF-3F7C-95CD-885D99BAD7F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V.TcExtractor.InputParsing", "V.TcExtractor.InputParsing\V.TcExtractor.InputParsing.csproj", "{EF2C515D-BD9C-4EEC-A9FB-8D81EF08C9C5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V.TcExtractor.Infrastructure.CsvStorage", "V.TcExtractor.Infrastructure.CsvStorage\V.TcExtractor.Infrastructure.CsvStorage.csproj", "{994A134B-1644-4664-B3C2-A4B979DEC5DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V.TcExtractor.InputParsing.Tests", "V.TcExtractor.InputParsing.Tests\V.TcExtractor.InputParsing.Tests.csproj", "{545F47DC-9D99-428E-942E-21BE4C9BD691}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V.TcExtractor.Domain", "V.TcExtractor.Domain\V.TcExtractor.Domain.csproj", "{FEA5AD16-B2F5-4161-A69F-CA4C7CAE86F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V.TcExtractor.OutputFormatting", "V.TcExtractor.OutputFormatting\V.TcExtractor.OutputFormatting.csproj", "{3402357E-8C1F-4160-B1D1-C8DF84DD2FED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V.TcExtractor.Application", "V.TcExtractor.Application\V.TcExtractor.Application.csproj", "{C9A209A1-0BF5-4B68-8FD5-D5745EBADDB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V.TcExtractor.Model", "V.TcExtractor.Model\V.TcExtractor.Model.csproj", "{6EB484B7-B160-4CE3-9FA0-0EB6B488230B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V.TcExtractor.Infrastructure.OfficeDocuments", "V.TcExtractor.Infrastructure.OfficeDocuments\V.TcExtractor.Infrastructure.OfficeDocuments.csproj", "{57BFACD3-3269-4496-908A-F1A028379A70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V.TcExtractor.Infrastructure.OfficeDocuments.Tests", "V.TcExtractor.Infrastructure.OfficeDocuments.Tests\V.TcExtractor.Infrastructure.OfficeDocuments.Tests.csproj", "{485E169D-B45F-48E0-B286-D43A2C10D49F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,22 +25,26 @@ Global
 		{0E78BE07-A4CF-3F7C-95CD-885D99BAD7F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E78BE07-A4CF-3F7C-95CD-885D99BAD7F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E78BE07-A4CF-3F7C-95CD-885D99BAD7F3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EF2C515D-BD9C-4EEC-A9FB-8D81EF08C9C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EF2C515D-BD9C-4EEC-A9FB-8D81EF08C9C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EF2C515D-BD9C-4EEC-A9FB-8D81EF08C9C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EF2C515D-BD9C-4EEC-A9FB-8D81EF08C9C5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{545F47DC-9D99-428E-942E-21BE4C9BD691}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{545F47DC-9D99-428E-942E-21BE4C9BD691}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{545F47DC-9D99-428E-942E-21BE4C9BD691}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{545F47DC-9D99-428E-942E-21BE4C9BD691}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3402357E-8C1F-4160-B1D1-C8DF84DD2FED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3402357E-8C1F-4160-B1D1-C8DF84DD2FED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3402357E-8C1F-4160-B1D1-C8DF84DD2FED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3402357E-8C1F-4160-B1D1-C8DF84DD2FED}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6EB484B7-B160-4CE3-9FA0-0EB6B488230B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6EB484B7-B160-4CE3-9FA0-0EB6B488230B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6EB484B7-B160-4CE3-9FA0-0EB6B488230B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6EB484B7-B160-4CE3-9FA0-0EB6B488230B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{994A134B-1644-4664-B3C2-A4B979DEC5DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{994A134B-1644-4664-B3C2-A4B979DEC5DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{994A134B-1644-4664-B3C2-A4B979DEC5DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{994A134B-1644-4664-B3C2-A4B979DEC5DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEA5AD16-B2F5-4161-A69F-CA4C7CAE86F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEA5AD16-B2F5-4161-A69F-CA4C7CAE86F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEA5AD16-B2F5-4161-A69F-CA4C7CAE86F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEA5AD16-B2F5-4161-A69F-CA4C7CAE86F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9A209A1-0BF5-4B68-8FD5-D5745EBADDB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9A209A1-0BF5-4B68-8FD5-D5745EBADDB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9A209A1-0BF5-4B68-8FD5-D5745EBADDB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9A209A1-0BF5-4B68-8FD5-D5745EBADDB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57BFACD3-3269-4496-908A-F1A028379A70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57BFACD3-3269-4496-908A-F1A028379A70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57BFACD3-3269-4496-908A-F1A028379A70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57BFACD3-3269-4496-908A-F1A028379A70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{485E169D-B45F-48E0-B286-D43A2C10D49F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{485E169D-B45F-48E0-B286-D43A2C10D49F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{485E169D-B45F-48E0-B286-D43A2C10D49F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{485E169D-B45F-48E0-B286-D43A2C10D49F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
