@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using V.TcExtractor.InputParsing;
 using V.TcExtractor.InputParsing.Adapters.FileAdapters;
 using V.TcExtractor.InputParsing.Adapters.TableAdapters;
+using V.TcExtractor.Model;
 using V.TcExtractor.OutputFormatting;
 
 namespace V.TcExtractor.Console;
@@ -45,6 +46,15 @@ public class Program
 
         System.Console.WriteLine($"Read from files: {testCases.Length} TCs and {moduleRequirements.Length} MRs");
 
+        var matcher = host.Services.GetRequiredService<ITestCaseRequirementMatcher>();
+        foreach (var moduleRequirement in moduleRequirements)
+        {
+            var matchingTestCases = testCases.Where(x => matcher.IsMatch(moduleRequirement, x)).ToArray();
+            if (!matchingTestCases.Any())
+                continue;
+            //var match = new Match(moduleRequirement, matchingTestCases);
+        }
+
         output.Write(testCases);
         output.Write(moduleRequirements);
     }
@@ -62,10 +72,24 @@ public class Program
                 services.AddScoped(c => new OutputFolder(config["pathToFiles"]!));
                 services.AddScoped(c => new InputFolder(config["pathToFiles"]!));
                 services.AddScoped<IFolderScanner, FolderScanner>();
+                services.AddScoped<ITestCaseRequirementMatcher, TestCaseRequirementMatcher>();
                 services.AddAllImplementations<ITestCaseFileProcessor>();
                 services.AddAllImplementations<IModuleRequirementFileProcessor>();
                 services.AddAllImplementations<ITableAdapter>();
                 services.AddAllImplementations<ICellAdapter>();
                 services.AddAllImplementations<ITestCaseOutput>();
             });
+}
+
+public interface ITestCaseRequirementMatcher
+{
+    bool IsMatch(ModuleRequirement moduleRequirement, TestCase testCase);
+}
+
+public class TestCaseRequirementMatcher : ITestCaseRequirementMatcher
+{
+    public bool IsMatch(ModuleRequirement moduleRequirement, TestCase testCase)
+    {
+        throw new NotImplementedException();
+    }
 }
