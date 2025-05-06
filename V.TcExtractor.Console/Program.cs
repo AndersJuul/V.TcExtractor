@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Serilog;
 using V.TcExtractor.Application;
 using V.TcExtractor.Domain;
 using V.TcExtractor.Domain.Options;
@@ -32,6 +33,17 @@ public class Program
         System.Console.WriteLine("---------------------------------------------------------------------");
         System.Console.WriteLine("Actual arguments: " + string.Join(' ', args));
         System.Console.WriteLine("---------------------------------------------------------------------");
+
+        // Configure Serilog first
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Information()
+            .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}")
+            .WriteTo.File(
+                path: "logs/log-.txt",
+                rollingInterval: RollingInterval.Day,
+                outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
+            .CreateLogger();
+
 
         var host = CreateHostBuilder(args)
             .Build();
@@ -66,6 +78,7 @@ public class Program
                     ["--InputRefresh:ShouldRefreshModuleReq"] = "InputRefresh:ShouldRefreshModuleReq",
                 });
             })
+            .UseSerilog()
             .ConfigureServices((hostContext, services) =>
             {
                 services.AddScoped<IFolderScanner, FolderScanner>();
