@@ -10,23 +10,23 @@ public class FolderScanner : IFolderScanner
     private readonly IEnumerable<ITestCaseFileProcessor> _testFileProcessors;
     private readonly IEnumerable<IModuleRequirementFileProcessor> _moduleRequirementFileProcessors;
     private readonly FileLocationOptions _fileLocationOptions;
-    private readonly IEnumerable<IDvplFileProcessor> _dvplFileProcessor;
+    private readonly IEnumerable<IDvplFileProcessor> _dvplFileProcessors;
 
     public FolderScanner(IEnumerable<ITestCaseFileProcessor> testFileProcessors,
         IEnumerable<IModuleRequirementFileProcessor> moduleRequirementFileProcessors,
-        IEnumerable<IDvplFileProcessor> dvplFileProcessor,
+        IEnumerable<IDvplFileProcessor> dvplFileProcessors,
         IOptions<FileLocationOptions> fileLocationOptions)
     {
         if (testFileProcessors == null || !testFileProcessors.Any())
-            throw new ArgumentException("testFileProcessors not specified.");
+            throw new ArgumentException("testFileProcessors not specified. Must have at least one.");
         if (moduleRequirementFileProcessors == null || !moduleRequirementFileProcessors.Any())
-            throw new ArgumentException("moduleRequirementFileProcessors not specified.");
-        if (dvplFileProcessor == null || !dvplFileProcessor.Any())
-            throw new ArgumentException("dvplFileProcessor not specified.");
+            throw new ArgumentException("moduleRequirementFileProcessors not specified. Must have at least one.");
+        if (dvplFileProcessors == null || !dvplFileProcessors.Any())
+            throw new ArgumentException("dvplFileProcessors not specified. Must have at least one.");
 
         _testFileProcessors = testFileProcessors;
         _moduleRequirementFileProcessors = moduleRequirementFileProcessors;
-        _dvplFileProcessor = dvplFileProcessor;
+        _dvplFileProcessors = dvplFileProcessors;
         _fileLocationOptions = fileLocationOptions.Value;
     }
 
@@ -75,7 +75,7 @@ public class FolderScanner : IFolderScanner
     {
         foreach (var fileName in GetFiles(_fileLocationOptions.Path, "*.xlsx"))
         {
-            var processors = _dvplFileProcessor.Where(xx => xx.CanHandle(fileName));
+            var processors = _dvplFileProcessors.Where(xx => xx.CanHandle(fileName));
 
             foreach (var processor in processors)
             {
