@@ -18,7 +18,7 @@ public class DvplFileProcessor : IDvplFileProcessor
             var worksheet = workbook.Worksheet(1);
             var range = worksheet.RangeUsed();
 
-            foreach (var row in range.Rows().Skip(2))
+            foreach (var row in range.Rows().Skip(3))
             {
                 var id = row.Cell(1).GetString();
                 if (!string.IsNullOrWhiteSpace(id))
