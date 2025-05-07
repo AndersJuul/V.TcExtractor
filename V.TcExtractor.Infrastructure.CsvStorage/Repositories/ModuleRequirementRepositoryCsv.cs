@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 using V.TcExtractor.Domain.Model;
 using V.TcExtractor.Domain.Options;
 using V.TcExtractor.Domain.Repositories;
-using V.TcExtractor.Infrastructure.CsvStorage.Maps;
+using V.TcExtractor.Infrastructure.CsvStorage.Mappers;
 
 namespace V.TcExtractor.Infrastructure.CsvStorage.Repositories;
 
