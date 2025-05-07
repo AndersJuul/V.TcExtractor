@@ -48,12 +48,34 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Tests
             Assert.Equal(41, moduleRequirements.Length);
         }
 
+        [Fact]
+        public void Scan_finds_all_dvpl_items()
+        {
+            // This test assumes test data in known place.
+            // Arrange
+            var sut = GetSut();
+
+            // Act
+            var dvplItems = sut
+                .GetDvplItems()
+                .ToArray();
+
+            // Assert
+            Dump(dvplItems);
+
+            Assert.Equal(41, dvplItems.Length);
+        }
+
         private FolderScanner GetSut()
         {
             var wordDocumentProcessor = GetWordFileProcessor();
             var moduleRequirementFileProcessor = new ExcelFileProcessor();
 
-            var sut = new FolderScanner([wordDocumentProcessor], [moduleRequirementFileProcessor],
+            IDvplFileProcessor dvplFileProcessor = new DvplFileProcessor();
+            var sut = new FolderScanner(
+                [wordDocumentProcessor],
+                [moduleRequirementFileProcessor],
+                [dvplFileProcessor],
                 new OptionsWrapper<FileLocationOptions>(new FileLocationOptions { Path = TestDataPath }));
             return sut;
         }

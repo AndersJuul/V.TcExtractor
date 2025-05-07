@@ -1,4 +1,4 @@
-﻿using V.TcExtractor.Infrastructure.OfficeDocuments;
+﻿using V.TcExtractor.Domain.Model;
 
 namespace V.TcExtractor.Domain.Repositories;
 

@@ -120,6 +120,7 @@ public class Program
 
                 services.AddScoped<ITestCaseRepository, TestCaseRepositoryCsv>();
                 services.AddScoped<IModuleRequirementRepository, ModuleRequirementRepositoryCsv>();
+                services.AddScoped<IDvplRepository, DvplRepositoryCsv>();
                 services.AddScoped<IMatch1Repository, Match1RepositoryCsv>();
 
                 services.AddOptions<FileLocationOptions>()

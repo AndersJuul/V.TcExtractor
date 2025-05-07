@@ -10,13 +10,16 @@ public class FolderScanner : IFolderScanner
     private readonly IEnumerable<ITestCaseFileProcessor> _testFileProcessors;
     private readonly IEnumerable<IModuleRequirementFileProcessor> _moduleRequirementFileProcessor;
     private readonly FileLocationOptions _fileLocationOptions;
+    private readonly IEnumerable<IDvplFileProcessor> _dvplFileProcessor;
 
     public FolderScanner(IEnumerable<ITestCaseFileProcessor> testFileProcessors,
         IEnumerable<IModuleRequirementFileProcessor> moduleRequirementFileProcessor,
+        IEnumerable<IDvplFileProcessor> dvplFileProcessor,
         IOptions<FileLocationOptions> fileLocationOptions)
     {
         _testFileProcessors = testFileProcessors;
         _moduleRequirementFileProcessor = moduleRequirementFileProcessor;
+        _dvplFileProcessor = dvplFileProcessor;
         _fileLocationOptions = fileLocationOptions.Value;
     }
 
@@ -63,6 +66,14 @@ public class FolderScanner : IFolderScanner
 
     public IEnumerable<DvplItem> GetDvplItems()
     {
-        throw new NotImplementedException();
+        foreach (var fileName in GetFiles(_fileLocationOptions.Path, "*.xlsx"))
+        {
+            var processors = _dvplFileProcessor.Where(xx => xx.CanHandle(fileName));
+
+            foreach (var processor in processors)
+            {
+                foreach (var dvplItem in processor.GetDvplItems(fileName)) yield return dvplItem;
+            }
+        }
     }
 }

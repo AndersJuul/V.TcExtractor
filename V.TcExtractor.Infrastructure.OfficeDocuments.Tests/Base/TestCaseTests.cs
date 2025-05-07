@@ -35,6 +35,18 @@ public abstract class TestCaseTests(ITestOutputHelper testOutputHelper)
         TestOutputHelper.WriteLine("----");
     }
 
+    protected void Dump(DvplItem[] dvplItems)
+    {
+        TestOutputHelper.WriteLine("DVPL Items:");
+        TestOutputHelper.WriteLine($"---- {dvplItems.Count()} DVPL Items");
+        foreach (var dvplItem in dvplItems)
+        {
+            TestOutputHelper.WriteLine($"DVPL Item : {dvplItem}");
+        }
+
+        TestOutputHelper.WriteLine("----");
+    }
+
     protected static WordFileProcessor GetWordFileProcessor()
     {
         var cellAdapter = new CellAdapter();
