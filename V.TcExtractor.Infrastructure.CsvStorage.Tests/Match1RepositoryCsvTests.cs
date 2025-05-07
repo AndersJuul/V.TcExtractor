@@ -77,11 +77,8 @@ public class Match1RepositoryCsvTests : IDisposable
 
         // Assert
         Assert.Single(retrievedMatches);
-        Assert.Equal(originalMatch.ModuleRequirement.Id, retrievedMatch.ModuleRequirement.Id);
-        Assert.Equal(originalMatch.ModuleRequirement.FileName, retrievedMatch.ModuleRequirement.FileName);
-        Assert.Equal(originalMatch.MatchingTestCases.First().ReqId, retrievedMatch.MatchingTestCases.First().ReqId);
-        Assert.Equal(originalMatch.MatchingTestCases.First().Description,
-            retrievedMatch.MatchingTestCases.First().Description);
+        Assert.Equal(originalMatch.ModuleRequirementId, retrievedMatch.ModuleRequirementId);
+        Assert.Equal(originalMatch.TestCases, retrievedMatch.TestCases);
     }
 
     [Fact]
@@ -103,9 +100,9 @@ public class Match1RepositoryCsvTests : IDisposable
         Assert.Equal(matches.Length, retrievedMatches.Length);
         for (int i = 0; i < matches.Length; i++)
         {
-            Assert.Equal(matches[i].ModuleRequirement.Id, retrievedMatches[i].ModuleRequirement.Id);
-            Assert.Equal(matches[i].MatchingTestCases.First().ReqId,
-                retrievedMatches[i].MatchingTestCases.First().ReqId);
+            Assert.Equal(matches[i].ModuleRequirementId, retrievedMatches[i].ModuleRequirementId);
+            Assert.Equal(matches[i].TestCases.First(),
+                retrievedMatches[i].TestCases.First());
         }
     }
 

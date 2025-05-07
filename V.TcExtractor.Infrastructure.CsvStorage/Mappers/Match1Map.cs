@@ -7,6 +7,7 @@ public class Match1Map : ClassMap<Match1>
 {
     public Match1Map()
     {
-        Map(m => m.ModuleRequirement.Id).Name("ModuleReqId").Index(0);
+        Map(m => m.ModuleRequirementId).Name("ModuleReqId").Index(0);
+        Map(m => m.TestCases).Name("Tests").Index(1);
     }
 }

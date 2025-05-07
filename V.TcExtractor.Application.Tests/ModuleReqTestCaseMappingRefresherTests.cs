@@ -123,8 +123,8 @@ public class ModuleReqTestCaseMappingRefresherTests
         // Assert
         _match1RepositoryMock.Verify(x => x.AddRange(It.Is<Match1[]>(matches =>
             matches.Length == 1 &&
-            matches[0].ModuleRequirement == requirement &&
-            matches[0].MatchingTestCases.Contains(testCase))), Times.Once);
+            matches[0].ModuleRequirementId == requirement.Id &&
+            matches[0].TestCases.Contains(testCase.TestNo))), Times.Once);
     }
 
     [Fact]

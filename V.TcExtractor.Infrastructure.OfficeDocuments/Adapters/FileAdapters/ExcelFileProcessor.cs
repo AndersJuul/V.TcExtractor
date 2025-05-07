@@ -23,6 +23,7 @@ public class ExcelFileProcessor : IModuleRequirementFileProcessor
     {
         using (var workbook = new XLWorkbook(fileName))
         {
+            var source = GetSource(fileName);
             var worksheet = workbook.Worksheet(1);
             var range = worksheet.RangeUsed();
 
@@ -34,9 +35,18 @@ public class ExcelFileProcessor : IModuleRequirementFileProcessor
                     RsTitle = row.Cell(5).GetString(),
                     CombinedRequirement = row.Cell(6).GetString(),
                     Motivation = row.Cell(12).GetString(),
-                    FileName = fileName
+                    FileName = fileName,
+                    Source = source
                 };
             }
         }
+    }
+
+    private RequirementSource GetSource(string fileName)
+    {
+        if (fileName.Contains("PSI")) return RequirementSource.PSI;
+        if (fileName.Contains("SPC")) return RequirementSource.SPC;
+
+        return RequirementSource.Unknown;
     }
 }

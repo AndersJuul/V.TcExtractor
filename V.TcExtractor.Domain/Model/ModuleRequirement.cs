@@ -7,9 +7,10 @@ public class ModuleRequirement
     public string CombinedRequirement { get; set; } = "";
     public string Motivation { get; set; } = "";
     public string FileName { get; set; } = "";
+    public RequirementSource Source { get; set; }
 
     public override string ToString()
     {
-        return $"{Id}    {RsTitle}   {CombinedRequirement}     {Motivation}   {FileName}";
+        return $"{Id}    {RsTitle}   {CombinedRequirement}     {Motivation}   {FileName} {Source}";
     }
 }
