@@ -44,7 +44,12 @@ public class ModuleReqTestCaseMappingRefresher : IModuleReqTestCaseMappingRefres
                 .Where(x => _testCaseRequirementMatcher.IsMatch(moduleRequirement, x))
                 .ToArray();
             if (matchingTestCases.Any())
-                matches.Add(new Match1(moduleRequirement, matchingTestCases));
+            {
+                matches.Add(
+                    new Match1(moduleRequirement.Id,
+                        string.Join(';', matchingTestCases.Select(x => $"{x.TestNo}:{x.FileName}/{x.DmsNumber}")))
+                );
+            }
         }
 
         _match1Repository.DeleteAll();

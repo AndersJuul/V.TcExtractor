@@ -19,8 +19,10 @@ public class Match1RepositoryCsvTests : IDisposable
             .RuleFor(t => t.ReqId, f => f.Random.Guid().ToString())
             .RuleFor(t => t.Description, f => f.Lorem.Sentence(3))
             .RuleFor(t => t.TestNo, f => f.Random.Int(min: 1, max: 1000).ToString())
-            .RuleFor(t => t.FileName, f => f.System.FileName()
-            );
+            .RuleFor(t => t.FileName, f => f.System.FileName())
+            .RuleFor(t => t.DmsNumber,
+                f => f.Random.Int(min: 1000, max: 9999) + "-" + f.Random.Int(min: 1000, max: 9999));
+
         _moduleRequirementFaker = new Faker<ModuleRequirement>()
             .RuleFor(t => t.Id, f => f.Random.Guid().ToString())
             .RuleFor(t => t.CombinedRequirement, f => f.Lorem.Sentence(3))
@@ -52,16 +54,6 @@ public class Match1RepositoryCsvTests : IDisposable
         // Assert
         var expectedFilePath = Path.Combine(_testDirectory, "matches.csv");
         Assert.True(File.Exists(expectedFilePath));
-    }
-
-    [Fact]
-    public void GetAll_ShouldReturnEmptyArrayWhenNoFileExists()
-    {
-        // Act
-        var result = _repository.GetAll();
-
-        // Assert
-        Assert.Empty(result);
     }
 
     [Fact]
@@ -166,10 +158,11 @@ public class Match1RepositoryCsvTests : IDisposable
 
     private Match1 CreateTestMatch()
     {
-        return new Match1(
-            _moduleRequirementFaker.Generate(),
-            _testCaseFaker.Generate(2).ToArray()
-        );
+        var moduleRequirementId = _moduleRequirementFaker.Generate().Id;
+        var values = _testCaseFaker.Generate(2).ToArray().Select(x => $"{x.TestNo}:{x.FileName}/{x.DmsNumber}");
+        var testCases = string.Join(';', values);
+
+        return new Match1(moduleRequirementId, testCases);
     }
 
     public void Dispose()

@@ -30,8 +30,9 @@ public class ModuleReqTestCaseMappingRefresherTests
             .RuleFor(t => t.ReqId, f => f.Random.Guid().ToString())
             .RuleFor(t => t.Description, f => f.Lorem.Sentence(3))
             .RuleFor(t => t.TestNo, f => f.Random.Int(min: 1, max: 1000).ToString())
-            .RuleFor(t => t.FileName, f => f.System.FileName()
-            );
+            .RuleFor(t => t.FileName, f => f.System.FileName())
+            .RuleFor(t => t.DmsNumber,
+                f => f.Random.Int(min: 1000, max: 9999) + "-" + f.Random.Int(min: 1000, max: 9999));
         _moduleRequirementFaker = new Faker<ModuleRequirement>()
             .RuleFor(t => t.Id, f => f.Random.Guid().ToString())
             .RuleFor(t => t.CombinedRequirement, f => f.Lorem.Sentence(3))
@@ -110,8 +111,8 @@ public class ModuleReqTestCaseMappingRefresherTests
     public void Execute_ShouldCreateMatchesForSuccessfulMatches()
     {
         // Arrange
-        var testCase = new TestCase { ReqId = "TC1", FileName = "", DmsNumber = "" };
-        var requirement = new ModuleRequirement { Id = "REQ1" };
+        var testCase = new TestCase { ReqId = "TC1", FileName = "", DmsNumber = "1234-1234" };
+        var requirement = new ModuleRequirement { Id = "TC1" };
         _testCaseRepositoryMock.Setup(x => x.GetAll()).Returns(new[] { testCase });
         _moduleRequirementRepositoryMock.Setup(x => x.GetAll()).Returns(new[] { requirement });
         _testCaseRequirementMatcherMock.Setup(x => x.IsMatch(requirement, testCase))
@@ -121,10 +122,13 @@ public class ModuleReqTestCaseMappingRefresherTests
         _refresher.Execute();
 
         // Assert
+        //_match1RepositoryMock.Verify(x => x.AddRange(It.IsAny<Match1[]>()), Times.Once);
         _match1RepositoryMock.Verify(x => x.AddRange(It.Is<Match1[]>(matches =>
-            matches.Length == 1 &&
-            matches[0].ModuleRequirementId == requirement.Id &&
-            matches[0].TestCases.Contains(testCase.TestNo))), Times.Once);
+                matches.Length == 1
+                && requirement.Id == matches[0].ModuleRequirementId
+                && matches[0].TestCases.Contains(testCase.TestNo)
+            ))
+            , Times.Once);
     }
 
     [Fact]

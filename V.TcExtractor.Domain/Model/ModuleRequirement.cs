@@ -7,7 +7,13 @@ public class ModuleRequirement
     public string Id
     {
         get => _id;
-        set => _id = value.Replace(",", ".");
+        set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("Id can't be empty.");
+
+            _id = value.Replace(",", ".");
+        }
     }
 
     public string RsTitle { get; set; } = "";

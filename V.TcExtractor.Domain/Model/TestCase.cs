@@ -1,9 +1,26 @@
-﻿namespace V.TcExtractor.Domain.Model;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.RegularExpressions;
+
+namespace V.TcExtractor.Domain.Model;
 
 public class TestCase
 {
+    private string _dmsNumber;
     public required string FileName { get; set; }
-    public required string DmsNumber { get; set; }
+
+    public required string DmsNumber
+    {
+        get => _dmsNumber;
+        set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("DmsNumber can't be empty.");
+            if (!Regex.IsMatch(value, @"^\d{4}-\d{4}$"))
+                throw new ArgumentException("DmsNumber must be on form ####-####.");
+            _dmsNumber = value;
+        }
+    }
+
     public string TestNo { get; set; } = "";
     public string Description { get; set; } = "";
     public string ReqId { get; set; } = "";

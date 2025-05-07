@@ -27,7 +27,7 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Tests
             // Assert
             Dump(testCases);
 
-            Assert.Equal(227, testCases.Count());
+            Assert.Equal(225, testCases.Count());
         }
 
         [Fact]
@@ -45,7 +45,7 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Tests
             // Assert
             Dump(moduleRequirements);
 
-            Assert.Equal(43, moduleRequirements.Length);
+            Assert.Equal(41, moduleRequirements.Length);
         }
 
         private FolderScanner GetSut()

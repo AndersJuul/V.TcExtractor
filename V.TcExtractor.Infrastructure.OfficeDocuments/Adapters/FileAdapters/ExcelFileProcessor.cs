@@ -29,15 +29,17 @@ public class ExcelFileProcessor : IModuleRequirementFileProcessor
 
             foreach (var row in range.Rows().Skip(2))
             {
-                yield return new ModuleRequirement
-                {
-                    Id = row.Cell(1).GetString(),
-                    RsTitle = row.Cell(5).GetString(),
-                    CombinedRequirement = row.Cell(6).GetString(),
-                    Motivation = row.Cell(12).GetString(),
-                    FileName = fileName,
-                    Source = source
-                };
+                var id = row.Cell(1).GetString();
+                if (!string.IsNullOrWhiteSpace(id))
+                    yield return new ModuleRequirement
+                    {
+                        Id = id,
+                        RsTitle = row.Cell(5).GetString(),
+                        CombinedRequirement = row.Cell(6).GetString(),
+                        Motivation = row.Cell(12).GetString(),
+                        FileName = fileName,
+                        Source = source
+                    };
             }
         }
     }

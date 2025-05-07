@@ -2,13 +2,13 @@
 
 public class Match1
 {
-    public Match1(ModuleRequirement moduleRequirement, TestCase[] matchingTestCases)
+    public Match1(string moduleRequirementId, string testCases)
     {
-        ModuleRequirementId = moduleRequirement.Id;
-        TestCases = string.Join(';', matchingTestCases.Select(x => $"{x.TestNo}:{x.FileName}"));
+        TestCases = testCases;
+        ModuleRequirementId = moduleRequirementId;
     }
 
     public string TestCases { get; set; }
 
-    public string ModuleRequirementId { get; }
+    public string ModuleRequirementId { get; set; }
 }

@@ -44,7 +44,7 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Tests
 
             // Assert
             Dump(moduleRequirements);
-            Assert.Equal(43, moduleRequirements.Count());
+            Assert.Equal(41, moduleRequirements.Count());
         }
 
         [Fact]
@@ -59,7 +59,7 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Tests
 
             // Assert
             Dump(moduleRequirements);
-            Assert.Equal(85, moduleRequirements.Count());
+            Assert.Equal(84, moduleRequirements.Count());
         }
 
         private static ExcelFileProcessor GetSut()

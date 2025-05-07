@@ -54,12 +54,33 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters
             foreach (var headerPart in wordDocument.MainDocumentPart?.HeaderParts)
             {
                 var text = headerPart.Header.InnerText;
-                var documentNo = "Document no. ";
-                if (text.Contains(documentNo))
-                {
-                    var subPart = text.Substring(text.IndexOf(documentNo) + documentNo.Length).Substring(0, 9);
-                    return subPart;
-                }
+                var dmsNumberFromHeader = DmsNumberFromHeader(text, "Document: INFO  Title ");
+                if (dmsNumberFromHeader != "") return dmsNumberFromHeader;
+            }
+
+            foreach (var headerPart in wordDocument.MainDocumentPart?.HeaderParts)
+            {
+                var text = headerPart.Header.InnerText;
+                var dmsNumberFromHeader = DmsNumberFromHeader(text, "Document no. ");
+                if (dmsNumberFromHeader != "") return dmsNumberFromHeader;
+            }
+
+            foreach (var headerPart in wordDocument.MainDocumentPart?.HeaderParts)
+            {
+                var text = headerPart.Header.InnerText;
+                var dmsNumberFromHeader = DmsNumberFromHeader(text, "Document:");
+                if (dmsNumberFromHeader != "") return dmsNumberFromHeader;
+            }
+
+            return "";
+        }
+
+        private static string DmsNumberFromHeader(string text, string indicator)
+        {
+            if (text.Contains(indicator))
+            {
+                var subPart = text.Substring(text.IndexOf(indicator) + indicator.Length).Substring(0, 9);
+                return subPart;
             }
 
             return "";
