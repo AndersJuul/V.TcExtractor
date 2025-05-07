@@ -8,13 +8,14 @@ namespace V.TcExtractor.Application;
 public class DVPLRefresher : IDVPLRefresher
 {
     private readonly IFolderScanner _folderScanner;
-    private readonly IDvplRepository _dvplRepository;
+    private readonly IDvplItemRepository _dvplItemRepository;
     private readonly ILogger<DVPLRefresher> _logger;
 
-    public DVPLRefresher(IFolderScanner folderScanner, IDvplRepository dvplRepository, ILogger<DVPLRefresher> logger)
+    public DVPLRefresher(IFolderScanner folderScanner, IDvplItemRepository dvplItemRepository,
+        ILogger<DVPLRefresher> logger)
     {
         _folderScanner = folderScanner;
-        _dvplRepository = dvplRepository;
+        _dvplItemRepository = dvplItemRepository;
         _logger = logger;
     }
 
@@ -26,8 +27,8 @@ public class DVPLRefresher : IDVPLRefresher
             .GetDvplItems()
             .ToArray();
 
-        _dvplRepository.DeleteAll();
-        _dvplRepository.AddRange(dvplItems);
+        _dvplItemRepository.DeleteAll();
+        _dvplItemRepository.AddRange(dvplItems);
 
         _logger.LogInformation("Done Refreshing DVPL Items: " + dvplItems.Length);
     }

@@ -2,7 +2,7 @@
 
 namespace V.TcExtractor.Domain.Repositories;
 
-public interface IDvplRepository
+public interface IDvplItemRepository
 {
     void DeleteAll();
     void AddRange(DvplItem[] dvplItems);

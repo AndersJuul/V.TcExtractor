@@ -10,7 +10,7 @@ namespace V.TcExtractor.Application.Tests;
 public class DvplRefresherTests
 {
     private readonly Mock<IFolderScanner> _folderScannerMock;
-    private readonly Mock<IDvplRepository> _dvplRepositoryMock;
+    private readonly Mock<IDvplItemRepository> _dvplRepositoryMock;
     private readonly Mock<ILogger<DVPLRefresher>> _loggerMock;
     private readonly DVPLRefresher _refresher;
     private readonly Faker<TestCase> _testCaseFaker;
@@ -19,7 +19,7 @@ public class DvplRefresherTests
     public DvplRefresherTests()
     {
         _folderScannerMock = new Mock<IFolderScanner>();
-        _dvplRepositoryMock = new Mock<IDvplRepository>();
+        _dvplRepositoryMock = new Mock<IDvplItemRepository>();
         _loggerMock = new Mock<ILogger<DVPLRefresher>>();
 
         // Set up Bogus fake data generator
