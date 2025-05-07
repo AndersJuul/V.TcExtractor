@@ -3,12 +3,12 @@ using V.TcExtractor.Domain.Model;
 
 namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters;
 
-public class DvplFileProcessor : IDvplFileProcessor
+public class SpcDvplFileProcessor : IDvplFileProcessor
 {
     public bool CanHandle(string fileName)
     {
         var nameWithoutPath = Path.GetFileName(fileName);
-        return nameWithoutPath.Contains("DVPL");
+        return nameWithoutPath.Contains("DVPL") && (nameWithoutPath.Contains("SPN") || nameWithoutPath.Contains("SPC"));
     }
 
     public IEnumerable<DvplItem> GetDvplItems(string fileName)

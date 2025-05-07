@@ -71,11 +71,12 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Tests
             var wordDocumentProcessor = GetWordFileProcessor();
             var moduleRequirementFileProcessor = new ExcelFileProcessor();
 
-            IDvplFileProcessor dvplFileProcessor = new DvplFileProcessor();
+            var psiDvplFileProcessor = new PsiDvplFileProcessor();
+            var spcDvplFileProcessor = new SpcDvplFileProcessor();
             var sut = new FolderScanner(
                 [wordDocumentProcessor],
                 [moduleRequirementFileProcessor],
-                [dvplFileProcessor],
+                [psiDvplFileProcessor, spcDvplFileProcessor],
                 new OptionsWrapper<FileLocationOptions>(new FileLocationOptions { Path = TestDataPath }));
             return sut;
         }
