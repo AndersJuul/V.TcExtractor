@@ -7,12 +7,8 @@ using V.TcExtractor.Application;
 using V.TcExtractor.Domain;
 using V.TcExtractor.Domain.Options;
 using V.TcExtractor.Domain.Refreshers;
-using V.TcExtractor.Domain.Repositories;
-using V.TcExtractor.Infrastructure.CsvStorage.Repositories;
+using V.TcExtractor.Infrastructure.CsvStorage;
 using V.TcExtractor.Infrastructure.OfficeDocuments;
-using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.CellAdapters;
-using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters;
-using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.TableAdapters;
 
 namespace V.TcExtractor.Console;
 
@@ -111,30 +107,11 @@ public class Program
             .UseSerilog()
             .ConfigureServices((hostContext, services) =>
             {
-                services.AddScoped<IFolderScanner, FolderScanner>();
-                services.AddScoped<ITestCaseRequirementMatcher, TestCaseRequirementMatcher>();
-
-                services.AddAllImplementations<ITestCaseFileProcessor>();
-                services.AddAllImplementations<IModuleRequirementFileProcessor>();
-                services.AddAllImplementations<IDvplFileProcessor>();
-                services.AddAllImplementations<ITableAdapter>();
-                services.AddAllImplementations<ICellAdapter>();
-
-                services.AddScoped<ITestCaseRepository, TestCaseRepositoryCsv>();
-                services.AddScoped<IModuleRequirementRepository, ModuleRequirementRepositoryCsv>();
-                services.AddScoped<IDvplItemRepository, DvplItemRepositoryCsv>();
-                services.AddScoped<IMatch1Repository, Match1RepositoryCsv>();
-
-                services.AddOptions<FileLocationOptions>()
-                    .Bind(hostContext.Configuration.GetSection("FileLocation"))
-                    .Validate(options => !string.IsNullOrEmpty(options.Path), "Path is required");
-                services.AddOptions<SettingOptions>()
-                    .Bind(hostContext.Configuration.GetSection("Setting"));
-
-                services.AddScoped<ITestCaseRefresher, TestCaseRefresher>();
-                services.AddScoped<IModuleRequirementRefresher, ModuleRequirementRefresher>();
-                services.AddScoped<IDVPLRefresher, DVPLRefresher>();
-                services.AddScoped<IModuleReqTestCaseMappingRefresher, ModuleReqTestCaseMappingRefresher>();
+                services.AddDomainLayer(hostContext.Configuration);
+                services.AddApplicationLayer();
+                services.AddInfrastructureOfficeDocuments();
+                services.AddInfrastructureCsv();
+                services.AddLogging();
             });
     }
 }
