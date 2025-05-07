@@ -2,13 +2,7 @@
 
 public class Match1
 {
-    public Match1(string moduleRequirementId, string testCases)
-    {
-        TestCases = testCases;
-        ModuleRequirementId = moduleRequirementId;
-    }
+    public string TestCases { get; init; }
 
-    public string TestCases { get; set; }
-
-    public string ModuleRequirementId { get; set; }
+    public string ModuleRequirementId { get; init; }
 }

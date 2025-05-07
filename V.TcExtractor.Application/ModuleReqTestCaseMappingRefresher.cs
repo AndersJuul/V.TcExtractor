@@ -46,8 +46,12 @@ public class ModuleReqTestCaseMappingRefresher : IModuleReqTestCaseMappingRefres
             if (matchingTestCases.Any())
             {
                 matches.Add(
-                    new Match1(moduleRequirement.Id,
-                        string.Join(';', matchingTestCases.Select(x => $"{x.TestNo}:{x.FileName}/{x.DmsNumber}")))
+                    new Match1
+                    {
+                        ModuleRequirementId = moduleRequirement.Id,
+                        TestCases = string.Join(';',
+                            matchingTestCases.Select(x => $"{x.TestNo}:{x.FileName}/{x.DmsNumber}"))
+                    }
                 );
             }
         }

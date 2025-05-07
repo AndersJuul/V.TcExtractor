@@ -159,10 +159,14 @@ public class Match1RepositoryCsvTests : IDisposable
     private Match1 CreateTestMatch()
     {
         var moduleRequirementId = _moduleRequirementFaker.Generate().Id;
+
         var values = _testCaseFaker.Generate(2).ToArray().Select(x => $"{x.TestNo}:{x.FileName}/{x.DmsNumber}");
         var testCases = string.Join(';', values);
 
-        return new Match1(moduleRequirementId, testCases);
+        return new Match1
+        {
+            ModuleRequirementId = moduleRequirementId, TestCases = testCases
+        };
     }
 
     public void Dispose()
