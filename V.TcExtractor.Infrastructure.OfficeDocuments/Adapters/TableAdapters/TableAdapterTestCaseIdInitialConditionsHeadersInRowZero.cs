@@ -34,13 +34,17 @@ public class TableAdapterTestCaseIdInitialConditionsHeadersInRowZero(ICellAdapte
         return false;
     }
 
-    public IEnumerable<TestCase> GetTestCases(Table table, string filePath)
+    public IEnumerable<TestCase> GetTestCases(Table table, string filePath, string dmsNumber)
     {
         // Process rows to find Test No, Description, and Req ID
         var desc = "";
         foreach (var row in table.Elements<TableRow>().Skip(1))
         {
-            var testCase = new TestCase { FileName = filePath };
+            var testCase = new TestCase
+            {
+                FileName = filePath,
+                DmsNumber = dmsNumber
+            };
 
             var cells = row.Elements<TableCell>().ToList();
 

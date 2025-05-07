@@ -36,9 +36,13 @@ public class TableAdapterTestCaseIdSubjectHeadersInColZero(ICellAdapter cellAdap
         return false;
     }
 
-    public IEnumerable<TestCase> GetTestCases(Table table, string filePath)
+    public IEnumerable<TestCase> GetTestCases(Table table, string filePath, string dmsNumber)
     {
-        var testCase = new TestCase { FileName = filePath };
+        var testCase = new TestCase
+        {
+            FileName = filePath,
+            DmsNumber = dmsNumber
+        };
 
         // Process rows to find Test No, Description, and Req ID
         foreach (var row in table.Elements<TableRow>())

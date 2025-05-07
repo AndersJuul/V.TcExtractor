@@ -26,6 +26,7 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters
 
             using (var wordDocument = WordprocessingDocument.Open(fileName, false))
             {
+                var dmsNumber = GetDmsNumberFromHeader(wordDocument);
                 var body = wordDocument.MainDocumentPart?.Document.Body;
 
                 // Find all tables in the document
@@ -35,7 +36,7 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters
                 {
                     var tableAdapter = _tableAdapters.SingleOrDefault(x => x.CanHandle(table));
 
-                    var cases = tableAdapter?.GetTestCases(table, fileName);
+                    var cases = tableAdapter?.GetTestCases(table, fileName, dmsNumber);
 
                     // Add the test case if we found at least some information
                     if (cases != null)
@@ -46,6 +47,22 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters
             }
 
             return testCases;
+        }
+
+        private static string GetDmsNumberFromHeader(WordprocessingDocument wordDocument)
+        {
+            foreach (var headerPart in wordDocument.MainDocumentPart?.HeaderParts)
+            {
+                var text = headerPart.Header.InnerText;
+                var documentNo = "Document no. ";
+                if (text.Contains(documentNo))
+                {
+                    var subPart = text.Substring(text.IndexOf(documentNo) + documentNo.Length).Substring(0, 9);
+                    return subPart;
+                }
+            }
+
+            return "";
         }
     }
 }

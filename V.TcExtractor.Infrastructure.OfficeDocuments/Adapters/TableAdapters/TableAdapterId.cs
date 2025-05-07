@@ -22,11 +22,12 @@ public class TableAdapterId(ICellAdapter cellAdapter) : ITableAdapter
         return false;
     }
 
-    public IEnumerable<TestCase> GetTestCases(Table table, string filePath)
+    public IEnumerable<TestCase> GetTestCases(Table table, string filePath, string dmsNumber)
     {
         var testCase = new TestCase
         {
             FileName = filePath,
+            DmsNumber = dmsNumber,
             TestNo = GetLastPartOfCellString(table, "ID:").Replace(" ", ""),
             ReqId = GetLastPartOfCellString(table, "DVPL ID:").Replace(" ", ""),
             Description = GetLastPartOfCellString(table, "Case Description:")

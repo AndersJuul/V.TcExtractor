@@ -110,7 +110,7 @@ public class ModuleReqTestCaseMappingRefresherTests
     public void Execute_ShouldCreateMatchesForSuccessfulMatches()
     {
         // Arrange
-        var testCase = new TestCase { ReqId = "TC1", FileName = "" };
+        var testCase = new TestCase { ReqId = "TC1", FileName = "", DmsNumber = "" };
         var requirement = new ModuleRequirement { Id = "REQ1" };
         _testCaseRepositoryMock.Setup(x => x.GetAll()).Returns(new[] { testCase });
         _moduleRequirementRepositoryMock.Setup(x => x.GetAll()).Returns(new[] { requirement });

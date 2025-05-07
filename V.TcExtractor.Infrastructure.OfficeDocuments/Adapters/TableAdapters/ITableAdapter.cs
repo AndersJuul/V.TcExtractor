@@ -6,5 +6,5 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.TableAdapters;
 public interface ITableAdapter
 {
     bool CanHandle(Table table);
-    IEnumerable<TestCase> GetTestCases(Table table, string filePath);
+    IEnumerable<TestCase> GetTestCases(Table table, string filePath, string dmsNumber);
 }
