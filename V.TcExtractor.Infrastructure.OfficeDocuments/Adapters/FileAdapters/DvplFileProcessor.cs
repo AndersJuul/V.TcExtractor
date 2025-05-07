@@ -24,6 +24,8 @@ public class DvplFileProcessor : IDvplFileProcessor
                 if (!string.IsNullOrWhiteSpace(id))
                     yield return new DvplItem
                     {
+                        ModuleRsCode = row.Cell(8).GetString(),
+                        TestLocation = row.Cell(27).GetString(),
                         //Id = id,
                         //RsTitle = row.Cell(5).GetString(),
                         //CombinedRequirement = row.Cell(6).GetString(),
