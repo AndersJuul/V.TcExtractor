@@ -5,4 +5,5 @@ public class SettingOptions
     public bool RefreshTestCases { get; set; } = false; // Default 
     public bool RefreshModuleReq { get; set; } = false; // Default 
     public bool RefreshModuleReqTestCaseMapping { get; set; } = false; // Default 
+    public bool RefreshDVPL { get; set; } = false; // Default
 }

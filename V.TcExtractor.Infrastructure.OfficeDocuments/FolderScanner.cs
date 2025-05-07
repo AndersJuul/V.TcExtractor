@@ -60,4 +60,9 @@ public class FolderScanner : IFolderScanner
             }
         }
     }
+
+    public IEnumerable<DvplItem> GetDvplItems()
+    {
+        throw new NotImplementedException();
+    }
 }

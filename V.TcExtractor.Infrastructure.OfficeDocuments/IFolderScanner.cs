@@ -6,4 +6,5 @@ public interface IFolderScanner
 {
     IEnumerable<TestCase> GetTestCases();
     IEnumerable<ModuleRequirement> GetModuleRequirements();
+    IEnumerable<DvplItem> GetDvplItems();
 }

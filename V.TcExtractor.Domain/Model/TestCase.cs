@@ -1,11 +1,10 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace V.TcExtractor.Domain.Model;
 
 public class TestCase
 {
-    private string _dmsNumber;
+    private string _dmsNumber = "";
     public required string FileName { get; set; }
 
     public required string DmsNumber

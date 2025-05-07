@@ -30,6 +30,11 @@ public class Program
             "--Setting:RefreshTestCases true // Whether Test Cases should be read fresh from Office files. Defaults to false");
         System.Console.WriteLine(
             "--Setting:RefreshModuleReq true // Whether Module Requirements should be read fresh from Office files. Defaults to false");
+        System.Console.WriteLine(
+            "--Setting:RefreshDVPL true // Whether DVPL should be read fresh from Office files. Defaults to false");
+        System.Console.WriteLine(
+            "--Setting:RefreshModuleReqTestCaseMapping true // Whether Module Requirements and Test Cases should be matched from CSV files. Defaults to false");
+
         System.Console.WriteLine("");
         System.Console.WriteLine("---------------------------------------------------------------------");
         System.Console.WriteLine("Actual arguments: " + string.Join(' ', args));
@@ -67,6 +72,12 @@ public class Program
                     .GetRequiredService<IModuleRequirementRefresher>()
                     .Execute();
 
+            if (runtimeOptions.RefreshDVPL)
+                host
+                    .Services
+                    .GetRequiredService<IDVPLRefresher>()
+                    .Execute();
+
             if (runtimeOptions.RefreshModuleReqTestCaseMapping)
                 host
                     .Services
@@ -93,6 +104,7 @@ public class Program
                     ["--FileLocation:Path"] = "FileLocation:Path",
                     ["--Setting:RefreshTestCases"] = "Setting:RefreshTestCases",
                     ["--Setting:RefreshModuleReq"] = "Setting:RefreshModuleReq",
+                    ["--Setting:RefreshDVPL"] = "Setting:RefreshDVPL",
                     ["--Setting:RefreshModuleReqTestCaseMapping"] = "Setting:RefreshModuleReqTestCaseMapping",
                 });
             })
@@ -118,6 +130,7 @@ public class Program
 
                 services.AddScoped<ITestCaseRefresher, TestCaseRefresher>();
                 services.AddScoped<IModuleRequirementRefresher, ModuleRequirementRefresher>();
+                services.AddScoped<IDVPLRefresher, DVPLRefresher>();
                 services.AddScoped<IModuleReqTestCaseMappingRefresher, ModuleReqTestCaseMappingRefresher>();
             });
     }
