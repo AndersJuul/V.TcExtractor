@@ -8,17 +8,24 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments;
 public class FolderScanner : IFolderScanner
 {
     private readonly IEnumerable<ITestCaseFileProcessor> _testFileProcessors;
-    private readonly IEnumerable<IModuleRequirementFileProcessor> _moduleRequirementFileProcessor;
+    private readonly IEnumerable<IModuleRequirementFileProcessor> _moduleRequirementFileProcessors;
     private readonly FileLocationOptions _fileLocationOptions;
     private readonly IEnumerable<IDvplFileProcessor> _dvplFileProcessor;
 
     public FolderScanner(IEnumerable<ITestCaseFileProcessor> testFileProcessors,
-        IEnumerable<IModuleRequirementFileProcessor> moduleRequirementFileProcessor,
+        IEnumerable<IModuleRequirementFileProcessor> moduleRequirementFileProcessors,
         IEnumerable<IDvplFileProcessor> dvplFileProcessor,
         IOptions<FileLocationOptions> fileLocationOptions)
     {
+        if (testFileProcessors == null || !testFileProcessors.Any())
+            throw new ArgumentException("testFileProcessors not specified.");
+        if (moduleRequirementFileProcessors == null || !moduleRequirementFileProcessors.Any())
+            throw new ArgumentException("moduleRequirementFileProcessors not specified.");
+        if (dvplFileProcessor == null || !dvplFileProcessor.Any())
+            throw new ArgumentException("dvplFileProcessor not specified.");
+
         _testFileProcessors = testFileProcessors;
-        _moduleRequirementFileProcessor = moduleRequirementFileProcessor;
+        _moduleRequirementFileProcessors = moduleRequirementFileProcessors;
         _dvplFileProcessor = dvplFileProcessor;
         _fileLocationOptions = fileLocationOptions.Value;
     }
@@ -55,7 +62,7 @@ public class FolderScanner : IFolderScanner
     {
         foreach (var fileName in GetFiles(_fileLocationOptions.Path, "*.xlsx"))
         {
-            var processors = _moduleRequirementFileProcessor.Where(xx => xx.CanHandle(fileName));
+            var processors = _moduleRequirementFileProcessors.Where(xx => xx.CanHandle(fileName));
 
             foreach (var processor in processors)
             {

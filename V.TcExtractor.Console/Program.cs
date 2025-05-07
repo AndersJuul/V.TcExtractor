@@ -113,8 +113,10 @@ public class Program
             {
                 services.AddScoped<IFolderScanner, FolderScanner>();
                 services.AddScoped<ITestCaseRequirementMatcher, TestCaseRequirementMatcher>();
+
                 services.AddAllImplementations<ITestCaseFileProcessor>();
                 services.AddAllImplementations<IModuleRequirementFileProcessor>();
+                services.AddAllImplementations<IDvplFileProcessor>();
                 services.AddAllImplementations<ITableAdapter>();
                 services.AddAllImplementations<ICellAdapter>();
 
