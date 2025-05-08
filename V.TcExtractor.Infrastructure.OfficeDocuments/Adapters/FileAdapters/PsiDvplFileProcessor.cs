@@ -18,25 +18,39 @@ public class PsiDvplFileProcessor : IDvplFileProcessor
             var worksheet = workbook.Worksheet(1);
             var range = worksheet.RangeUsed();
 
+            var productRsCode = "";
+            var moduleRsCode = "";
+            var testLocation = "";
+
             foreach (var row in range.Rows().Skip(3))
             {
-                var id = row.Cell(1).GetString();
-                var moduleRsCode = row.Cell(8).GetString();
-                var testLocation = row.Cell(27).GetString();
-                if (!string.IsNullOrWhiteSpace(id))
+                productRsCode = GetValueDefaultIfEmpty(row.Cell(4).GetString(), productRsCode);
+                moduleRsCode = GetValueDefaultIfEmpty(row.Cell(8).GetString(), moduleRsCode);
+                testLocation = GetValueDefaultIfEmpty(row.Cell(27).GetString(), testLocation);
+                yield return new DvplItem
                 {
-                    yield return new DvplItem
-                    {
-                        ModuleRsCode = moduleRsCode,
-                        TestLocation = testLocation,
-                        //Id = id,
-                        //RsTitle = row.Cell(5).GetString(),
-                        //CombinedRequirement = row.Cell(6).GetString(),
-                        //Motivation = row.Cell(12).GetString(),
-                        FileName = fileName,
-                    };
-                }
+                    ProductRsCode = productRsCode,
+                    ModuleRsCode = GetCommaSeparatedRequirements(moduleRsCode),
+                    TestLocation = testLocation,
+                    FileName = fileName,
+                };
             }
         }
+    }
+
+    private string GetCommaSeparatedRequirements(string moduleRsCode)
+    {
+        var lines = moduleRsCode
+            .Split(['\n'], StringSplitOptions.RemoveEmptyEntries)
+            .Where(x => x.Contains("_"));
+        return string.Join(',', lines);
+    }
+
+    private string GetValueDefaultIfEmpty(string newValue, string defaultValue)
+    {
+        if (!string.IsNullOrWhiteSpace(newValue))
+            return newValue;
+
+        return defaultValue;
     }
 }

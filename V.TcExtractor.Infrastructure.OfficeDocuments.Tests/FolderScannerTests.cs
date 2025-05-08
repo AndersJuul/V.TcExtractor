@@ -63,7 +63,7 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Tests
             // Assert
             Dump(dvplItems);
 
-            Assert.Equal(129, dvplItems.Length);
+            Assert.Equal(120, dvplItems.Length);
         }
 
         private FolderScanner GetSut()
