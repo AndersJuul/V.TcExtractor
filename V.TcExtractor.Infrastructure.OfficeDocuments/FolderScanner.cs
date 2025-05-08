@@ -12,7 +12,8 @@ public class FolderScanner : IFolderScanner
     private readonly FileLocationOptions _fileLocationOptions;
     private readonly IEnumerable<IDvplFileProcessor> _dvplFileProcessors;
 
-    public FolderScanner(IEnumerable<ITestCaseFileProcessor> testFileProcessors,
+    public FolderScanner(
+        IEnumerable<ITestCaseFileProcessor> testFileProcessors,
         IEnumerable<IModuleRequirementFileProcessor> moduleRequirementFileProcessors,
         IEnumerable<IDvplFileProcessor> dvplFileProcessors,
         IOptions<FileLocationOptions> fileLocationOptions)

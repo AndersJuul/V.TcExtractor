@@ -16,6 +16,7 @@ public class ModuleRequirementRepositoryCsvTests : IDisposable
         // Set up Bogus fake data generator
         _moduleRequirementFaker = new Faker<ModuleRequirement>()
             .RuleFor(t => t.Id, f => f.Random.Guid().ToString())
+            .RuleFor(t => t.ProductRequirement, f => "PRO" + f.Lorem.Word())
             .RuleFor(t => t.CombinedRequirement, f => f.Lorem.Sentence(3))
             .RuleFor(t => t.Motivation, f => f.Lorem.Sentence(3))
             .RuleFor(t => t.RsTitle, f => f.Lorem.Sentence(3))

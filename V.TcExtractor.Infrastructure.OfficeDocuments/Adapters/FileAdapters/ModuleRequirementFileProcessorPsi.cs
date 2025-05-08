@@ -3,7 +3,7 @@ using V.TcExtractor.Domain.Model;
 
 namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters;
 
-public class ExcelFileProcessor : IModuleRequirementFileProcessor
+public class ModuleRequirementFileProcessorPsi : ModuleRequirementFileProcessorSpc, IModuleRequirementFileProcessor
 {
     public bool CanHandle(string fileName)
     {
@@ -11,6 +11,9 @@ public class ExcelFileProcessor : IModuleRequirementFileProcessor
         if (!extension.Equals(".xlsx", StringComparison.InvariantCultureIgnoreCase)) return false;
 
         if (!File.Exists(fileName)) return false;
+
+        if (!fileName.Contains("PSI"))
+            return false;
 
         using var workbook = new XLWorkbook(fileName);
         var worksheet = workbook.Worksheet(1);
@@ -30,10 +33,16 @@ public class ExcelFileProcessor : IModuleRequirementFileProcessor
             foreach (var row in range.Rows().Skip(2))
             {
                 var id = row.Cell(1).GetString();
+                var reqCode = row.Cell(3).GetString();
+                var productRequirementLink = row.Cell(4).GetString();
                 if (!string.IsNullOrWhiteSpace(id))
                     yield return new ModuleRequirement
                     {
                         Id = id,
+                        ProductRequirement =
+                            ExtractProductRequirementReferences(!string.IsNullOrEmpty(reqCode)
+                                ? reqCode
+                                : productRequirementLink),
                         RsTitle = row.Cell(5).GetString(),
                         CombinedRequirement = row.Cell(6).GetString(),
                         Motivation = row.Cell(12).GetString(),
@@ -42,13 +51,5 @@ public class ExcelFileProcessor : IModuleRequirementFileProcessor
                     };
             }
         }
-    }
-
-    private RequirementSource GetSource(string fileName)
-    {
-        if (fileName.Contains("PSI")) return RequirementSource.PSI;
-        if (fileName.Contains("SPC")) return RequirementSource.SPC;
-
-        return RequirementSource.Unknown;
     }
 }

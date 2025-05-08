@@ -61,8 +61,12 @@ public abstract class TestCaseTests(ITestOutputHelper testOutputHelper)
         return wordFileProcessor;
     }
 
-    protected static ExcelFileProcessor GetExcelFileProcessor()
+    protected static IModuleRequirementFileProcessor[] GetExcelFileProcessors()
     {
-        return new ExcelFileProcessor();
+        return
+        [
+            new ModuleRequirementFileProcessorPsi(),
+            new ModuleRequirementFileProcessorSpc()
+        ];
     }
 }

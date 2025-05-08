@@ -8,5 +8,6 @@ public record QuotedStringCsvConfig : CsvConfiguration
     public QuotedStringCsvConfig() : base(CultureInfo.InvariantCulture)
     {
         ShouldQuote = args => true; // Quote all fields
+        Delimiter = ";"; // Use semicolon as delimiter
     }
 }

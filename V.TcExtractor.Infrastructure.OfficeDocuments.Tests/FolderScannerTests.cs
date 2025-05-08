@@ -45,7 +45,7 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Tests
             // Assert
             Dump(moduleRequirements);
 
-            Assert.Equal(41, moduleRequirements.Length);
+            Assert.Equal(122, moduleRequirements.Length);
         }
 
         [Fact]
@@ -69,13 +69,14 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Tests
         private FolderScanner GetSut()
         {
             var wordDocumentProcessor = GetWordFileProcessor();
-            var moduleRequirementFileProcessor = new ExcelFileProcessor();
 
             var psiDvplFileProcessor = new PsiDvplFileProcessor();
             var spcDvplFileProcessor = new SpcDvplFileProcessor();
+            var moduleRequirementFileProcessors = GetExcelFileProcessors();
+
             var sut = new FolderScanner(
                 [wordDocumentProcessor],
-                [moduleRequirementFileProcessor],
+                moduleRequirementFileProcessors,
                 [psiDvplFileProcessor, spcDvplFileProcessor],
                 new OptionsWrapper<FileLocationOptions>(new FileLocationOptions { Path = TestDataPath }));
             return sut;

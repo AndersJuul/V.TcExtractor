@@ -8,7 +8,8 @@ public class SpcDvplFileProcessor : IDvplFileProcessor
     public bool CanHandle(string fileName)
     {
         var nameWithoutPath = Path.GetFileName(fileName);
-        return nameWithoutPath.Contains("DVPL") && (nameWithoutPath.Contains("SPN") || nameWithoutPath.Contains("SPC"));
+        return
+            false; //nameWithoutPath.Contains("DVPL") && (nameWithoutPath.Contains("SPN") || nameWithoutPath.Contains("SPC"));
     }
 
     public IEnumerable<DvplItem> GetDvplItems(string fileName)

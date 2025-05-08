@@ -2,12 +2,12 @@
 
 public class DvplItem
 {
-    public string FileName { get; set; }
-    public string ModuleRsCode { get; set; }
-    public string TestLocation { get; set; }
+    public required string FileName { get; set; }
+    public required string ModuleRsCode { get; set; }
+    public required string TestLocation { get; set; }
 
     public override string ToString()
     {
-        return $"{FileName} {TestLocation} {ModuleRsCode}";
+        return $"{FileName} || {TestLocation} || {ModuleRsCode}";
     }
 }

@@ -4,7 +4,8 @@ using Xunit.Abstractions;
 
 namespace V.TcExtractor.Infrastructure.OfficeDocuments.Tests
 {
-    public class ExcelFileProcessorTests(ITestOutputHelper testOutputHelper) : TestCaseTests(testOutputHelper)
+    public class ModuleRequirementFileProcessorPsiTests(ITestOutputHelper testOutputHelper)
+        : TestCaseTests(testOutputHelper)
     {
         [Fact]
         public void CanHandle_returns_false_for_word_file_name()
@@ -47,25 +48,9 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Tests
             Assert.Equal(41, moduleRequirements.Count());
         }
 
-        [Fact]
-        public void GetModuleRequirements_returns_module_requirements_for_spc_requirements()
+        private static ModuleRequirementFileProcessorPsi GetSut()
         {
-            // Arrange
-            var sut = GetSut();
-
-            // Act
-            var moduleRequirements = sut
-                .GetModuleRequirements(Path.Combine(TestDataPath, "DVPL", "SPC Requirements.xlsx"));
-
-            // Assert
-            Dump(moduleRequirements);
-            Assert.Equal(84, moduleRequirements.Count());
-        }
-
-        private static ExcelFileProcessor GetSut()
-        {
-            var sut = GetExcelFileProcessor();
-            return sut;
+            return new ModuleRequirementFileProcessorPsi();
         }
     }
 }

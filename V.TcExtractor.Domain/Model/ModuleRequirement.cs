@@ -3,6 +3,7 @@
 public class ModuleRequirement
 {
     private string _id = "";
+    private string _productRequirement;
 
     public string Id
     {
@@ -22,8 +23,19 @@ public class ModuleRequirement
     public string FileName { get; set; } = "";
     public RequirementSource Source { get; set; }
 
+    public string ProductRequirement
+    {
+        get => _productRequirement;
+        set
+        {
+            if (!value.Contains("PRO"))
+                throw new ArgumentException("Product requirement must contain 'PRO'.");
+            _productRequirement = value;
+        }
+    }
+
     public override string ToString()
     {
-        return $"{Id}    {RsTitle}   {CombinedRequirement}     {Motivation}   {FileName} {Source}";
+        return $"{Id}  {ProductRequirement}  {RsTitle}   {CombinedRequirement}     {Motivation}   {FileName} {Source}";
     }
 }
