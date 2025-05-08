@@ -5,6 +5,7 @@ namespace V.TcExtractor.Domain.Model;
 public class TestCase
 {
     private string _dmsNumber = "";
+    private string _testNo = "";
     public required string FileName { get; set; }
 
     public required string DmsNumber
@@ -20,7 +21,17 @@ public class TestCase
         }
     }
 
-    public string TestNo { get; set; } = "";
+    public string TestNo
+    {
+        get => _testNo;
+        set
+        {
+            if (value.Contains(" "))
+                throw new ArgumentException("TestNo can't contain spaces.");
+            _testNo = value;
+        }
+    }
+
     public string Description { get; set; } = "";
     public string ReqId { get; set; } = "";
 

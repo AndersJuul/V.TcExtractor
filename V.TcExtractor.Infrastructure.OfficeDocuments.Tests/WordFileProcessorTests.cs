@@ -204,7 +204,7 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Tests
             Assert.Equal(4, testCases.Count());
 
             // Special case: TC_ ReSc _001 covers multiple requirements
-            var testCaseTC_ReSc_001 = testCases.Single(x => x.TestNo == "TC_ ReSc _001");
+            var testCaseTC_ReSc_001 = testCases.Single(x => x.TestNo == "TC_ReSc_001");
             Assert.Contains("PSI_1.1.2", testCaseTC_ReSc_001.ReqId);
             Assert.Contains("PSI_1.1.4", testCaseTC_ReSc_001.ReqId);
             Assert.Contains("PSI_57.1", testCaseTC_ReSc_001.ReqId);

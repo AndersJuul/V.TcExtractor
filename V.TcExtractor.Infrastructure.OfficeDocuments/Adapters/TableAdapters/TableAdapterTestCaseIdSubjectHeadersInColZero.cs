@@ -55,7 +55,7 @@ public class TableAdapterTestCaseIdSubjectHeadersInColZero(ICellAdapter cellAdap
 
                 if (headerCell.Contains("Test ID"))
                 {
-                    testCase.TestNo = valueCell.Trim();
+                    testCase.TestNo = valueCell.Replace(" ", "").Trim();
                 }
 
                 if (headerCell.Contains("Description"))

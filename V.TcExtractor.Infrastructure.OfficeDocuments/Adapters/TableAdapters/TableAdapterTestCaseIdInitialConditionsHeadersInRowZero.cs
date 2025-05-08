@@ -51,7 +51,7 @@ public class TableAdapterTestCaseIdInitialConditionsHeadersInRowZero(ICellAdapte
             if (string.IsNullOrEmpty(cellAdapter.GetCellText(cells[0]).Trim()))
                 continue;
 
-            testCase.TestNo = cellAdapter.GetCellText(cells[0]).Trim();
+            testCase.TestNo = cellAdapter.GetCellText(cells[0]).Replace(" ", "").Trim();
 
             if (!string.IsNullOrEmpty(cellAdapter.GetCellText(cells[1]).Trim()))
                 desc = cellAdapter.GetCellText(cells[1]).Trim();

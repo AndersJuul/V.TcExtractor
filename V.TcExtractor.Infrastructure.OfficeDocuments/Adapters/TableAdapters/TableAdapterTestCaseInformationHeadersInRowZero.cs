@@ -48,7 +48,7 @@ public class TableAdapterTestCaseInformationHeadersInRowZero(ICellAdapter cellAd
                 // Extract Test No
                 if (headerCell.Contains("Test No"))
                 {
-                    testCase.TestNo = cellAdapter.GetCellText(cells[1]).Trim();
+                    testCase.TestNo = cellAdapter.GetCellText(cells[1]).Replace(" ", "").Trim();
                     testCase.ReqId = cellAdapter.GetCellText(cells[4]).Trim();
                 }
                 // Extract Description
