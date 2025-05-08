@@ -14,12 +14,8 @@ public class DvplItemRepositoryCsvTests : IDisposable
     public DvplItemRepositoryCsvTests()
     {
         _dvplItemFaker = new Faker<DvplItem>()
-                //.RuleFor(t => t.ReqId, f => f.Random.Guid().ToString())
-                //.RuleFor(t => t.Description, f => f.Lorem.Sentence(3))
-                //.RuleFor(t => t.TestNo, f => f.Random.Int(min: 1, max: 1000).ToString())
+                .RuleFor(t => t.ProductRsCode, f => f.Random.Guid().ToString())
                 .RuleFor(t => t.FileName, f => f.System.FileName())
-            //.RuleFor(t => t.DmsNumber,
-            //    f => f.Random.Int(min: 1000, max: 9999) + "-" + f.Random.Int(min: 1000, max: 9999))
             ;
 
         // Create a temp directory for testing
