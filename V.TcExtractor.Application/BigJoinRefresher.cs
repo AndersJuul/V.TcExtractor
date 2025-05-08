@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using V.TcExtractor.Application.Tests;
+using V.TcExtractor.Domain.Model;
 using V.TcExtractor.Domain.Refreshers;
 using V.TcExtractor.Domain.Repositories;
 
