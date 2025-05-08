@@ -9,16 +9,19 @@ public class BigJoinRefresher : IBigJoinRefresher
 {
     private readonly ITestCaseRepository _testCaseRepository;
     private readonly IModuleRequirementRepository _moduleRequirementRepository;
+    private readonly IDvplItemRepository _dvplItemRepository;
     private readonly IBigJoinRepository _bigJoinRepository;
     private readonly ILogger<BigJoinRefresher> _logger;
 
     public BigJoinRefresher(ITestCaseRepository testCaseRepository,
         IModuleRequirementRepository moduleRequirementRepository,
+        IDvplItemRepository dvplItemRepository,
         IBigJoinRepository bigJoinRepository,
         ILogger<BigJoinRefresher> logger)
     {
         _testCaseRepository = testCaseRepository;
         _moduleRequirementRepository = moduleRequirementRepository;
+        _dvplItemRepository = dvplItemRepository;
         _bigJoinRepository = bigJoinRepository;
         _logger = logger;
     }
@@ -28,13 +31,40 @@ public class BigJoinRefresher : IBigJoinRefresher
         _logger.LogInformation("Refreshing Big Joins.");
 
 
-        var moduleRequirements = _moduleRequirementRepository.GetAll();
         var testCases = _testCaseRepository.GetAll();
+        var moduleRequirements = _moduleRequirementRepository.GetAll();
+        var dvpls = _dvplItemRepository.GetAll();
+
+        var bigJoins = new List<BigJoin>();
+
+        foreach (var dvplItem in dvpls)
+        {
+            foreach (var moduleRequirement in moduleRequirements.Where(x =>
+                         x.ProductRequirement.Contains(dvplItem.ProductRsCode)))
+            {
+                foreach (var testCase in testCases.Where(x => x.ReqId.Contains(moduleRequirement.Id)))
+                {
+                    bigJoins.Add(
+                        new BigJoin
+                        {
+                            ProductRsCode = dvplItem.ProductRsCode,
+                            TestLocation = dvplItem.TestLocation,
+                            ModuleRequirementId = moduleRequirement.Id,
+                            TestNo = testCase.TestNo,
+                            TestCaseFileName = testCase.FileName,
+                            TestCaseDmsNumber = testCase.DmsNumber
+                        }
+                    );
+                    //Log.Logger.Information(
+                    //    $"{dvplItem.ProductRsCode,20} {dvplItem.TestLocation,20} {moduleRequirement.Id,5} {testCase.TestNo,10} {testCase.FileName,20} {testCase.DmsNumber,20}");
+                }
+            }
+        }
 
 
         _bigJoinRepository.DeleteAll();
-        _bigJoinRepository.AddRange(new BigJoin[] { });
+        _bigJoinRepository.AddRange(bigJoins.ToArray());
 
-        _logger.LogInformation("Done Refreshing Big Joins: " + testCases.Length);
+        _logger.LogInformation("Done Refreshing Big Joins: " + bigJoins.Count);
     }
 }

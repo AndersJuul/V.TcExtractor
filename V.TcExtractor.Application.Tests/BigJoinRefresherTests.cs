@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using V.TcExtractor.Domain.Model;
 using V.TcExtractor.Domain.Repositories;
-using V.TcExtractor.Infrastructure.OfficeDocuments;
 
 namespace V.TcExtractor.Application.Tests;
 
@@ -12,6 +11,7 @@ public class BigJoinRefresherTests
     private readonly Mock<IBigJoinRepository> _bigJoinRepositoryMock;
     private readonly Mock<ITestCaseRepository> _testCaseRepositoryMock;
     private readonly Mock<IModuleRequirementRepository> _moduleRequirementRepositoryMock;
+    private readonly Mock<IDvplItemRepository> _dvplItemRepositoryMock;
     private readonly Mock<ILogger<BigJoinRefresher>> _loggerMock;
     private readonly BigJoinRefresher _refresher;
     private readonly Faker<BigJoin> _bigJoinFaker;
@@ -21,6 +21,7 @@ public class BigJoinRefresherTests
     {
         _moduleRequirementRepositoryMock = new Mock<IModuleRequirementRepository>();
         _testCaseRepositoryMock = new Mock<ITestCaseRepository>();
+        _dvplItemRepositoryMock = new Mock<IDvplItemRepository>();
         _bigJoinRepositoryMock = new Mock<IBigJoinRepository>();
         _loggerMock = new Mock<ILogger<BigJoinRefresher>>();
 
@@ -39,6 +40,7 @@ public class BigJoinRefresherTests
 
         _refresher = new BigJoinRefresher(_testCaseRepositoryMock.Object,
             _moduleRequirementRepositoryMock.Object,
+            _dvplItemRepositoryMock.Object,
             _bigJoinRepositoryMock.Object,
             _loggerMock.Object);
     }
