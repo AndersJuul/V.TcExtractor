@@ -6,4 +6,5 @@ public interface IDvplItemRepository
 {
     void DeleteAll();
     void AddRange(DvplItem[] dvplItems);
+    DvplItem[] GetAll();
 }

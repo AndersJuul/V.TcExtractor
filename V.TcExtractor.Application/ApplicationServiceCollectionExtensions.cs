@@ -11,6 +11,7 @@ namespace V.TcExtractor.Application
             services.AddScoped<IModuleRequirementRefresher, ModuleRequirementRefresher>();
             services.AddScoped<IDVPLRefresher, DVPLRefresher>();
             services.AddScoped<IModuleReqTestCaseMappingRefresher, ModuleReqTestCaseMappingRefresher>();
+            services.AddScoped<IBigJoinRefresher, BigJoinRefresher>();
 
             return services;
         }

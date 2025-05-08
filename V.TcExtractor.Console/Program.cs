@@ -5,8 +5,10 @@ using Microsoft.Extensions.Options;
 using Serilog;
 using V.TcExtractor.Application;
 using V.TcExtractor.Domain;
+using V.TcExtractor.Domain.Model;
 using V.TcExtractor.Domain.Options;
 using V.TcExtractor.Domain.Refreshers;
+using V.TcExtractor.Domain.Repositories;
 using V.TcExtractor.Infrastructure.CsvStorage;
 using V.TcExtractor.Infrastructure.OfficeDocuments;
 
@@ -79,6 +81,35 @@ public class Program
                     .Services
                     .GetRequiredService<IModuleReqTestCaseMappingRefresher>()
                     .Execute();
+
+            if (runtimeOptions.RefreshBigJoin)
+                host
+                    .Services
+                    .GetRequiredService<IBigJoinRefresher>()
+                    .Execute();
+
+            var rDvplItems = host.Services.GetRequiredService<IDvplItemRepository>();
+            var rModuleRequirements = host.Services.GetRequiredService<IModuleRequirementRepository>();
+            var rTestCases = host.Services.GetRequiredService<ITestCaseRepository>();
+
+            var dvpls = rDvplItems.GetAll();
+            var moduleRequirements = rModuleRequirements.GetAll();
+            var testCases = rTestCases.GetAll();
+            Log.Logger.Information(
+                "{ProductRsCode}       {TestLocation}          {Id}{TestNo} {FileName}                                            {DmsNumber}");
+
+            foreach (var dvplItem in dvpls)
+            {
+                foreach (var moduleRequirement in moduleRequirements.Where(x =>
+                             x.ProductRequirement.Contains(dvplItem.ProductRsCode)))
+                {
+                    foreach (var testCase in testCases.Where(x => x.ReqId.Contains(moduleRequirement.Id)))
+                    {
+                        Log.Logger.Information(
+                            $"{dvplItem.ProductRsCode,20} {dvplItem.TestLocation,20} {moduleRequirement.Id,5} {testCase.TestNo,10} {testCase.FileName,20} {testCase.DmsNumber,20}");
+                    }
+                }
+            }
         }
         catch (Exception ex)
         {
