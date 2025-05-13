@@ -64,6 +64,12 @@ public class Program
                     .GetRequiredService<ITestCaseRefresher>()
                     .Execute();
 
+            if (runtimeOptions.RefreshTestResults)
+                host
+                    .Services
+                    .GetRequiredService<ITestResultRefresher>()
+                    .Execute();
+
             if (runtimeOptions.RefreshModuleReq)
                 host
                     .Services

@@ -72,6 +72,13 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters
                 if (dmsNumberFromHeader != "") return dmsNumberFromHeader;
             }
 
+            foreach (var headerPart in wordDocument.MainDocumentPart?.HeaderParts)
+            {
+                var text = headerPart.Header.InnerText;
+                var dmsNumberFromHeader = DmsNumberFromHeader(text, "DMS no.: ");
+                if (dmsNumberFromHeader != "") return dmsNumberFromHeader;
+            }
+
             return "";
         }
 

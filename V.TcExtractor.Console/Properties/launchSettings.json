@@ -2,7 +2,7 @@
   "profiles": {
     "V.TcExtractor.Console": {
       "commandName": "Project",
-      "commandLineArgs": "--FileLocation:Path \"C:\\Data\\V\" --Setting:RefreshTestCases true --Setting:RefreshModuleReq true --Setting:RefreshDVPL true --Setting:RefreshModuleReqTestCaseMapping true --Setting:RefreshBigJoin true"
+      "commandLineArgs": "--FileLocation:Path \"C:\\\\Users\\\\aju\\\\Mit drev\\\\V\" --Setting:RefreshTestCases true --Setting:RefreshModuleReq true --Setting:RefreshDVPL true --Setting:RefreshModuleReqTestCaseMapping true --Setting:RefreshBigJoin true"
     }
   }
 }

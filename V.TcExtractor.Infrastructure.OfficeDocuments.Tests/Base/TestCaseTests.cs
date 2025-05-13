@@ -9,7 +9,7 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Tests.Base;
 public abstract class TestCaseTests(ITestOutputHelper testOutputHelper)
 {
     protected readonly ITestOutputHelper TestOutputHelper = testOutputHelper;
-    protected readonly string TestDataPath = "C:\\DATA\\v";
+    protected readonly string TestDataPath = "C:\\Users\\aju\\Mit drev\\V";
 
     protected void Dump(IEnumerable<TestCase> testCases)
     {

@@ -21,4 +21,8 @@
     <ProjectReference Include="..\V.TcExtractor.Infrastructure.CsvStorage\V.TcExtractor.Infrastructure.CsvStorage.csproj" />
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /Y /F &quot;C:\Projects\V.TcExtractor\V.TcExtractor.Console\bin\Debug\net9.0\*.*&quot; &quot;C:\Users\aju\Mit drev\V\Binary\&quot;" />
+  </Target>
+
 </Project>

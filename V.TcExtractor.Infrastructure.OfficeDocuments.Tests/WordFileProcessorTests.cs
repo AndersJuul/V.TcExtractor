@@ -13,7 +13,7 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Tests
             var sut = GetSut();
 
             // Act
-            var canHandle = sut.CanHandle("A.docx");
+            var canHandle = sut.CanHandle("A DVPR.docx");
 
             // Assert
             Assert.True(canHandle);
