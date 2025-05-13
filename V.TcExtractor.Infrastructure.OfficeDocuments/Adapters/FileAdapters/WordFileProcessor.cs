@@ -16,6 +16,7 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters
 
         public bool CanHandle(string fileName)
         {
+            if (!fileName.Contains("DVPR")) return false; // Take only dvpr
             var extension = Path.GetExtension(fileName);
             return extension.Equals(".docx", StringComparison.InvariantCultureIgnoreCase);
         }

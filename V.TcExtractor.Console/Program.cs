@@ -25,6 +25,8 @@ public class Program
         System.Console.WriteLine(
             "--Setting:RefreshTestCases true // Whether Test Cases should be read fresh from Office files. Defaults to false");
         System.Console.WriteLine(
+            "--Setting:RefreshTestResults true // Whether Test Results should be read fresh from Office files. Defaults to false");
+        System.Console.WriteLine(
             "--Setting:RefreshModuleReq true // Whether Module Requirements should be read fresh from Office files. Defaults to false");
         System.Console.WriteLine(
             "--Setting:RefreshDVPL true // Whether DVPL should be read fresh from Office files. Defaults to false");
