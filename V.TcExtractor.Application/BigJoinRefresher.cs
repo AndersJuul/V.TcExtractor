@@ -55,8 +55,6 @@ public class BigJoinRefresher : IBigJoinRefresher
                             TestCaseDmsNumber = testCase.DmsNumber
                         }
                     );
-                    //Log.Logger.Information(
-                    //    $"{dvplItem.ProductRsCode,20} {dvplItem.TestLocation,20} {moduleRequirement.Id,5} {testCase.TestNo,10} {testCase.FileName,20} {testCase.DmsNumber,20}");
                 }
             }
         }

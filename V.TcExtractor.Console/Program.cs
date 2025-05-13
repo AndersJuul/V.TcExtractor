@@ -30,6 +30,8 @@ public class Program
             "--Setting:RefreshDVPL true // Whether DVPL should be read fresh from Office files. Defaults to false");
         System.Console.WriteLine(
             "--Setting:RefreshModuleReqTestCaseMapping true // Whether Module Requirements and Test Cases should be matched from CSV files. Defaults to false");
+        System.Console.WriteLine(
+            "--Setting:RefreshBigJoin true // Whether DVPL, Module Requirements and Test Cases should be matched from CSV files. Defaults to false");
 
         System.Console.WriteLine("");
         System.Console.WriteLine("---------------------------------------------------------------------");
