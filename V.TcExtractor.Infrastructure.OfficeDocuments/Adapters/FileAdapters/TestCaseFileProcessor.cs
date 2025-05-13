@@ -5,11 +5,11 @@ using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.TableAdapters;
 
 namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters
 {
-    public class WordFileProcessor : ITestCaseFileProcessor
+    public class TestCaseFileProcessor : ITestCaseFileProcessor
     {
         private readonly IEnumerable<ITableAdapter> _tableAdapters;
 
-        public WordFileProcessor(IEnumerable<ITableAdapter> tableAdapters)
+        public TestCaseFileProcessor(IEnumerable<ITableAdapter> tableAdapters)
         {
             _tableAdapters = tableAdapters;
         }

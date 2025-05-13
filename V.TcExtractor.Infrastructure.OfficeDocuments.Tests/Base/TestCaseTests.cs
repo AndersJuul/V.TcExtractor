@@ -47,10 +47,10 @@ public abstract class TestCaseTests(ITestOutputHelper testOutputHelper)
         TestOutputHelper.WriteLine("----");
     }
 
-    protected static WordFileProcessor GetWordFileProcessor()
+    protected static TestCaseFileProcessor GetWordFileProcessor()
     {
         var cellAdapter = new CellAdapter();
-        var wordFileProcessor = new WordFileProcessor(
+        var wordFileProcessor = new TestCaseFileProcessor(
         [
             new TableAdapterId(cellAdapter),
             new TableAdapterTestCaseIdAndDescriptionHeadersInRowZero(cellAdapter),

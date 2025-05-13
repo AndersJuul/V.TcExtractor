@@ -4,7 +4,7 @@ using Xunit.Abstractions;
 
 namespace V.TcExtractor.Infrastructure.OfficeDocuments.Tests
 {
-    public class WordFileProcessorTests(ITestOutputHelper testOutputHelper) : TestCaseTests(testOutputHelper)
+    public class TestCaseFileProcessorTests(ITestOutputHelper testOutputHelper) : TestCaseTests(testOutputHelper)
     {
         [Fact]
         public void CanHandle_returns_true_for_word_file_name()
@@ -437,7 +437,7 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Tests
             Assert.All(testCases, x => Assert.False(string.IsNullOrEmpty(x.Description)));
         }
 
-        private static WordFileProcessor GetSut()
+        private static TestCaseFileProcessor GetSut()
         {
             var sut = GetWordFileProcessor();
             return sut;
