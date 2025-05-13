@@ -84,4 +84,9 @@ public class FolderScanner : IFolderScanner
             }
         }
     }
+
+    public IEnumerable<TestResult> GetTestResults()
+    {
+        throw new NotImplementedException();
+    }
 }
