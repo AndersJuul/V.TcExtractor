@@ -3,7 +3,7 @@
 public class ModuleRequirement
 {
     private string _id = "";
-    private string _productRequirement;
+    private string _productRequirement = "";
 
     public string Id
     {

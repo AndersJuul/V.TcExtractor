@@ -52,28 +52,32 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters
 
         private static string GetDmsNumberFromHeader(WordprocessingDocument wordDocument)
         {
-            foreach (var headerPart in wordDocument.MainDocumentPart?.HeaderParts)
+            var headerParts = wordDocument.MainDocumentPart?.HeaderParts.ToArray() ??
+                              throw new NullReferenceException(
+                                  "Not able to get MainDocumentPart?.HeaderParts from document.");
+
+            foreach (var headerPart in headerParts)
             {
                 var text = headerPart.Header.InnerText;
                 var dmsNumberFromHeader = DmsNumberFromHeader(text, "Document: INFO  Title ");
                 if (dmsNumberFromHeader != "") return dmsNumberFromHeader;
             }
 
-            foreach (var headerPart in wordDocument.MainDocumentPart?.HeaderParts)
+            foreach (var headerPart in headerParts)
             {
                 var text = headerPart.Header.InnerText;
                 var dmsNumberFromHeader = DmsNumberFromHeader(text, "Document no. ");
                 if (dmsNumberFromHeader != "") return dmsNumberFromHeader;
             }
 
-            foreach (var headerPart in wordDocument.MainDocumentPart?.HeaderParts)
+            foreach (var headerPart in headerParts)
             {
                 var text = headerPart.Header.InnerText;
                 var dmsNumberFromHeader = DmsNumberFromHeader(text, "Document:");
                 if (dmsNumberFromHeader != "") return dmsNumberFromHeader;
             }
 
-            foreach (var headerPart in wordDocument.MainDocumentPart?.HeaderParts)
+            foreach (var headerPart in headerParts)
             {
                 var text = headerPart.Header.InnerText;
                 var dmsNumberFromHeader = DmsNumberFromHeader(text, "DMS no.: ");

@@ -3,7 +3,7 @@ using V.TcExtractor.Domain.Model;
 
 namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters;
 
-public class ModuleRequirementFileProcessorPsi : ModuleRequirementFileProcessorSpc, IModuleRequirementFileProcessor
+public class ModuleRequirementFileProcessorPsi : ModuleRequirementFileProcessorBase, IModuleRequirementFileProcessor
 {
     public bool CanHandle(string fileName)
     {
@@ -28,7 +28,8 @@ public class ModuleRequirementFileProcessorPsi : ModuleRequirementFileProcessorS
         {
             var source = GetSource(fileName);
             var worksheet = workbook.Worksheet(1);
-            var range = worksheet.RangeUsed();
+            var range = worksheet.RangeUsed() ??
+                        throw new NullReferenceException("Not able to get RangeUsed from worksheet.");
 
             foreach (var row in range.Rows().Skip(2))
             {

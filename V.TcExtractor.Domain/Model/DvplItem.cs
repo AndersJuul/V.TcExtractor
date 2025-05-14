@@ -4,10 +4,10 @@ namespace V.TcExtractor.Domain.Model;
 
 public class DvplItem
 {
-    private string _fileName;
-    private string _moduleRsCode;
-    private string _testLocation;
-    private string _productRsCode;
+    private string _fileName = "";
+    private string _moduleRsCode = "";
+    private string _testLocation = "";
+    private string _productRsCode = "";
 
     public required string FileName
     {

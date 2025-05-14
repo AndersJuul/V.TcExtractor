@@ -16,7 +16,9 @@ public class PsiDvplFileProcessor : IDvplFileProcessor
         using (var workbook = new XLWorkbook(fileName))
         {
             var worksheet = workbook.Worksheet(1);
-            var range = worksheet.RangeUsed();
+            var range = worksheet.RangeUsed() ??
+                        throw new NullReferenceException("Not able to get RangeUsed from worksheet.");
+            ;
 
             var productRsCode = "";
             var moduleRsCode = "";

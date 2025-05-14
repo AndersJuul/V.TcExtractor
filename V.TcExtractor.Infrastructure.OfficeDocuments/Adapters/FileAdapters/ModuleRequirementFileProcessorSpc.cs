@@ -30,7 +30,8 @@ public class ModuleRequirementFileProcessorSpc : ModuleRequirementFileProcessorB
         {
             var source = GetSource(fileName);
             var worksheet = workbook.Worksheet(4);
-            var range = worksheet.RangeUsed();
+            var range = worksheet.RangeUsed() ??
+                        throw new NullReferenceException("Not able to get RangeUsed from worksheet.");
 
             foreach (var row in range.Rows().Skip(1))
             {
