@@ -2,7 +2,7 @@
 
 namespace V.TcExtractor.Domain.Processors;
 
-public interface ITestResultProcessor
+public interface ITestResultFileProcessor
 {
     bool CanHandle(string fileName);
     IEnumerable<TestResult> GetTestResults(string fileName);

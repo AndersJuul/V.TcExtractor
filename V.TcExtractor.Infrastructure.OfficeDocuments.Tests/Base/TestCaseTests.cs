@@ -70,4 +70,18 @@ public abstract class TestCaseTests(ITestOutputHelper testOutputHelper)
             new ModuleRequirementFileProcessorSpc()
         ];
     }
+
+    protected ITestResultFileProcessor GetTestResultFileProcessor()
+    {
+        var cellAdapter = new CellAdapter();
+        var wordFileProcessor = new TestResultFileProcessor(
+        [
+            new TableAdapterId(cellAdapter),
+            new TableAdapterTestCaseIdAndDescriptionHeadersInRowZero(cellAdapter),
+            new TableAdapterTestCaseIdSubjectHeadersInColZero(cellAdapter),
+            new TableAdapterTestCaseInformationHeadersInRowZero(cellAdapter),
+            new TableAdapterTestCaseIdInitialConditionsHeadersInRowZero(cellAdapter)
+        ]);
+        return wordFileProcessor;
+    }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace V.TcExtractor.Console;
+namespace V.TcExtractor.Domain;
 
 public static class ServiceCollectionExtensions
 {

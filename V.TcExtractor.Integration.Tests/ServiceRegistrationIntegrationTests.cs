@@ -30,10 +30,10 @@ namespace V.TcExtractor.Integration.Tests
 
             var assemblies = new Assembly[]
             {
-                typeof(DomainServiceCollectionExtensions).Assembly,
                 typeof(ApplicationServiceCollectionExtensions).Assembly,
-                typeof(InfrastructureOfficeDocumentsServiceCollectionExtensions).Assembly,
+                typeof(DomainServiceCollectionExtensions).Assembly,
                 typeof(InfrastructureCsvStorageServiceCollectionExtensions).Assembly,
+                typeof(InfrastructureOfficeDocumentsServiceCollectionExtensions).Assembly,
             };
 
             var failures = new List<string>();

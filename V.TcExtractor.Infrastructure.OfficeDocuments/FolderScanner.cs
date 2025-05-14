@@ -12,16 +12,18 @@ public class FolderScanner : IFolderScanner
     private readonly IEnumerable<IModuleRequirementFileProcessor> _moduleRequirementFileProcessors;
     private readonly FileLocationOptions _fileLocationOptions;
     private readonly IEnumerable<IDvplFileProcessor> _dvplFileProcessors;
-    private readonly IEnumerable<ITestResultProcessor> _testResultProcessors;
+    private readonly IEnumerable<ITestResultFileProcessor> _testResultProcessors;
 
     public FolderScanner(IEnumerable<ITestCaseFileProcessor> testFileProcessors,
         IEnumerable<IModuleRequirementFileProcessor> moduleRequirementFileProcessors,
         IEnumerable<IDvplFileProcessor> dvplFileProcessors,
-        IEnumerable<ITestResultProcessor> testResultProcessors,
+        IEnumerable<ITestResultFileProcessor> testResultProcessors,
         IOptions<FileLocationOptions> fileLocationOptions)
     {
         if (testFileProcessors == null || !testFileProcessors.Any())
             throw new ArgumentException("testFileProcessors not specified. Must have at least one.");
+        if (testResultProcessors == null || !testResultProcessors.Any())
+            throw new ArgumentException("testResultProcessors not specified. Must have at least one.");
         if (moduleRequirementFileProcessors == null || !moduleRequirementFileProcessors.Any())
             throw new ArgumentException("moduleRequirementFileProcessors not specified. Must have at least one.");
         if (dvplFileProcessors == null || !dvplFileProcessors.Any())

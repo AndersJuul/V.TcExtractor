@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using V.TcExtractor.Console;
+using V.TcExtractor.Domain;
 using V.TcExtractor.Domain.Processors;
 using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.CellAdapters;
 using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters;
@@ -13,9 +13,13 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments
         {
             services.AddScoped<IFolderScanner, FolderScanner>();
 
-            services.AddAllImplementations<ITestCaseFileProcessor>();
-            services.AddAllImplementations<IModuleRequirementFileProcessor>();
-            services.AddAllImplementations<IDvplFileProcessor>();
+            var serviceLifetime = ServiceLifetime.Scoped;
+            var assemblies = new[] { typeof(TestCaseFileProcessor).Assembly };
+
+            services.AddAllImplementations<ITestCaseFileProcessor>(serviceLifetime, assemblies);
+            services.AddAllImplementations<ITestResultFileProcessor>(serviceLifetime, assemblies);
+            services.AddAllImplementations<IModuleRequirementFileProcessor>(serviceLifetime, assemblies);
+            services.AddAllImplementations<IDvplFileProcessor>(serviceLifetime, assemblies);
             services.AddAllImplementations<ITableAdapter>();
             services.AddAllImplementations<ICellAdapter>();
 
