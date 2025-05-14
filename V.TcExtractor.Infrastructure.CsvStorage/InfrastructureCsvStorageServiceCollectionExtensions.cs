@@ -9,6 +9,7 @@ public static class InfrastructureCsvStorageServiceCollectionExtensions
     public static IServiceCollection AddInfrastructureCsv(this IServiceCollection services)
     {
         services.AddScoped<ITestCaseRepository, TestCaseRepositoryCsv>();
+        services.AddScoped<ITestResultRepository, TestResultRepositoryCsv>();
         services.AddScoped<IModuleRequirementRepository, ModuleRequirementRepositoryCsv>();
         services.AddScoped<IDvplItemRepository, DvplItemRepositoryCsv>();
         services.AddScoped<IBigJoinRepository, BigJoinRepositoryCsv>();

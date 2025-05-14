@@ -8,14 +8,14 @@ namespace V.TcExtractor.Application;
 public class TestResultRefresher : ITestResultRefresher
 {
     private readonly IFolderScanner _folderScanner;
-    private readonly ITestCaseRepository _testCaseRepository;
-    private readonly ILogger<TestCaseRefresher> _logger;
+    private readonly ITestResultRepository _testResultRepository;
+    private readonly ILogger<TestResultRefresher> _logger;
 
-    public TestResultRefresher(IFolderScanner folderScanner, ITestCaseRepository testCaseRepository,
-        ILogger<TestCaseRefresher> logger)
+    public TestResultRefresher(IFolderScanner folderScanner, ITestResultRepository testResultRepository,
+        ILogger<TestResultRefresher> logger)
     {
         _folderScanner = folderScanner;
-        _testCaseRepository = testCaseRepository;
+        _testResultRepository = testResultRepository;
         _logger = logger;
     }
 
@@ -23,13 +23,13 @@ public class TestResultRefresher : ITestResultRefresher
     {
         _logger.LogInformation("Refreshing Test Results.");
 
-        //var testCases = _folderScanner
-        //    .GetTestCases()
-        //    .ToArray();
+        var testResults = _folderScanner
+            .GetTestResults()
+            .ToArray();
 
-        //_testCaseRepository.DeleteAll();
-        //_testCaseRepository.AddRange(testCases);
+        _testResultRepository.DeleteAll();
+        _testResultRepository.AddRange(testResults);
 
-        //_logger.LogInformation("Done Refreshing Test Results: " + testCases.Length);
+        _logger.LogInformation("Done Refreshing Test Results: " + testResults.Length);
     }
 }
