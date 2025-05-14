@@ -26,7 +26,7 @@ public class TestCase
         get => _testNo;
         set
         {
-            if (value.Contains(" "))
+            if (value.Contains(' '))
                 throw new ArgumentException("TestNo can't contain spaces.");
             _testNo = value;
         }

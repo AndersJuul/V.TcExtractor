@@ -12,9 +12,9 @@ public static class LoggerExtensions
             x => x.Log(
                 logLevel,
                 It.IsAny<EventId>(),
-                It.Is<It.IsAnyType>((v, _) => v.ToString().Contains(message)),
+                It.Is<It.IsAnyType>((v, _) => v.ToString() != null && v.ToString()!.Contains(message)),
                 It.IsAny<Exception>(),
-                It.IsAny<Func<It.IsAnyType, Exception, string>>()),
+                It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
             times);
     }
 }

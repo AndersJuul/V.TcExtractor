@@ -13,30 +13,27 @@ public class PsiDvplFileProcessor : IDvplFileProcessor
 
     public IEnumerable<DvplItem> GetDvplItems(string fileName)
     {
-        using (var workbook = new XLWorkbook(fileName))
+        using var workbook = new XLWorkbook(fileName);
+        var worksheet = workbook.Worksheet(1);
+        var range = worksheet.RangeUsed() ??
+                    throw new NullReferenceException("Not able to get RangeUsed from worksheet.");
+
+        var productRsCode = "";
+        var moduleRsCode = "";
+        var testLocation = "";
+
+        foreach (var row in range.Rows().Skip(3))
         {
-            var worksheet = workbook.Worksheet(1);
-            var range = worksheet.RangeUsed() ??
-                        throw new NullReferenceException("Not able to get RangeUsed from worksheet.");
-            ;
-
-            var productRsCode = "";
-            var moduleRsCode = "";
-            var testLocation = "";
-
-            foreach (var row in range.Rows().Skip(3))
+            productRsCode = GetValueDefaultIfEmpty(row.Cell(4).GetString(), productRsCode);
+            moduleRsCode = GetValueDefaultIfEmpty(row.Cell(8).GetString(), moduleRsCode);
+            testLocation = GetValueDefaultIfEmpty(row.Cell(27).GetString(), testLocation);
+            yield return new DvplItem
             {
-                productRsCode = GetValueDefaultIfEmpty(row.Cell(4).GetString(), productRsCode);
-                moduleRsCode = GetValueDefaultIfEmpty(row.Cell(8).GetString(), moduleRsCode);
-                testLocation = GetValueDefaultIfEmpty(row.Cell(27).GetString(), testLocation);
-                yield return new DvplItem
-                {
-                    ProductRsCode = productRsCode,
-                    ModuleRsCode = GetCommaSeparatedRequirements(moduleRsCode),
-                    TestLocation = testLocation,
-                    FileName = fileName,
-                };
-            }
+                ProductRsCode = productRsCode,
+                ModuleRsCode = GetCommaSeparatedRequirements(moduleRsCode),
+                TestLocation = testLocation,
+                FileName = fileName,
+            };
         }
     }
 
