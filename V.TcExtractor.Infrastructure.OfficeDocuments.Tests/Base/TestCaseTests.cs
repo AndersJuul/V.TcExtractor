@@ -1,4 +1,5 @@
 ﻿using V.TcExtractor.Domain.Model;
+using V.TcExtractor.Domain.Processors;
 using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.CellAdapters;
 using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters;
 using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.TableAdapters;

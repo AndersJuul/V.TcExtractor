@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using V.TcExtractor.Console;
+using V.TcExtractor.Domain.Processors;
 using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.CellAdapters;
 using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters;
 using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.TableAdapters;

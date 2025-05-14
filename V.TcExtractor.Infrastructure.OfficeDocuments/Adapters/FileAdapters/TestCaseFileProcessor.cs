@@ -1,6 +1,7 @@
 ﻿using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using V.TcExtractor.Domain.Model;
+using V.TcExtractor.Domain.Processors;
 using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.TableAdapters;
 
 namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters

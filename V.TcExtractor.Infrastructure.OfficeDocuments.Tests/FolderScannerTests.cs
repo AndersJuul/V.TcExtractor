@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using V.TcExtractor.Domain.Options;
+using V.TcExtractor.Domain.Processors;
 using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters;
 using V.TcExtractor.Infrastructure.OfficeDocuments.Tests.Base;
 using Xunit.Abstractions;
@@ -78,6 +79,7 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Tests
                 [wordDocumentProcessor],
                 moduleRequirementFileProcessors,
                 [psiDvplFileProcessor, spcDvplFileProcessor],
+                [],
                 new OptionsWrapper<FileLocationOptions>(new FileLocationOptions { Path = TestDataPath }));
             return sut;
         }

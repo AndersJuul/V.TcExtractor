@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using V.TcExtractor.Domain.Model;
 using V.TcExtractor.Domain.Options;
+using V.TcExtractor.Domain.Processors;
 using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters;
 
 namespace V.TcExtractor.Infrastructure.OfficeDocuments;
@@ -11,11 +12,12 @@ public class FolderScanner : IFolderScanner
     private readonly IEnumerable<IModuleRequirementFileProcessor> _moduleRequirementFileProcessors;
     private readonly FileLocationOptions _fileLocationOptions;
     private readonly IEnumerable<IDvplFileProcessor> _dvplFileProcessors;
+    private readonly IEnumerable<ITestResultProcessor> _testResultProcessors;
 
-    public FolderScanner(
-        IEnumerable<ITestCaseFileProcessor> testFileProcessors,
+    public FolderScanner(IEnumerable<ITestCaseFileProcessor> testFileProcessors,
         IEnumerable<IModuleRequirementFileProcessor> moduleRequirementFileProcessors,
         IEnumerable<IDvplFileProcessor> dvplFileProcessors,
+        IEnumerable<ITestResultProcessor> testResultProcessors,
         IOptions<FileLocationOptions> fileLocationOptions)
     {
         if (testFileProcessors == null || !testFileProcessors.Any())
@@ -28,6 +30,7 @@ public class FolderScanner : IFolderScanner
         _testFileProcessors = testFileProcessors;
         _moduleRequirementFileProcessors = moduleRequirementFileProcessors;
         _dvplFileProcessors = dvplFileProcessors;
+        _testResultProcessors = testResultProcessors;
         _fileLocationOptions = fileLocationOptions.Value;
     }
 
@@ -87,6 +90,14 @@ public class FolderScanner : IFolderScanner
 
     public IEnumerable<TestResult> GetTestResults()
     {
-        throw new NotImplementedException();
+        foreach (var fileName in GetFiles(_fileLocationOptions.Path, "*.docx"))
+        {
+            var processors = _testResultProcessors.Where(xx => xx.CanHandle(fileName));
+
+            foreach (var processor in processors)
+            {
+                foreach (var testResult in processor.GetTestResults(fileName)) yield return testResult;
+            }
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using V.TcExtractor.Domain.Model;
 
-namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters;
+namespace V.TcExtractor.Domain.Processors;
 
 public interface IDvplFileProcessor
 {

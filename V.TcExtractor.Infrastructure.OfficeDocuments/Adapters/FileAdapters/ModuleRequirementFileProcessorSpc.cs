@@ -1,5 +1,6 @@
 ﻿using ClosedXML.Excel;
 using V.TcExtractor.Domain.Model;
+using V.TcExtractor.Domain.Processors;
 
 namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters;
 
