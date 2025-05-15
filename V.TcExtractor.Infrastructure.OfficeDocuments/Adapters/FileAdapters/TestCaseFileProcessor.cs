@@ -41,7 +41,7 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters
                 {
                     var tableAdapter = _tableAdapters.SingleOrDefault(x => x.CanHandle(table));
 
-                    var cases = tableAdapter?.GetTestCases(table, fileName, dmsNumber);
+                    var cases = tableAdapter?.GetTestCases(table, fileName, dmsNumber?.Number ?? "?");
 
                     // Add the test case if we found at least some information
                     if (cases != null)

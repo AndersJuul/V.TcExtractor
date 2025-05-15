@@ -1,8 +1,9 @@
 ﻿using DocumentFormat.OpenXml.Packaging;
+using V.TcExtractor.Domain.Model;
 
 namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters;
 
 public interface IDmsNumberAdapter
 {
-    string GetDmsNumberFromHeader(WordprocessingDocument wordDocument);
+    DmsInfo? GetDmsNumberFromHeader(WordprocessingDocument wordDocument);
 }

@@ -82,15 +82,6 @@ public abstract class TestCaseTests(ITestOutputHelper testOutputHelper)
         return testResultFileProcessor;
     }
 
-    protected TestResultScadaFileProcessor GetTestResultScadaFileProcessor()
-    {
-        var testResultFileProcessor =
-            new TestResultScadaFileProcessor(
-                [new TestResultTableAdapter(new CellAdapter(), new PassedTextAdapter())],
-                new DmsNumberAdapter());
-        return testResultFileProcessor;
-    }
-
     protected void Dump(TestResult[] testResults)
     {
         TestOutputHelper.WriteLine("Test Results:");

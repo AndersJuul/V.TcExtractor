@@ -7,9 +7,11 @@ public class TestResult
     public required string Subject { get; set; } = "";
     public required string Result { get; set; } = "";
     public required string FileName { get; set; } = "";
+    public required string DmsNumber { get; set; } = "";
 
     public override string ToString()
     {
-        return $"TestId: {TestId}  Passed: {Passed}  Subject: {Subject} Result: {Result} FileName: {FileName}";
+        return
+            $"TestId: {TestId}  Passed: {Passed}  Subject: {Subject} Result: {Result} DmsNumber: {DmsNumber} FileName: {FileName}";
     }
 }
