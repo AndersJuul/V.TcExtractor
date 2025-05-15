@@ -3,9 +3,9 @@ using V.TcExtractor.Domain.Model;
 using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.CellAdapters;
 using Table = DocumentFormat.OpenXml.Wordprocessing.Table;
 
-namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.TableAdapters;
+namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.TestCaseTableAdapters;
 
-public class TableAdapterTestCaseIdSubjectHeadersInColZero(ICellAdapter cellAdapter) : ITableAdapter
+public class TestCaseTableAdapterTestCaseIdSubjectHeadersInColZero(ICellAdapter cellAdapter) : ITestCaseTableAdapter
 {
     public bool CanHandle(Table table)
     {

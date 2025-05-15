@@ -2,7 +2,6 @@
 using V.TcExtractor.Domain.Model;
 using V.TcExtractor.Domain.Options;
 using V.TcExtractor.Domain.Processors;
-using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters;
 
 namespace V.TcExtractor.Infrastructure.OfficeDocuments;
 

@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V.TcExtractor.Application.T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V.TcExtractor.Integration.Tests", "V.TcExtractor.Integration.Tests\V.TcExtractor.Integration.Tests.csproj", "{FB3837B6-57F9-4750-AFC8-EF4FC3D85299}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V.TcExtractor.Domain.Tests", "V.TcExtractor.Domain.Tests\V.TcExtractor.Domain.Tests.csproj", "{7445C432-7CB9-42C3-A804-F859E0893998}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,10 @@ Global
 		{FB3837B6-57F9-4750-AFC8-EF4FC3D85299}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB3837B6-57F9-4750-AFC8-EF4FC3D85299}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB3837B6-57F9-4750-AFC8-EF4FC3D85299}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7445C432-7CB9-42C3-A804-F859E0893998}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7445C432-7CB9-42C3-A804-F859E0893998}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7445C432-7CB9-42C3-A804-F859E0893998}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7445C432-7CB9-42C3-A804-F859E0893998}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

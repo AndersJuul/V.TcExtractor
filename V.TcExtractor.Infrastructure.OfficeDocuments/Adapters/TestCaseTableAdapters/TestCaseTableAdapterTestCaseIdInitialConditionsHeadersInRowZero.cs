@@ -2,9 +2,10 @@
 using V.TcExtractor.Domain.Model;
 using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.CellAdapters;
 
-namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.TableAdapters;
+namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.TestCaseTableAdapters;
 
-public class TableAdapterTestCaseIdInitialConditionsHeadersInRowZero(ICellAdapter cellAdapter) : ITableAdapter
+public class TestCaseTableAdapterTestCaseIdInitialConditionsHeadersInRowZero(ICellAdapter cellAdapter)
+    : ITestCaseTableAdapter
 {
     public bool CanHandle(Table table)
     {

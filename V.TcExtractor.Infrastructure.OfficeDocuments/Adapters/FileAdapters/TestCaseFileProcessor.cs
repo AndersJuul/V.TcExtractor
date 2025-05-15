@@ -2,15 +2,15 @@
 using DocumentFormat.OpenXml.Wordprocessing;
 using V.TcExtractor.Domain.Model;
 using V.TcExtractor.Domain.Processors;
-using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.TableAdapters;
+using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.TestCaseTableAdapters;
 
 namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters
 {
     public class TestCaseFileProcessor : ITestCaseFileProcessor
     {
-        private readonly IEnumerable<ITableAdapter> _tableAdapters;
+        private readonly IEnumerable<ITestCaseTableAdapter> _tableAdapters;
 
-        public TestCaseFileProcessor(IEnumerable<ITableAdapter> tableAdapters)
+        public TestCaseFileProcessor(IEnumerable<ITestCaseTableAdapter> tableAdapters)
         {
             _tableAdapters = tableAdapters;
         }

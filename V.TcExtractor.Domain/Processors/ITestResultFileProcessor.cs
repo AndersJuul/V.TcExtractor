@@ -5,5 +5,5 @@ namespace V.TcExtractor.Domain.Processors;
 public interface ITestResultFileProcessor
 {
     bool CanHandle(string fileName);
-    IEnumerable<TestResult> GetTestResults(string fileName);
+    List<TestResult> GetTestResults(string fileName);
 }

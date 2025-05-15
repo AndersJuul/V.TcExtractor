@@ -3,7 +3,8 @@ using V.TcExtractor.Domain;
 using V.TcExtractor.Domain.Processors;
 using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.CellAdapters;
 using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters;
-using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.TableAdapters;
+using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.TestCaseTableAdapters;
+using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.TestResultTableAdapters;
 
 namespace V.TcExtractor.Infrastructure.OfficeDocuments
 {
@@ -20,7 +21,8 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments
             services.AddAllImplementations<ITestResultFileProcessor>(serviceLifetime, assemblies);
             services.AddAllImplementations<IModuleRequirementFileProcessor>(serviceLifetime, assemblies);
             services.AddAllImplementations<IDvplFileProcessor>(serviceLifetime, assemblies);
-            services.AddAllImplementations<ITableAdapter>();
+            services.AddAllImplementations<ITestCaseTableAdapter>();
+            services.AddAllImplementations<ITestResultTableAdapter>();
             services.AddAllImplementations<ICellAdapter>();
 
             return services;

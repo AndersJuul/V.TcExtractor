@@ -1,8 +1,10 @@
-﻿using V.TcExtractor.Domain.Model;
+﻿using V.TcExtractor.Domain.Adapters;
+using V.TcExtractor.Domain.Model;
 using V.TcExtractor.Domain.Processors;
 using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.CellAdapters;
 using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters;
-using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.TableAdapters;
+using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.TestCaseTableAdapters;
+using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.TestResultTableAdapters;
 using Xunit.Abstractions;
 
 namespace V.TcExtractor.Infrastructure.OfficeDocuments.Tests.Base;
@@ -39,7 +41,7 @@ public abstract class TestCaseTests(ITestOutputHelper testOutputHelper)
     protected void Dump(DvplItem[] dvplItems)
     {
         TestOutputHelper.WriteLine("DVPL Items:");
-        TestOutputHelper.WriteLine($"---- {dvplItems.Count()} DVPL Items");
+        TestOutputHelper.WriteLine($"---- {dvplItems.Length} DVPL Items");
         foreach (var dvplItem in dvplItems)
         {
             TestOutputHelper.WriteLine($"DVPL Item : {dvplItem}");
@@ -53,11 +55,11 @@ public abstract class TestCaseTests(ITestOutputHelper testOutputHelper)
         var cellAdapter = new CellAdapter();
         var wordFileProcessor = new TestCaseFileProcessor(
         [
-            new TableAdapterId(cellAdapter),
-            new TableAdapterTestCaseIdAndDescriptionHeadersInRowZero(cellAdapter),
-            new TableAdapterTestCaseIdSubjectHeadersInColZero(cellAdapter),
-            new TableAdapterTestCaseInformationHeadersInRowZero(cellAdapter),
-            new TableAdapterTestCaseIdInitialConditionsHeadersInRowZero(cellAdapter)
+            new TestCaseTableAdapterId(cellAdapter),
+            new TestCaseTableAdapterTestCaseIdAndDescriptionHeadersInRowZero(cellAdapter),
+            new TestCaseTableAdapterTestCaseIdSubjectHeadersInColZero(cellAdapter),
+            new TestCaseTableAdapterTestCaseInformationHeadersInRowZero(cellAdapter),
+            new TestCaseTableAdapterTestCaseIdInitialConditionsHeadersInRowZero(cellAdapter)
         ]);
         return wordFileProcessor;
     }
@@ -71,17 +73,22 @@ public abstract class TestCaseTests(ITestOutputHelper testOutputHelper)
         ];
     }
 
-    protected ITestResultFileProcessor GetTestResultFileProcessor()
+    protected TestResultFileProcessor GetTestResultFileProcessor()
     {
-        var cellAdapter = new CellAdapter();
-        var wordFileProcessor = new TestResultFileProcessor(
-        [
-            new TableAdapterId(cellAdapter),
-            new TableAdapterTestCaseIdAndDescriptionHeadersInRowZero(cellAdapter),
-            new TableAdapterTestCaseIdSubjectHeadersInColZero(cellAdapter),
-            new TableAdapterTestCaseInformationHeadersInRowZero(cellAdapter),
-            new TableAdapterTestCaseIdInitialConditionsHeadersInRowZero(cellAdapter)
-        ]);
-        return wordFileProcessor;
+        var testResultFileProcessor =
+            new TestResultFileProcessor([new TestResultTableAdapter(new CellAdapter(), new PassedTextAdapter())]);
+        return testResultFileProcessor;
+    }
+
+    protected void Dump(TestResult[] testResults)
+    {
+        TestOutputHelper.WriteLine("Test Results:");
+        TestOutputHelper.WriteLine($"---- {testResults.Length} Test Results");
+        foreach (var testResult in testResults)
+        {
+            TestOutputHelper.WriteLine($"Test Result : {testResult}");
+        }
+
+        TestOutputHelper.WriteLine("----");
     }
 }

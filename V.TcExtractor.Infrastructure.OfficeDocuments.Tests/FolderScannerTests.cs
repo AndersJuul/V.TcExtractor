@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
 using V.TcExtractor.Domain.Options;
-using V.TcExtractor.Domain.Processors;
 using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters;
 using V.TcExtractor.Infrastructure.OfficeDocuments.Tests.Base;
 using Xunit.Abstractions;
@@ -74,12 +73,13 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Tests
             var psiDvplFileProcessor = new PsiDvplFileProcessor();
             var spcDvplFileProcessor = new SpcDvplFileProcessor();
             var moduleRequirementFileProcessors = GetExcelFileProcessors();
+            var testResultFileProcessor = GetTestResultFileProcessor();
 
             var sut = new FolderScanner(
                 [wordDocumentProcessor],
                 moduleRequirementFileProcessors,
                 [psiDvplFileProcessor, spcDvplFileProcessor],
-                [GetTestResultFileProcessor()],
+                [testResultFileProcessor],
                 new OptionsWrapper<FileLocationOptions>(new FileLocationOptions { Path = TestDataPath }));
             return sut;
         }

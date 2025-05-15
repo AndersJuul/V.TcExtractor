@@ -2,34 +2,32 @@
 using DocumentFormat.OpenXml.Wordprocessing;
 using V.TcExtractor.Domain.Model;
 using V.TcExtractor.Domain.Processors;
-using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.TableAdapters;
+using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.TestResultTableAdapters;
 
 namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters
 {
     public class TestResultFileProcessor : ITestResultFileProcessor
     {
-        private readonly IEnumerable<ITableAdapter> _tableAdapters;
+        private readonly IEnumerable<ITestResultTableAdapter> _tableAdapters;
 
-        public TestResultFileProcessor(IEnumerable<ITableAdapter> tableAdapters)
+        public TestResultFileProcessor(IEnumerable<ITestResultTableAdapter> tableAdapters)
         {
+            if (tableAdapters == null || !tableAdapters.Any())
+                throw new ArgumentNullException(nameof(tableAdapters), "No table adapters provided.");
             _tableAdapters = tableAdapters;
         }
 
         public bool CanHandle(string fileName)
         {
-            if (!fileName.Contains("DVPR")) return false; // Take only dvpr
+            if (!fileName.Contains("DVPR")) return false; // Take only DVRE
+            if (fileName.Contains("SCADA")) return false; // SCADA is special
             var extension = Path.GetExtension(fileName);
             return extension.Equals(".docx", StringComparison.InvariantCultureIgnoreCase);
         }
 
-        public IEnumerable<TestResult> GetTestResults(string fileName)
+        public List<TestResult> GetTestResults(string fileName)
         {
-            throw new NotImplementedException();
-        }
-
-        public List<TestCase> GetTestCases(string fileName)
-        {
-            var testCases = new List<TestCase>();
+            var testResults = new List<TestResult>();
 
             using (var wordDocument = WordprocessingDocument.Open(fileName, false))
             {
@@ -43,17 +41,17 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters
                 {
                     var tableAdapter = _tableAdapters.SingleOrDefault(x => x.CanHandle(table));
 
-                    var cases = tableAdapter?.GetTestCases(table, fileName, dmsNumber);
+                    var results = tableAdapter?.GetTestResults(table, fileName, dmsNumber);
 
                     // Add the test case if we found at least some information
-                    if (cases != null)
+                    if (results != null)
                     {
-                        testCases.AddRange(cases);
+                        testResults.AddRange(results);
                     }
                 }
             }
 
-            return testCases;
+            return testResults;
         }
 
         private static string GetDmsNumberFromHeader(WordprocessingDocument wordDocument)

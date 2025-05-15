@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using V.TcExtractor.Domain.Adapters;
 using V.TcExtractor.Domain.Options;
 
 namespace V.TcExtractor.Domain
@@ -10,6 +11,7 @@ namespace V.TcExtractor.Domain
             IConfiguration configuration)
         {
             services.AddScoped<ITestCaseRequirementMatcher, TestCaseRequirementMatcher>();
+            services.AddScoped<IPassedTextAdapter, PassedTextAdapter>();
 
             services.AddOptions<FileLocationOptions>()
                 .Bind(configuration.GetSection("FileLocation"))
