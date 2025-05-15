@@ -5,7 +5,8 @@ using Xunit.Abstractions;
 
 namespace V.TcExtractor.Infrastructure.OfficeDocuments.Tests
 {
-    public class TestResultFileProcessorTests(ITestOutputHelper testOutputHelper) : TestCaseTests(testOutputHelper)
+    public class TestResultNonScadaFileProcessorTests(ITestOutputHelper testOutputHelper)
+        : TestCaseTests(testOutputHelper)
     {
         [Fact]
         public void CanHandle_returns_true_for_word_file_name()
@@ -14,7 +15,7 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Tests
             var sut = GetSut();
 
             // Act
-            var canHandle = sut.CanHandle("A DVPR.docx");
+            var canHandle = sut.CanHandle("A DVRE.docx");
 
             // Assert
             Assert.True(canHandle);
@@ -40,7 +41,6 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Tests
             yield return [new[] { "DVRE", "DVRE VES - IO.docx" }, 5];
             yield return [new[] { "DVRE", "DVRE VES - L7FW Failover with Containers.docx" }, 11];
             yield return [new[] { "DVRE", "DVRE VES - OSV 1.docx" }, 76];
-            yield return [new[] { "DVRE", "DVRE VES - SCADA.docx" }, 38];
             yield return [new[] { "DVRE", "DVRE VES - VOT.docx" }, 37];
             yield return [new[] { "DVRE", "Tests_Batch - VES DVRE for Base Configuration.docx" }, 12];
         }
@@ -63,9 +63,9 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Tests
             Assert.Equal(expectedCount, testResults.Length);
         }
 
-        private TestResultFileProcessor GetSut()
+        private TestResultNonScadaFileProcessor GetSut()
         {
-            var sut = GetTestResultFileProcessor();
+            var sut = GetTestResultNonScadaFileProcessor();
             return sut;
         }
     }

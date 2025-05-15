@@ -6,12 +6,12 @@ using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.TestResultTableAdapt
 
 namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters
 {
-    public class TestResultFileProcessor : ITestResultFileProcessor
+    public class TestResultScadaFileProcessor : ITestResultFileProcessor
     {
         private readonly IEnumerable<ITestResultTableAdapter> _tableAdapters;
         private readonly IDmsNumberAdapter _dmsNumberAdapter;
 
-        public TestResultFileProcessor(IEnumerable<ITestResultTableAdapter> tableAdapters,
+        public TestResultScadaFileProcessor(IEnumerable<ITestResultTableAdapter> tableAdapters,
             IDmsNumberAdapter dmsNumberAdapter)
         {
             if (tableAdapters == null || !tableAdapters.Any())
@@ -22,8 +22,9 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters
 
         public bool CanHandle(string fileName)
         {
-            if (!fileName.Contains("DVPR")) return false; // Take only DVRE
-            if (fileName.Contains("SCADA")) return false; // SCADA is special
+            if (!fileName.Contains("DVRE")) return false; // Take only DVRE
+            if (!fileName.Contains("SCADA")) return false; // Only SCADA 
+
             var extension = Path.GetExtension(fileName);
             return extension.Equals(".docx", StringComparison.InvariantCultureIgnoreCase);
         }

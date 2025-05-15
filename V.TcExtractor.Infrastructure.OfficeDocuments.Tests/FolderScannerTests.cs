@@ -73,7 +73,7 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Tests
             var psiDvplFileProcessor = new PsiDvplFileProcessor();
             var spcDvplFileProcessor = new SpcDvplFileProcessor();
             var moduleRequirementFileProcessors = GetExcelFileProcessors();
-            var testResultFileProcessor = GetTestResultFileProcessor();
+            var testResultFileProcessor = GetTestResultNonScadaFileProcessor();
 
             var sut = new FolderScanner(
                 [wordDocumentProcessor],

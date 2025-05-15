@@ -73,10 +73,20 @@ public abstract class TestCaseTests(ITestOutputHelper testOutputHelper)
         ];
     }
 
-    protected TestResultFileProcessor GetTestResultFileProcessor()
+    protected TestResultNonScadaFileProcessor GetTestResultNonScadaFileProcessor()
     {
         var testResultFileProcessor =
-            new TestResultFileProcessor([new TestResultTableAdapter(new CellAdapter(), new PassedTextAdapter())],
+            new TestResultNonScadaFileProcessor(
+                [new TestResultTableAdapter(new CellAdapter(), new PassedTextAdapter())],
+                new DmsNumberAdapter());
+        return testResultFileProcessor;
+    }
+
+    protected TestResultScadaFileProcessor GetTestResultScadaFileProcessor()
+    {
+        var testResultFileProcessor =
+            new TestResultScadaFileProcessor(
+                [new TestResultTableAdapter(new CellAdapter(), new PassedTextAdapter())],
                 new DmsNumberAdapter());
         return testResultFileProcessor;
     }
