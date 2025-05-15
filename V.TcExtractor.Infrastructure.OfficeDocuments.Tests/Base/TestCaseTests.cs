@@ -60,7 +60,7 @@ public abstract class TestCaseTests(ITestOutputHelper testOutputHelper)
             new TestCaseTableAdapterTestCaseIdSubjectHeadersInColZero(cellAdapter),
             new TestCaseTableAdapterTestCaseInformationHeadersInRowZero(cellAdapter),
             new TestCaseTableAdapterTestCaseIdInitialConditionsHeadersInRowZero(cellAdapter)
-        ]);
+        ], new DmsNumberAdapter());
         return wordFileProcessor;
     }
 
@@ -76,7 +76,8 @@ public abstract class TestCaseTests(ITestOutputHelper testOutputHelper)
     protected TestResultFileProcessor GetTestResultFileProcessor()
     {
         var testResultFileProcessor =
-            new TestResultFileProcessor([new TestResultTableAdapter(new CellAdapter(), new PassedTextAdapter())]);
+            new TestResultFileProcessor([new TestResultTableAdapter(new CellAdapter(), new PassedTextAdapter())],
+                new DmsNumberAdapter());
         return testResultFileProcessor;
     }
 

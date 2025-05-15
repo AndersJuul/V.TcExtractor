@@ -23,6 +23,7 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments
             services.AddAllImplementations<IDvplFileProcessor>(serviceLifetime, assemblies);
             services.AddAllImplementations<ITestCaseTableAdapter>();
             services.AddAllImplementations<ITestResultTableAdapter>();
+            services.AddAllImplementations<IDmsNumberAdapter>();
             services.AddAllImplementations<ICellAdapter>();
 
             return services;
