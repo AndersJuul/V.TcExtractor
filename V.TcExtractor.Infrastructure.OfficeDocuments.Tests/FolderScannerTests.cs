@@ -81,7 +81,7 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Tests
                 [psiDvplFileProcessor, spcDvplFileProcessor],
                 [testResultFileProcessor],
                 new OptionsWrapper<FileLocationOptions>(new FileLocationOptions { Path = TestDataPath }),
-                [new WordFileProcessor(new DmsNumberAdapter())]);
+                [new WordFileProcessor(new DmsNumberAdapter()), new ExcelFileProcessor()]);
             return sut;
         }
     }

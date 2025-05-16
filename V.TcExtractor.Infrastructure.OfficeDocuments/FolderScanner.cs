@@ -64,20 +64,9 @@ public class FolderScanner : IFolderScanner
 
         foreach (var file in allFiles)
         {
-            var processor = _fileProcessors.Where(x => x.CanHandle(file)).FirstOrDefault();
+            var processor = _fileProcessors.FirstOrDefault(x => x.CanHandle(file));
             if (processor != null) yield return processor.GetFileItem(file);
         }
-
-        //var fileItems = allFiles
-        //    .Select(file => new FileItem
-        //    {
-        //        FileName = Path.GetFileName(file),
-        //        FilePath = file,
-        //        DmsNumber = _dmsNumberAdapter.GetDmsNumberFromHeader(file)
-        //    })
-        //    .ToList();
-
-        ////File.WriteAllLines(_fileLocationOptions.Path, allFiles);
     }
 
     public IEnumerable<TestCase> GetTestCases()
