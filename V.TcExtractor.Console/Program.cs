@@ -95,6 +95,11 @@ public class Program
                     .Services
                     .GetRequiredService<IBigJoinRefresher>()
                     .Execute();
+            // Always
+            host
+                .Services
+                .GetRequiredService<IFileItemRefresher>()
+                .Execute();
         }
         catch (Exception ex)
         {

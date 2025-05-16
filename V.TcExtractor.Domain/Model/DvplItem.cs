@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace V.TcExtractor.Domain.Model;
+﻿namespace V.TcExtractor.Domain.Model;
 
 public class DvplItem
 {

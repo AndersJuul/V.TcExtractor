@@ -2,6 +2,7 @@
 using V.TcExtractor.Domain.Model;
 using V.TcExtractor.Domain.Options;
 using V.TcExtractor.Domain.Processors;
+using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters;
 
 namespace V.TcExtractor.Infrastructure.OfficeDocuments;
 
@@ -12,12 +13,13 @@ public class FolderScanner : IFolderScanner
     private readonly FileLocationOptions _fileLocationOptions;
     private readonly IEnumerable<IDvplFileProcessor> _dvplFileProcessors;
     private readonly IEnumerable<ITestResultFileProcessor> _testResultProcessors;
+    private readonly IEnumerable<IFileProcessor> _fileProcessors;
 
     public FolderScanner(IEnumerable<ITestCaseFileProcessor> testFileProcessors,
         IEnumerable<IModuleRequirementFileProcessor> moduleRequirementFileProcessors,
         IEnumerable<IDvplFileProcessor> dvplFileProcessors,
         IEnumerable<ITestResultFileProcessor> testResultProcessors,
-        IOptions<FileLocationOptions> fileLocationOptions)
+        IOptions<FileLocationOptions> fileLocationOptions, IEnumerable<IFileProcessor> fileProcessors)
     {
         if (testFileProcessors == null || !testFileProcessors.Any())
             throw new ArgumentException("testFileProcessors not specified. Must have at least one.");
@@ -27,11 +29,14 @@ public class FolderScanner : IFolderScanner
             throw new ArgumentException("moduleRequirementFileProcessors not specified. Must have at least one.");
         if (dvplFileProcessors == null || !dvplFileProcessors.Any())
             throw new ArgumentException("dvplFileProcessors not specified. Must have at least one.");
+        if (fileProcessors == null || !fileProcessors.Any())
+            throw new ArgumentException("fileProcessors not specified. Must have at least one.");
 
         _testFileProcessors = testFileProcessors;
         _moduleRequirementFileProcessors = moduleRequirementFileProcessors;
         _dvplFileProcessors = dvplFileProcessors;
         _testResultProcessors = testResultProcessors;
+        _fileProcessors = fileProcessors;
         _fileLocationOptions = fileLocationOptions.Value;
     }
 
@@ -48,6 +53,31 @@ public class FolderScanner : IFolderScanner
         {
             foreach (var file in GetFiles(directory, searchPattern)) yield return file;
         }
+    }
+
+    public IEnumerable<FileItem> GetFileItems()
+    {
+        var wordDocuments = GetFiles(_fileLocationOptions.Path, "*.docx");
+        var excelDocuments = GetFiles(_fileLocationOptions.Path, "*.xlsx");
+
+        var allFiles = wordDocuments.Concat(excelDocuments);
+
+        foreach (var file in allFiles)
+        {
+            var processor = _fileProcessors.Where(x => x.CanHandle(file)).FirstOrDefault();
+            if (processor != null) yield return processor.GetFileItem(file);
+        }
+
+        //var fileItems = allFiles
+        //    .Select(file => new FileItem
+        //    {
+        //        FileName = Path.GetFileName(file),
+        //        FilePath = file,
+        //        DmsNumber = _dmsNumberAdapter.GetDmsNumberFromHeader(file)
+        //    })
+        //    .ToList();
+
+        ////File.WriteAllLines(_fileLocationOptions.Path, allFiles);
     }
 
     public IEnumerable<TestCase> GetTestCases()

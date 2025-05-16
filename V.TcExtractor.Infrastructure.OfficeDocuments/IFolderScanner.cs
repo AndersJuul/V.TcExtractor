@@ -8,4 +8,6 @@ public interface IFolderScanner
     IEnumerable<ModuleRequirement> GetModuleRequirements();
     IEnumerable<DvplItem> GetDvplItems();
     IEnumerable<TestResult> GetTestResults();
+    IEnumerable<string> GetFiles(string folder, string searchPattern);
+    IEnumerable<FileItem> GetFileItems();
 }
