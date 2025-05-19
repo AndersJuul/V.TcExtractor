@@ -6,4 +6,9 @@ public class FileItem
     public required string DmsNumber { get; set; }
     public required string FileType { get; set; }
     public required string FilePath { get; set; }
+
+    public override string ToString()
+    {
+        return $"{FileType} {DmsNumber} {FileName} {FilePath}";
+    }
 }

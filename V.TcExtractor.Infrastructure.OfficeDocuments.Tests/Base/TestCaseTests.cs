@@ -93,4 +93,16 @@ public abstract class TestCaseTests(ITestOutputHelper testOutputHelper)
 
         TestOutputHelper.WriteLine("----");
     }
+
+    protected void Dump(FileItem[] fileItems)
+    {
+        TestOutputHelper.WriteLine("File Items:");
+        TestOutputHelper.WriteLine($"---- {fileItems.Length} File Items");
+        foreach (var testResult in fileItems)
+        {
+            TestOutputHelper.WriteLine($"File Item: {testResult}");
+        }
+
+        TestOutputHelper.WriteLine("----");
+    }
 }

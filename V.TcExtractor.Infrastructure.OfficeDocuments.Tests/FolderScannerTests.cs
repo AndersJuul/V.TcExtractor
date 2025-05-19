@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using V.TcExtractor.Domain.Model;
 using V.TcExtractor.Domain.Options;
 using V.TcExtractor.Infrastructure.OfficeDocuments.Adapters.FileAdapters;
 using V.TcExtractor.Infrastructure.OfficeDocuments.Tests.Base;
@@ -10,6 +11,24 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Tests
     {
         public FolderScannerTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
+        }
+
+        [Fact]
+        public void Scan_finds_all_files()
+        {
+            // This test assumes test data in known place.
+            // Arrange
+            var sut = GetSut();
+
+            // Act
+            var fileItems = sut
+                .GetFileItems()
+                .ToArray();
+
+            // Assert
+            Dump(fileItems);
+
+            Assert.Equal(32, fileItems.Count());
         }
 
         [Fact]
