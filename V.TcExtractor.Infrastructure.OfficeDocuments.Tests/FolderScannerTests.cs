@@ -14,6 +14,24 @@ namespace V.TcExtractor.Infrastructure.OfficeDocuments.Tests
         }
 
         [Fact]
+        public void Scan_finds_all_test_results()
+        {
+            // This test assumes test data in known place.
+            // Arrange
+            var sut = GetSut();
+
+            // Act
+            var testResults = sut
+                .GetTestResults()
+                .ToArray();
+
+            // Assert
+            Dump(testResults);
+
+            Assert.Equal(155, testResults.Count());
+        }
+
+        [Fact]
         public void Scan_finds_all_files()
         {
             // This test assumes test data in known place.
