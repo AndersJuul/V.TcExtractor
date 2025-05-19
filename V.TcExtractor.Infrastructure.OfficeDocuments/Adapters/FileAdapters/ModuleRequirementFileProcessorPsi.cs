@@ -36,20 +36,26 @@ public class ModuleRequirementFileProcessorPsi : ModuleRequirementFileProcessorB
             var id = row.Cell(1).GetString();
             var reqCode = row.Cell(3).GetString();
             var productRequirementLink = row.Cell(4).GetString();
-            if (!string.IsNullOrWhiteSpace(id))
-                yield return new ModuleRequirement
-                {
-                    Id = id,
-                    ProductRequirement =
-                        ExtractProductRequirementReferences(!string.IsNullOrEmpty(reqCode)
-                            ? reqCode
-                            : productRequirementLink),
-                    RsTitle = row.Cell(5).GetString(),
-                    CombinedRequirement = row.Cell(6).GetString(),
-                    Motivation = row.Cell(12).GetString(),
-                    FileName = fileName,
-                    Source = source
-                };
+
+            if (string.IsNullOrWhiteSpace(id)) continue;
+
+            // prefix ID with "PSI." if not already present
+            if (!id.Contains("psi", StringComparison.InvariantCultureIgnoreCase))
+                id = "PSI." + id;
+
+            yield return new ModuleRequirement
+            {
+                Id = id,
+                ProductRequirement =
+                    ExtractProductRequirementReferences(!string.IsNullOrEmpty(reqCode)
+                        ? reqCode
+                        : productRequirementLink),
+                RsTitle = row.Cell(5).GetString(),
+                CombinedRequirement = row.Cell(6).GetString(),
+                Motivation = row.Cell(12).GetString(),
+                FileName = fileName,
+                Source = source
+            };
         }
     }
 }
